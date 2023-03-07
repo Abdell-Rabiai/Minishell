@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/07 17:30:18 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/07 19:56:34 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void export(t_infos *infos)
 void export_variable(t_infos *infos, char *string)
 {
 	t_envp 	*temp;
-	t_envp 	*new_node;
 	char	*var_value;
 	char 	*var_name;
 
@@ -70,12 +69,19 @@ void export_variable(t_infos *infos, char *string)
 		var_value++;
 	while (temp)
 	{
-		if (ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)) == 0)
-			return ;
+		if (!ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)))
+		{
+			if(!ft_strncmp(var_value, "", ft_strlen(var_value)))
+				return ;
+			else
+			{
+				temp->variable_value = var_value;
+				return ;
+			}
+		}
 		temp = temp->next;
 	}
-	new_node = new_node_envp(var_name, var_value);
-	add_back_envp(&infos->my_envp, new_node);
+	add_back_envp(&infos->my_envp, new_node_envp(var_name, var_value));
 }
 
 void unset(char *str, char **envp)
