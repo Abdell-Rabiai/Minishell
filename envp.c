@@ -6,33 +6,42 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:34:10 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/06 21:54:04 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/07 13:54:17 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void sort_envp(char **envp)
+void swap_envp_nodes(t_envp *tmp_envp, t_envp *tmp)
 {
-    int i;
-    int j;
-    char *tmp;
+	char *tmp_value;
+	char *tmp_name;
 
-    i = 0;
-    while (envp[i])
+	tmp_name = tmp_envp->variable_name;
+	tmp_value = tmp_envp->variable_value;
+	tmp_envp->variable_name = tmp->variable_name;
+	tmp_envp->variable_value = tmp->variable_value;
+	tmp->variable_name = tmp_name;
+	tmp->variable_value = tmp_value;
+}
+
+void sort_envp(t_infos *infos)
+{
+    t_envp *tmp_envp;
+	t_envp *tmp;
+
+
+	tmp_envp = infos->my_envp;
+    while (tmp_envp)
     {
-        j = i + 1;
-        while (envp[j])
+        tmp = tmp_envp->next;
+        while (tmp)
         {
-            if (ft_strncmp(envp[i], envp[j], ft_strlen(envp[i])) > 0)
-            {
-                tmp = envp[i];
-                envp[i] = envp[j];
-                envp[j] = tmp;
-            }
-            j++;
+            if (ft_strncmp(tmp_envp->variable_name, tmp->variable_name, ft_strlen(tmp_envp->variable_name)) > 0)
+                swap_envp_nodes(tmp_envp, tmp);
+            tmp = tmp->next;
         }
-        i++;
+       tmp_envp = tmp_envp->next;
     }
 }
 
@@ -63,20 +72,6 @@ void	add_back_envp(t_envp **lst, t_envp *new)
 		while (temp->next != NULL)
 			temp = temp->next;
 		temp->next = new;
-	}
-}
-
-
-void print_envp(t_infos *infos)
-{
-	t_envp *tmp_env;
-
-	tmp_env = infos->my_envp;
-	while (tmp_env != NULL)
-	{
-		printf("%s=", tmp_env->variable_name);
-		printf("%s\n", tmp_env->variable_value);
-		tmp_env = tmp_env->next;
 	}
 }
 

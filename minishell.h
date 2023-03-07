@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/06 21:45:45 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/07 14:42:38 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ void init(t_infos *infos);
 void    echo(char *str, bool option);
 void    pwd(void);
 void    cd(char *path);
-void    export(char **envp);
+void    export(t_infos *infos);
+void	export_variable(t_infos *infos, char *string);
 void    unset(char *str, char **envp);
 
 /*--------->builtins utils funtions <--------*/
-void 	sort_envp(char **envp);
-void 	env(char **envp);
+void	sort_envp(t_infos *infos);
+void	env(t_infos *infos);
 void 	duplicate_envp(char **envp, t_infos *infos);
 void 	print_envp(t_infos *infos);
 char 	*get_variable_name(char *string);
