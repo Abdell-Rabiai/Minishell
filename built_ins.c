@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/07 14:51:04 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/07 17:30:18 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ void export(t_infos *infos)
 		if (ft_strncmp(temp->variable_value, "", ft_strlen(temp->variable_value)) == 0)
 			printf("declare -x %s\n", temp->variable_name);
 		else
-			printf("declare -x %s=%s\n", temp->variable_name, temp->variable_value);
+			printf("declare -x %s=\"%s\"\n", temp->variable_name, temp->variable_value);
 		temp = temp->next;
 	}
-	
 }
 
 void export_variable(t_infos *infos, char *string)
@@ -65,6 +64,10 @@ void export_variable(t_infos *infos, char *string)
 	temp = infos->my_envp;
 	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string);
 	var_value = ft_strchr(string, '=');
+	if (!var_value)
+		var_value = "";
+	else
+		var_value++;
 	while (temp)
 	{
 		if (ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)) == 0)
@@ -73,7 +76,6 @@ void export_variable(t_infos *infos, char *string)
 	}
 	new_node = new_node_envp(var_name, var_value);
 	add_back_envp(&infos->my_envp, new_node);
-	free(var_name);
 }
 
 void unset(char *str, char **envp)
