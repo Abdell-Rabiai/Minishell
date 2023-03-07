@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/07 19:56:34 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/07 22:28:39 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@ void export_variable(t_infos *infos, char *string)
 		if (!ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)))
 		{
 			if(!ft_strncmp(var_value, "", ft_strlen(var_value)))
+			{
+				free(var_name);
 				return ;
+			}
 			else
 			{
 				temp->variable_value = var_value;
+				free(var_name);
 				return ;
 			}
 		}
