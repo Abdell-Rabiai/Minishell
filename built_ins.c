@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/07 22:28:39 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/08 19:15:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void export(t_infos *infos)
 	temp = infos->my_envp;
 	while (temp)
 	{
-		if (ft_strncmp(temp->variable_value, "", ft_strlen(temp->variable_value)) == 0)
+		if (!(*temp->variable_value))
 			printf("declare -x %s\n", temp->variable_name);
 		else
 			printf("declare -x %s=\"%s\"\n", temp->variable_name, temp->variable_value);
