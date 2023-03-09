@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/09 16:40:32 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/09 18:47:54 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,40 @@ typedef struct s_infos
 	struct s_envp	*my_envp;
 } t_infos;
 
-void    prompt();
 
-/*init*/
+/*---------> initialize_data <--------*/
 void init(t_infos *infos);
-/*--------->builtins funtions <--------*/
+
+/*---------> basic builtins funtions <--------*/
 void    echo(char *str, bool option);
 void    pwd(void);
 void    cd(char *path);
+
+/*---------> export <--------*/
 void    export(t_infos *infos);
-void	export_variable(t_infos *infos, char *string);
-void	unset(char *str, t_infos *infos);
-int		check_variable_regex_unset(char *str);
-
-/*--------->builtins utils funtions <--------*/
+void	swap_envp_nodes(t_envp *tmp_envp, t_envp *tmp);
 void	sort_envp(t_infos *infos);
-void	env(t_infos *infos);
-void 	duplicate_envp(char **envp, t_infos *infos);
-void 	print_envp(t_infos *infos);
-char 	*get_variable_name(char *string);
+void	export_variable(t_infos *infos, char *string);
+void	add_variable(t_infos *infos, char *var_name, char *var_value);
+int		check_variable_regex(char *str);
 char 	*get_variable_value(char *string);
-void	add_back_envp(t_envp **lst, t_envp *new);
+char	*get_variable_name(char *string);
 t_envp	*new_node_envp(char *v_name, char *v_value);
+void	add_back_envp(t_envp **lst, t_envp *new);
+void 	duplicate_envp(char **envp, t_infos *infos);
 
+/*---------> unset <--------*/
+void	unset(char *str, t_infos *infos);
+int		delete_head_envp(t_infos *infos, char *str);
+int		delete_node_envp(t_infos *infos, char *str);
+int		delete_tail_envp(t_infos *infos, char *str);
+
+/*---------> env <--------*/
+void env(t_infos *infos);
+
+/*--------->builtins util funtions <--------*/
+void    echo(char *str, bool option);
+void    pwd(void);
+void    cd(char *path);
+void    exitt(void);
 #endif
