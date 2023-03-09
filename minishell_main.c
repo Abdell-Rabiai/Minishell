@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:24:53 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/09 19:15:58 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/09 22:19:08 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ int main(int ac, char **av, char **envp)
 	(void)envp;
 	t_infos infos;
 	init(&infos);
-	// duplicate_envp(envp, &infos);
+	duplicate_envp(envp, &infos);
 	// // env(&infos);
 	// printf("\n*--------------EXPORT-----------------*\n");
-	// // export(&infos);
-	// export_variable(&infos, "Tabi3a");
-	// export_variable(&infos, "Tabi3a=3alam Khoore");
+	// export(&infos);
+	export_variable(&infos, "Tabi3a");
+	export_variable(&infos, "Black");
+	export_variable(&infos, "BZaytona=");
+	export_variable(&infos, "B=""");
+	export_variable(&infos, "Tabi3a=dfaa3 sdaar haz rass o fuck l3alaam tkoon m9iwaad");
+	export_variable(&infos, "Tabi3a+= The_Greatest");
 	// export_variable(&infos, "Black=1004");
 	// export_variable(&infos, "Tabi3a=Hello world from 1337");
 	// export_variable(&infos, "Black=Security researcher");
@@ -45,13 +49,13 @@ int main(int ac, char **av, char **envp)
 	// unset("__CF_USER_TEXT_ENCODING", &infos);
 	// unset("_P9K_TTY", &infos);
 	// unset("", &infos);
-	// printf("\n*--------------AFTER UNSET PATH-----------------*\n");
-	// export(&infos);
-	// printf("\n*--------------AFTER ENV-----------------*\n");
-	// env(&infos);
-	echo("ps\n", 0);
+	printf("\n*--------------AFTER UNSET PATH-----------------*\n");
+	export(&infos);
+	printf("\n*--------------AFTER ENV-----------------*\n");
+	env(&infos);
+	// echo("ps\n", 0);
 	// pwd();
-	cd("*");
+	// cd("*");
 	// pwd();
 	// 
 	// while (1);

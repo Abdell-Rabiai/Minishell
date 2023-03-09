@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:05:21 by ahmaymou          #+#    #+#             */
-/*   Updated: 2022/11/12 21:01:13 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/09 22:02:05 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(to_return, s1, ft_strlen(s1) + 1);
 	ft_strlcat(to_return, s2, len + 1);
+	// free((char *)s1);
 	return (to_return);
 }

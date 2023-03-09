@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:30:43 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/09 19:00:46 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/09 22:13:36 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void env(t_infos *infos)
 	temp = infos->my_envp;
 	while (temp)
 	{
-		printf("%s=%s\n", temp->variable_name, temp->variable_value);
+		if (temp->variable_value)
+			printf("%s=%s\n", temp->variable_name, temp->variable_value);
 		temp = temp->next;
 	}
 }

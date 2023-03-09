@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/09 18:32:00 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/09 22:22:26 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ int check_variable_regex(char *str)
 	while (str[i])
 	{
 		if (str[i] != '_' && !ft_isalnum(str[i]))
-			return (1);
+		{
+			if (str[i] == '+' && str[i + 1] == '=') // export +='test'
+				return (1);
+			else
+				return (0);
+		}
 		i++;
 	}
 	return (0);
@@ -37,10 +42,12 @@ void export(t_infos *infos)
 	i = 0;
 	sort_envp(infos);
 	temp = infos->my_envp;
-	while (temp)
+	while (temp->next)
 	{
-		if (!(*temp->variable_value))
+		if (!temp->variable_value)
 			printf("declare -x %s\n", temp->variable_name);
+		else if(!(*temp->variable_value))
+			printf("declare -x %s=\"\"\n", temp->variable_name);
 		else
 			printf("declare -x %s=\"%s\"\n", temp->variable_name, temp->variable_value);
 		temp = temp->next;
@@ -56,16 +63,20 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 	{
 		if (!ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)))
 		{
-			if(!ft_strncmp(var_value, "", ft_strlen(var_value)))
+			if(!var_value)
 			{
 				free(var_name);
-				return ;
+				break ;
+			}
+			else if (var_name[ft_strlen(var_name) - 1] == '+')
+			{
+				temp->variable_value = ft_strjoin(temp->variable_value, var_value);
+				return (free(var_name));
 			}
 			else
 			{
 				temp->variable_value = var_value;
-				free(var_name);
-				return ;
+				return (free(var_name));
 			}
 		}
 		temp = temp->next;
@@ -87,9 +98,7 @@ void export_variable(t_infos *infos, char *string)
 		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", var_name);
 		return ;
 	}
-	if (!var_value)
-		var_value = "";
-	else
+	if (var_value)
 		var_value++;
     add_variable(infos, var_name, var_value);
 }
