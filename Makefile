@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/08 19:20:08 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/09 16:21:01 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS_OBJ = $(shell ls | grep .c | grep -v main)
 
 SRC = main.c
 
-FLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 CC = cc
 
@@ -24,15 +24,19 @@ LIB = libft/libft.a
 
 OBJ = $(SRCS_OBJ:.c=.o)
 
-all : $(NAME)
+all : libftprintf $(NAME)
 
 %.o: %.c minishell.h
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJ) minishell.h main.c
 	make -C libft/
-	$(CC) $(FLAGS) $(SRC) $(OBJ) $(LIB) -lreadline -o $(NAME)
+	$(CC) $(FLAGS) $(SRC) $(OBJ) $(LIB) -lreadline libftprintf.a -o $(NAME)
 	@rm -rf $(LIBS)
+
+libftprintf :
+	make -C ft_printf/
+	@cd ft_printf && make
 
 clean :
 	make clean -C libft

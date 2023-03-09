@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/08 19:15:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/09 16:40:56 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,95 @@ void export_variable(t_infos *infos, char *string)
 	add_back_envp(&infos->my_envp, new_node_envp(var_name, var_value));
 }
 
-void unset(char *str, char **envp)
+int delete_head_envp(t_infos *infos, char *str)
 {
-	(void)str;
-	int i = 0;
-	while (envp[i])
+	t_envp *temp;
+	temp = infos->my_envp;
+	if (!ft_strcmp(temp->next->variable_name, str))
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			free(envp[i]);
+		printf("{ %s==%s }}\n", temp->next->variable_name, str);
+		infos->my_envp = infos->my_envp->next;
+		free(temp);
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int delete_node_envp(t_infos *infos, char *str)
+{
+	t_envp *temp;
+	t_envp *curr;
+	temp = infos->my_envp;
+	while (temp->next)
+	{
+		if (!ft_strcmp(temp->next->variable_name, str))
+		{
+			printf("{ %s==%s }}\n", temp->next->variable_name, str);
+			curr = temp->next;
+			temp->next = temp->next->next; 
+			free(curr);
+			return (1);
+		}
+		else
+			temp = temp->next;
+	}
+	return (0);
+}
+
+int delete_tail_envp(t_infos *infos, char *str)
+{
+	t_envp *temp;
+	t_envp *previous;
+	temp = infos->my_envp;
+	while (temp->next)
+	{
+		previous = temp;
+		temp = temp->next;
+	}
+	if (!ft_strcmp(temp->variable_name, str))
+	{
+		printf("{ %s==%s }}\n", temp->variable_name, str);
+		previous->next = NULL;
+		free(temp);
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int check_variable_regex_unset(char *str)
+{
+	int i;
+	i = 0;
+
+	if (str[i] != '_' && !ft_isalpha(str[i]))
+		return (1);
+	i++;
+	while (str[i])
+	{
+		if (str[i] != '_' && !ft_isalnum(str[i]))
+			return (1);
 		i++;
+	}
+	return (0);
+}
+
+void unset(char *str, t_infos *infos)
+{
+	if (check_variable_regex_unset(str))
+	{
+		ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", str);
+		return ;
+	}
+	if (delete_head_envp(infos, str))
+		return ;
+	else
+	{
+		if (delete_node_envp(infos, str))
+			return ;
+		else
+			delete_tail_envp(infos, str);
 	}
 }
 

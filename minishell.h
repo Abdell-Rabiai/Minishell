@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/08 19:09:09 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/09 16:40:32 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include "libft/libft.h"
+# include "ft_printf/ft_printf.h"
 
 typedef struct s_envp
 {
@@ -45,7 +46,8 @@ void    pwd(void);
 void    cd(char *path);
 void    export(t_infos *infos);
 void	export_variable(t_infos *infos, char *string);
-void    unset(char *str, char **envp);
+void	unset(char *str, t_infos *infos);
+int		check_variable_regex_unset(char *str);
 
 /*--------->builtins utils funtions <--------*/
 void	sort_envp(t_infos *infos);
