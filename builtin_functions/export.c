@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 17:06:25 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 20:10:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,7 @@ void export_variable(t_infos *infos, char *string)
 	}
 	if (var_value)
 		var_value++;
+	if (var_name[ft_strlen(var_name) - 1] == '+')
+		var_name[ft_strlen(var_name) - 1] = '\0';
     add_variable(infos, var_name, var_value);
 }

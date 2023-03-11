@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:24:53 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/11 19:14:21 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 19:55:12 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ int main(int ac, char **av, char **envp)
 	duplicate_envp(envp, &infos);
 	// export(&infos);
 	// env(&infos);
-	// export_variable(&infos, "Tabi3a");
-	// export_variable(&infos, "Tabi3a=AI researcher");
-	// export_variable(&infos, "Tabi3a+=_something great");
+	// export_variable(&infos, "l^=========jgkldsngjlbdsjgbdsjgb,dmsbg,===");
+	// export_variable(&infos, "l+=AI researcher");
+	export_variable(&infos, "Tabi3a+=_something great");
 	// export(&infos);
 	// printf("thiers {%s}\n",getenv("Tabi3a"));
 	// printf("mine {%s}\n",get_envp_value("Tabi3a", &infos));
 	
-	// export_variable(&infos, "Tabi3a=1");
-	// export_variable(&infos, "Tabi3a=2");
-	// export_variable(&infos, "Tabi3a=3");
-	// export_variable(&infos, "Tabi3a=4");
+	// export_variable(&infos, "ATabi3a=1");
+	// export_variable(&infos, "BTabi3a=2");
+	// export_variable(&infos, "CTabi3a=3");
+	// export_variable(&infos, "     zTabi3a=4");
 	// export_variable(&infos, "Tabi3a=5");
 	// export_variable(&infos, "Tabi3a=dfaa3 sdaar haz rass o fuck l3alaam tkoon m9iwaad");
 	// export_variable(&infos, "Tabi3a=opps");
@@ -74,9 +74,9 @@ int main(int ac, char **av, char **envp)
 	// unset("ZSH", &infos);
 	// printf("\n*--------------EXPORT-----------------*\n");
 	// printf("\n*--------------ENV-----------------*\n");
-	// export(&infos);
+	export(&infos);
 	// printf("\n*--------------AFTER ENV-----------------*\n");
-	env(&infos);
+	//env(&infos);
 	// echo("ps\n", 0);
 	// pwd();
 	// cd("*");

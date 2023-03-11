@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/09 19:15:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 19:42:53 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void    echo(char *str, bool option)
 {
 	if (option)
-		printf("%s", str);
+		ft_printf(1, "%s", str);
 	else
-		printf("%s\n", str);
+		ft_printf(1, "%s\n", str);
 }
 
 void    pwd(void)
