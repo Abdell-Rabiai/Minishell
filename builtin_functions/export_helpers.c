@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:34:10 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 12:07:30 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 16:04:59 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ t_envp	*new_node_envp(char *v_name, char *v_value)
 	return (new_node);
 }
 
-void	add_back_envp(t_envp **lst, t_envp *new)
+void	add_back_envp(t_envp **head, t_envp *new)
 {
 	t_envp	*temp;
 
+	temp = *head;
 	if (!new)
 		return ;
-	if (!(*lst))
-		*lst = new;
-	else
+	if ((*head))
 	{
-		temp = *lst;
-		while (temp->next != NULL)
+		while (temp->next)
 			temp = temp->next;
 		temp->next = new;
 	}
+	else
+		*head = new;
 }
 
 char *get_variable_value(char *string)

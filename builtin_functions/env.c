@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:30:43 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/09 22:13:36 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 13:57:40 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ void sort_envp(t_infos *infos)
 void env(t_infos *infos)
 {
 	t_envp *temp;
+
 	temp = infos->my_envp;
-	while (temp)
+	while (temp != NULL)
 	{
 		if (temp->variable_value)
 			printf("%s=%s\n", temp->variable_name, temp->variable_value);

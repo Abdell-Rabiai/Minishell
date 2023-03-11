@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/10 22:19:40 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 16:05:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void export(t_infos *infos)
 	i = 0;
 	sort_envp(infos);
 	temp = infos->my_envp;
-	while (temp->next)
+	while (temp)
 	{
 		if (!temp->variable_value)
 			printf("declare -x %s\n", temp->variable_name);
@@ -64,18 +64,16 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 		if (!ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)))
 		{
 			if(!var_value)
-			{
-				free(var_name);
 				break ;
-			}
 			else if (var_name[ft_strlen(var_name) - 1] == '+')
 			{
-				temp->variable_value = ft_strjoin(temp->variable_value, var_value, 0);
+				temp->variable_value = ft_strjoin(temp->variable_value, var_value, 1);
 				free(var_name);
 				return ;
 			}
 			else
 			{
+				free(temp->variable_value);
 				temp->variable_value = ft_strdup(var_value, 0);
 				free(var_name);
 				return ;
@@ -83,6 +81,9 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 		}
 		temp = temp->next;
 	}
+	printf("var_name {%s}, var_value {%s}\n\n", var_name, var_value);
+	if (var_value)
+		var_value = ft_strdup(var_value, 0);
 	add_back_envp(&infos->my_envp, new_node_envp(var_name, var_value));
 }
 
