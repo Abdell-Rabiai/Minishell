@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 19:42:53 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 20:11:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void    pwd(void)
 	if (!getcwd(str, sizeof(str)))
 		ft_printf(2, "Error printing current working directory!\n");
 	else
-		printf("%s\n", str);
+		ft_printf(1, "%s\n", str);
 }
 
 void    cd(char *path)

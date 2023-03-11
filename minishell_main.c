@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:24:53 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/11 19:55:12 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 22:05:22 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ int main(int ac, char **av, char **envp)
 	duplicate_envp(envp, &infos);
 	// export(&infos);
 	// env(&infos);
-	// export_variable(&infos, "l^=========jgkldsngjlbdsjgbdsjgb,dmsbg,===");
+	// export_variable(&infos, "=jgkldsngjlbdsjgbdsjgb,dmsbg,===");
 	// export_variable(&infos, "l+=AI researcher");
-	export_variable(&infos, "Tabi3a+=_something great");
+	// export_variable(&infos, "Tabi3a======---##=something great");
 	// export(&infos);
 	// printf("thiers {%s}\n",getenv("Tabi3a"));
 	// printf("mine {%s}\n",get_envp_value("Tabi3a", &infos));
 	
-	// export_variable(&infos, "ATabi3a=1");
-	// export_variable(&infos, "BTabi3a=2");
+	export_variable(&infos, "Tabi3a+=111111111");
+	export_variable(&infos, "Tabi3a^========= and now thats what im talkiing about ");
 	// export_variable(&infos, "CTabi3a=3");
 	// export_variable(&infos, "     zTabi3a=4");
 	// export_variable(&infos, "Tabi3a=5");

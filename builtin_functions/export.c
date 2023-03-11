@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 20:10:11 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 22:04:21 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int check_variable_regex(char *str)
 	{
 		if (str[i] != '_' && !ft_isalnum(str[i]))
 		{
+			// printf("str[i] = }}%c{{\n", str[i]);
 			if (str[i] == '+' && str[i + 1] == '=') // export +='test'
-				return (1);
-			else
 				return (0);
+			else
+				return (1);
 		}
 		i++;
 	}
@@ -79,6 +80,8 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 		}
 		temp = temp->next;
 	}
+	if (var_name[ft_strlen(var_name) - 1] == '+')
+		var_name[ft_strlen(var_name) - 1] = '\0';
 	add_back_envp(&infos->my_envp, new_node_envp(var_name, ft_strdup(var_value, 0)));
 }
 
@@ -89,17 +92,19 @@ void export_variable(t_infos *infos, char *string)
 	char 	*var_name;
 
 	temp = infos->my_envp;
-	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string);
+	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string + 1);
 	var_value = ft_strchr(string, '=');
 	if (check_variable_regex(var_name))
 	{
-		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", var_name);
+		ft_printf(2, "minishell: export: `%s%s': not a valid identifier\n", var_name,var_value);
 		free(var_name);
 		return ;
 	}
+	printf("var_name = {{%s}}\n", var_name);
 	if (var_value)
 		var_value++;
-	if (var_name[ft_strlen(var_name) - 1] == '+')
+	if (var_name[ft_strlen(var_name) - 1] == '=')
 		var_name[ft_strlen(var_name) - 1] = '\0';
+	printf("var_namehhhh = {{%s}}\n", var_name);
     add_variable(infos, var_name, var_value);
 }
