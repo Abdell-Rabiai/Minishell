@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:38:36 by ahmaymou          #+#    #+#             */
-/*   Updated: 2022/10/27 16:57:36 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:51:36 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	size_t	ls;
 	size_t	ld;
 	size_t	i;
-
+	
 	ls = ft_strlen(src);
 	if (!dst && !dstsize)
 		return (ls);

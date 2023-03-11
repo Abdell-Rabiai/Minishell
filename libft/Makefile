@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 18:47:21 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/11 13:12:03 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/11 17:28:12 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,29 +28,38 @@ BONUS_OBJECT = $(BONUS_SRC:.c=.o)
 
 CC = cc
 
-# echo1 = @echo "\033[92mCompiled all the files successfully !!! :) \033[0m"
-# echo2 = @echo "\033[92mCompiled bonus files successfully !!! :) \033[0m"
-# echo3 = @echo "\033[36mArchive created successfully !!! :) \033[m"
-# echo4 = @echo "\033[31mbonus added to the archive successfully !!! :) \033[m"
+echo1 = @echo "\033[92mCompiled LIBFT files successfully !!! :) \033[0m"
+echo2 = @echo "\033[92mCompiled bonus LIBFT files successfully !!! :) \033[0m"
+echo3 = @echo "\033[36mLIBFT created successfully !!! :) \033[m"
+echo4 = @echo "\033[36mbonus added to the LIBFT successfully !!! :) \033[m"
+
+echo5 = @echo "\033[31mLIBFT Objects removed successfully !!! :) \033[m"
+echo6 = @echo "\033[31mLIBFT removed successfully !!! :) \033[m"
 
 FLAGS = -Wall -Wextra -Werror
 
-all : $(NAME)
+all : $(NAME) bonus
 
 %.o: %.c libft.h
 	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJECT) libft.h
+#@$(echo1)
 	@ar rc $(NAME) $(OBJECT)
+#@$(echo3)
 
 bonus : $(NAME) $(BONUS_OBJECT)
+#@$(echo2)
 	@ar rc $(NAME) $(OBJECT) $(BONUS_OBJECT)
+#@$(echo4)
 
 clean :
-	@rm -f $(OBJECT) $(BONUS_OBJECT)
+	@rm -rf $(OBJECT) $(BONUS_OBJECT)
+#@$(echo5)
 
 fclean : clean
-	@rm -f $(NAME)
+	@rm -rf $(NAME)
+#@$(echo6)
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:24:53 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/11 16:07:03 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 16:42:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,43 +17,9 @@ void loo(void)
 	system("leaks minishell");
 }
 
-// void ft_free_envp(t_infos *infos)
-// {
-// 	(void)infos;
-// 	t_envp *head;
-// 	t_envp *temp2;
-
-// 	head = infos->my_envp;
-// 	while (head)
-// 	{
-// 		temp2 = head->next;
-// 		free(head->variable_name);
-// 		free(head->variable_value);
-// 		free(head);
-// 		head = temp2;
-// 	}
-// }
-
-void	ft_lstclear_envp(t_envp *lst)
-{
-	t_envp	*temp;
-
-	if (!lst)
-		return ;
-	while (lst )
-	{
-		temp = (lst)->next;
-		free((lst)->variable_name);
-		free((lst)->variable_value);
-		free(lst);
-		(lst) = temp;
-	}
-	lst = NULL;
-}
-
 int main(int ac, char **av, char **envp)
 {
-	atexit(loo);
+	// atexit(loo);
 	(void)ac;
 	(void)av;
 	(void)envp;
@@ -95,7 +61,6 @@ int main(int ac, char **av, char **envp)
 	pwd();
 	cd("*");
 	pwd();
-	ft_lstclear_envp(infos.my_envp);
-	// ft_free_envp(&infos);
+	ft_free_envp(&infos.my_envp);
 	// while (1);
 }

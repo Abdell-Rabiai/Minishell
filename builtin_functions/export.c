@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 16:05:01 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 17:06:25 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,18 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 			else if (var_name[ft_strlen(var_name) - 1] == '+')
 			{
 				temp->variable_value = ft_strjoin(temp->variable_value, var_value, 1);
-				free(var_name);
-				return ;
+				return (free(var_name));
 			}
 			else
 			{
 				free(temp->variable_value);
 				temp->variable_value = ft_strdup(var_value, 0);
-				free(var_name);
-				return ;
+				return (free(var_name));
 			}
 		}
 		temp = temp->next;
 	}
-	printf("var_name {%s}, var_value {%s}\n\n", var_name, var_value);
-	if (var_value)
-		var_value = ft_strdup(var_value, 0);
-	add_back_envp(&infos->my_envp, new_node_envp(var_name, var_value));
+	add_back_envp(&infos->my_envp, new_node_envp(var_name, ft_strdup(var_value, 0)));
 }
 
 void export_variable(t_infos *infos, char *string)

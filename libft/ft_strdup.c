@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:40:49 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/10 16:24:16 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 16:41:03 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1, int flag)
 	int		len;
 	int		i;
 
+	if (!s1)
+		return (NULL);
 	len = ft_strlen(s1);
 	i = 0;
 	copy = (char *)malloc((len + 1) * sizeof(char));

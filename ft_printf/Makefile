@@ -6,17 +6,11 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 14:20:54 by arabiai           #+#    #+#              #
-#    Updated: 2023/02/25 13:38:30 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/11 17:28:03 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ../libftprintf.a
-
-COLOUR_GREEN=\033[92m
-COLOUR_RED=\033[0;31m
-COLOUR_BLUE=\033[0;34m
-COLOUR_END=\033[0m
-COLOUR_YELLOW=\033[0;33m
 
 bold := $(shell tput bold)
 sgr0 := $(shell tput sgr0)
@@ -29,30 +23,30 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -rf
 
-ECHO1 = @echo "$(COLOUR_GREEN)$(bold)Compiled all files successfully!$(sgr0)$(COLOUR_END)"
-ECHO2 = @echo "$(COLOUR_YELLOW)$(bold)the library $(NAME) created successfully!$(sgr0)$(COLOUR_END)"
-ECHO3 = @echo "$(COLOUR_RED)$(bold)Object files removed!$(sgr0)$(COLOUR_END)"
-ECHO4 = @echo "$(COLOUR_RED)$(bold)the library $(NAME) removed!$(sgr0)$(COLOUR_END)"
+echo1 = @echo "\033[92mCompiled PRINTF files successfully !!! :) \033[0m"
+echo2 = @echo "\033[36mFT_PRINTF.A created successfully !!! :) \033[m"
+echo3 = @echo "\033[31mPRINTF Objects removed successfully !!! :) \033[m"
+echo4 = @echo "\033[31mFT_PRINTF.A removed successfully !!! :) \033[m
 
 OBJECTS = $(SOURCES:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : $(OBJECTS) ft_printf.h
-	$(ECHO1)
-	ar rc $(NAME) $?
-	$(ECHO2)
+#@$(echo1)
+	@ar rc $(NAME) $?
+#@$(echo2)
 
 %.o: %.c ft_printf.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	$(RM) $(OBJECTS)
-	$(ECHO3)
+	@$(RM) $(OBJECTS)
+#@$(echo3)
 
 fclean : clean
-	$(RM) $(NAME)
-	$(ECHO4)
+	@$(RM) $(NAME)
+#@$(echo4)
 
 re : fclean all
 
