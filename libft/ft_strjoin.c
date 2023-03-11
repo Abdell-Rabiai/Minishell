@@ -6,13 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 11:05:21 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/09 22:02:05 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/10 16:31:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2, int flag)
 {
 	char				*to_return;
 	unsigned int		i;
@@ -29,6 +29,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(to_return, s1, ft_strlen(s1) + 1);
 	ft_strlcat(to_return, s2, len + 1);
-	// free((char *)s1);
+	if (flag == 1)
+		free((char *)s1);
+	else if (flag == 2)
+		free((char *)s2);
+	else if (flag == 3)
+	{
+		free((char *)s1);
+		free((char *)s2);
+	}
 	return (to_return);
 }

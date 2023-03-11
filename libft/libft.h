@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:58:35 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/09 15:48:03 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/10 16:33:04 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 void				*ft_calloc(size_t count, size_t size);
-char				*ft_strdup(const char *str);
+char				*ft_strdup(const char *str, int flag);
 void				ft_striteri(char *s, void (*f)(unsigned int, char*));
 
 char				*ft_substr(char const *s, unsigned int start, size_t len);
-char				*ft_strjoin(const char *s1, const char *s2);
+char				*ft_strjoin(const char *s1, const char *s2, int flag);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);

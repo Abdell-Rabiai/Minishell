@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/09 22:11:51 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/10 16:27:14 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS_OBJ = $(shell ls *.c | grep -v minishell_main.c) $(shell ls builtin_functio
 
 SRC = minishell_main.c
 
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 
 CC = cc
 

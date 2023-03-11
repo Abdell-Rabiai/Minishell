@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/09 22:22:26 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/10 22:19:40 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 			}
 			else if (var_name[ft_strlen(var_name) - 1] == '+')
 			{
-				temp->variable_value = ft_strjoin(temp->variable_value, var_value);
-				return (free(var_name));
+				temp->variable_value = ft_strjoin(temp->variable_value, var_value, 0);
+				free(var_name);
+				return ;
 			}
 			else
 			{
-				temp->variable_value = var_value;
-				return (free(var_name));
+				temp->variable_value = ft_strdup(var_value, 0);
+				free(var_name);
+				return ;
 			}
 		}
 		temp = temp->next;
@@ -96,6 +98,7 @@ void export_variable(t_infos *infos, char *string)
 	if (check_variable_regex(var_name))
 	{
 		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", var_name);
+		free(var_name);
 		return ;
 	}
 	if (var_value)
