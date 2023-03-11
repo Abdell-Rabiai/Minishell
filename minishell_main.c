@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:24:53 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/11 22:05:22 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/11 22:08:22 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ int main(int ac, char **av, char **envp)
 	// printf("thiers {%s}\n",getenv("Tabi3a"));
 	// printf("mine {%s}\n",get_envp_value("Tabi3a", &infos));
 	
-	export_variable(&infos, "Tabi3a+=111111111");
-	export_variable(&infos, "Tabi3a^========= and now thats what im talkiing about ");
+	export_variable(&infos, "Aaaaaaa+=111111111");
+	unset("Aaaaaaa", &infos);
+	// export_variable(&infos, "Tabi3a^========= and now thats what im talkiing about ");
+	export(&infos);
 	// export_variable(&infos, "CTabi3a=3");
 	// export_variable(&infos, "     zTabi3a=4");
 	// export_variable(&infos, "Tabi3a=5");
@@ -74,7 +76,7 @@ int main(int ac, char **av, char **envp)
 	// unset("ZSH", &infos);
 	// printf("\n*--------------EXPORT-----------------*\n");
 	// printf("\n*--------------ENV-----------------*\n");
-	export(&infos);
+	// export(&infos);
 	// printf("\n*--------------AFTER ENV-----------------*\n");
 	//env(&infos);
 	// echo("ps\n", 0);
