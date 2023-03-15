@@ -6,13 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/11 15:26:06 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/14 16:51:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void unset(char *str, t_infos *infos)
+void unset_variable(char *str, t_infos *infos)
 {
 
 	if (check_variable_regex(str))

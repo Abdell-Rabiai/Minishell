@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/11 16:38:18 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/14 19:09:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,58 @@ void 	duplicate_envp(char **envp, t_infos *infos);
 void	ft_free_envp(t_envp **head);
 
 /*---------> unset <--------*/
-void	unset(char *str, t_infos *infos);
+void	unset_variable(char *str, t_infos *infos);
 int		delete_head_envp(t_infos *infos, char *str);
 int		delete_node_envp(t_infos *infos, char *str);
 int		delete_tail_envp(t_infos *infos, char *str);
 
 /*---------> env <--------*/
-void env(t_infos *infos);
+void	my_env(t_infos *infos);
+char 	*get_envp_value(char *variable_name, t_infos *infos);
+void 	set_envp_value(char *old_variable, char *current_variable, t_infos *infos);
+
 
 /*--------->builtins util funtions <--------*/
-void    echo(char *str, bool option);
-void    pwd(void);
+int		check_for_newline_option(char *str);
+void	my_echo(char **strs);
+void    my_pwd(void);
+void	my_cd(char **strs, t_infos *infos);
 void    cd(char *path);
-void    exitt(void);
+void	my_exit(char **strs, t_infos *infos);
+
+/*---------> execution <--------*/
+void execute_one_cmd(char **str, char **envp);
+char **copy_envp_into_array(t_infos *infos);
+
+/**AHMAYMOU*/
+
+typedef enum TYPE
+{
+	word,/*0*/
+	trunc,/*1*/
+	here_doc,/*2*/
+	in_redir,/*3*/
+	delimiter,/*4*/
+	in_file,/*5*/
+	append,/*6*/
+	out_file,/*7*/
+	Pipe /*8*/
+}			t_type;
+
+void	prompt(t_infos *infos);
+void	echo(char *str, bool option);
+void	pwd(void);
+void	change_dir(char *path);
+void	handle_kill(int sig);
+bool	count_quotes(char *str);
+int		end_word_index(char *str);
+bool	is_spec(char str);
+int		end_word_index(char *str);
+void	add_or_join(t_list **head, char *temp, t_list **temp2);
+void	assign_type(t_list *command);
+t_type	what_type(char *cmd);
+int		check_pars_errors(t_list *command);
+int		check_pars_syntax(char *str);
+int		check_pars_erros2(t_list *temp, char *str);
+
 #endif

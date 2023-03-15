@@ -6,13 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:40:49 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/11 16:41:03 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/14 21:32:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1, int flag)
+char	*ft_strdup(const char *s1, bool flag)
 {
 	char	*copy;
 	int		len;

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 22:04:21 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/14 17:08:50 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,10 @@ int check_variable_regex(char *str)
 	i++;
 	while (str[i])
 	{
+		if (str[i] == '+' && !str[i + 1])
+			return (0) ;
 		if (str[i] != '_' && !ft_isalnum(str[i]))
-		{
-			// printf("str[i] = }}%c{{\n", str[i]);
-			if (str[i] == '+' && str[i + 1] == '=') // export +='test'
-				return (0);
-			else
-				return (1);
-		}
+			return (1);
 		i++;
 	}
 	return (0);
@@ -63,11 +59,13 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
     while (temp)
 	{
 		if (!ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)))
-		{
+		{	
 			if(!var_value)
-				break ;
+				return (free(var_name)) ;
 			else if (var_name[ft_strlen(var_name) - 1] == '+')
 			{
+				if (!temp->variable_value)
+					temp->variable_value = ft_strdup("", 0);
 				temp->variable_value = ft_strjoin(temp->variable_value, var_value, 1);
 				return (free(var_name));
 			}
@@ -92,19 +90,18 @@ void export_variable(t_infos *infos, char *string)
 	char 	*var_name;
 
 	temp = infos->my_envp;
-	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string + 1);
+	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string);
 	var_value = ft_strchr(string, '=');
 	if (check_variable_regex(var_name))
 	{
-		ft_printf(2, "minishell: export: `%s%s': not a valid identifier\n", var_name,var_value);
+		if (var_value == NULL)
+			ft_printf(2, "minishell: export: `%s': not a valid identifier\n", var_name);
+		else
+			ft_printf(2, "minishell: export: `%s%s': not a valid identifier\n", var_name,var_value);
 		free(var_name);
 		return ;
 	}
-	printf("var_name = {{%s}}\n", var_name);
 	if (var_value)
 		var_value++;
-	if (var_name[ft_strlen(var_name) - 1] == '=')
-		var_name[ft_strlen(var_name) - 1] = '\0';
-	printf("var_namehhhh = {{%s}}\n", var_name);
     add_variable(infos, var_name, var_value);
 }

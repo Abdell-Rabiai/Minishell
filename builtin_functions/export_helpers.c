@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:34:10 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 16:04:59 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/14 19:25:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ void duplicate_envp(char **envp, t_infos *infos)
         add_back_envp(&infos->my_envp, new_node_envp(v_name, v_value));
 		i++;
 	}
+	set_envp_value("OLDPWD", "", infos);
 }

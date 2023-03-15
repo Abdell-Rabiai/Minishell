@@ -6,11 +6,25 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:30:43 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 16:38:08 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/14 16:42:46 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char *get_envp_value(char *variable_name, t_infos *infos)
+{
+	t_envp *tmp;
+
+	tmp = infos->my_envp;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->variable_name, variable_name) == 0)
+				return (tmp->variable_value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
 void swap_envp_nodes(t_envp *tmp_envp, t_envp *tmp)
 {
@@ -61,7 +75,7 @@ void sort_envp(t_infos *infos)
     }
 }
 
-void env(t_infos *infos)
+void my_env(t_infos *infos)
 {
 	t_envp *temp;
 

@@ -6,21 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/11 20:11:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/14 18:37:18 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    echo(char *str, bool option)
-{
-	if (option)
-		ft_printf(1, "%s", str);
-	else
-		ft_printf(1, "%s\n", str);
-}
-
-void    pwd(void)
+void    my_pwd(void)
 {
 	char    str[256];
 
@@ -30,13 +22,22 @@ void    pwd(void)
 		ft_printf(1, "%s\n", str);
 }
 
-void    cd(char *path)
+void my_exit(char **strs, t_infos *infos)
 {
-	if (chdir(path))
-		ft_printf(2, "bash: cd: %s: No such file or directory\n", path);
-}
-
-void    exitt(void)
-{
-    exit(0);
+	(void)infos;
+	int exit_status;
+	if (strs[1])
+	{
+		exit_status = ft_atoi(strs[1]);
+		printf("exit {{ %d }}\n", exit_status);
+		if (exit_status == 0)
+			ft_printf(1, "exit\nminishell: exit: %s: numeric argument required\n", strs[1]);
+		if (exit_status >= 256)
+			exit_status = exit_status % 256;
+	}
+	else
+		exit_status = EXIT_SUCCESS;
+	ft_printf(1, "exit with status {%d}\n", exit_status);
+	clear_history();
+	exit(exit_status);	
 }
