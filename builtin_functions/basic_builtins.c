@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/16 20:04:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 23:06:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,14 @@ void my_exit(char **strs, t_infos *infos)
 {
 	(void)infos;
 	long long exit_status;
+	if ((strs[1] && strs[2]))
+	{
+		ft_printf(1, "minishell: exit: too many arguments\n");
+		return ;
+	}
 	if (strs[1])
 	{
-		exit_status = ft_atoi(strs[1]);
+		exit_status = llabs(ft_atoi(strs[1]));
 		printf("exit_status: %lld\n", exit_status);
 		if (exit_status == 0)
 			ft_printf(1, "exit\nminishell: exit: %s: numeric argument required\n", strs[1]);

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/16 19:10:33 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 22:54:46 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	prompt(t_infos *infos)
 		builtin_handler(str, infos);
 		add_history(str);
 		free(str);
-		// printf("\n");
 	}
 }
 
@@ -130,7 +129,7 @@ void print_env(char **envp)
 
 int main(int ac, char **av, char **envp)
 {
-	atexit(koo);
+	// atexit(koo);
 	t_infos infos;
 	init(&infos);
 	duplicate_envp(envp, &infos);

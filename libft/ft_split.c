@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:30:40 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/14 16:40:59 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 22:49:23 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**free_all(char **str)
 	return (NULL);
 }
 
-static int	count_words(const char *str, char charset)
+int	count_words(const char *str, char charset)
 {
 	int	i;
 	int	count;
