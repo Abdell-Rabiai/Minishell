@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/16 15:09:51 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 17:30:40 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void init(t_infos *infos);
 /*---------> basic builtins funtions <--------*/
 void    echo(char *str, bool option);
 void    pwd(void);
-void    cd(char *path);
+void    cd(char *path, t_infos *infos);
 
 /*---------> export <--------*/
 void	my_export(char **strs, t_infos *infos);
@@ -77,9 +77,9 @@ void	add_ignored_env(t_infos *infos);
 /*--------->builtins util funtions <--------*/
 int		check_for_newline_option(char *str);
 void	my_echo(char **strs);
-void    my_pwd(void);
+void    my_pwd(t_infos *infos);
 void	my_cd(char **strs, t_infos *infos);
-void    cd(char *path);
+void    cd(char *path, t_infos *infos);
 void	my_exit(char **strs, t_infos *infos);
 
 /*---------> execution <--------*/

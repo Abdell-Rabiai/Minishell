@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/16 15:08:02 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 19:10:33 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void builtin_handler(char *str, t_infos *infos)
 	else if (!ft_strcmp(strs[0], "cd"))
 		my_cd(strs, infos);
 	else if (!ft_strcmp(strs[0], "pwd"))
-		my_pwd();
+		my_pwd(infos);
 	else if (!ft_strcmp(strs[0], "export"))
 		my_export(strs, infos);
 	else if (!ft_strcmp(strs[0], "unset"))
@@ -85,9 +85,11 @@ void	prompt(t_infos *infos)
 	{
 		char *cwd;
 		cwd = getcwd(NULL, 0);
-		ft_printf(1, "\x1B[1;36m%s$\033[0m\n", cwd);
+		if (!cwd)
+			cwd = ft_strdup(get_envp_value("PWD", infos), 0);
+		ft_printf(1, "\x1B[1;36m%s$ \033[0m", cwd);
 		free(cwd);
-		str = readline("\033[1;32m> \033[0m");
+		str = readline("\033[1;32mminihell> \033[0m");
 		if (!str)
 		{
 			clear_history();
@@ -96,7 +98,7 @@ void	prompt(t_infos *infos)
 		builtin_handler(str, infos);
 		add_history(str);
 		free(str);
-		printf("\n");
+		// printf("\n");
 	}
 }
 

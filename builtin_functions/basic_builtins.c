@@ -6,18 +6,18 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/15 21:22:51 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 20:04:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    my_pwd(void)
+void    my_pwd(t_infos *infos)
 {
 	char    str[256];
 
 	if (!getcwd(str, sizeof(str)))
-		ft_printf(2, "Error printing current working directory!\n");
+		ft_printf(1, "%s\n", get_envp_value("PWD", infos));
 	else
 		ft_printf(1, "%s\n", str);
 }
