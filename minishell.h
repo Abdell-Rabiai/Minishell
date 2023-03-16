@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/15 18:37:40 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:09:51 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	my_env(t_infos *infos);
 char 	*get_envp_value(char *variable_name, t_infos *infos);
 void 	set_envp_value(char *old_variable, char *current_variable, t_infos *infos);
 void	update_shlvl_variable(t_infos *infos);
+void	add_ignored_env(t_infos *infos);
 
 /*--------->builtins util funtions <--------*/
 int		check_for_newline_option(char *str);

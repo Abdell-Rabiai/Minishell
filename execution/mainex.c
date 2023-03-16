@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/16 13:01:36 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:08:02 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void print_env(char **envp)
 
 int main(int ac, char **av, char **envp)
 {
-	// atexit(koo);
+	atexit(koo);
 	t_infos infos;
 	init(&infos);
 	duplicate_envp(envp, &infos);

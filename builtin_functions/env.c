@@ -6,11 +6,20 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:30:43 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/16 15:03:17 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:10:09 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void add_ignored_env(t_infos *infos)
+{
+	add_back_envp(&infos->my_envp, new_node_envp("PWD", ft_strdup(getcwd(NULL, 0), 1)));
+	add_back_envp(&infos->my_envp, new_node_envp("SHLVL", ft_strdup("1", 0)));
+	add_back_envp(&infos->my_envp, new_node_envp("_", ft_strjoin(ft_strdup(getcwd(NULL, 0), 1), "./minishell", 1)));
+	add_back_envp(&infos->my_envp, new_node_envp("OLDPWD", ft_strdup("", 0)));
+	add_back_envp(&infos->my_envp, new_node_envp("PATH", ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin", 0)));
+}
 
 char *get_envp_value(char *variable_name, t_infos *infos)
 {
