@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/14 19:09:01 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/15 18:37:40 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void    pwd(void);
 void    cd(char *path);
 
 /*---------> export <--------*/
+void	my_export(char **strs, t_infos *infos);
 void    export(t_infos *infos);
 void	swap_envp_nodes(t_envp *tmp_envp, t_envp *tmp);
 void	sort_envp(t_infos *infos);
@@ -60,6 +61,7 @@ void 	duplicate_envp(char **envp, t_infos *infos);
 void	ft_free_envp(t_envp **head);
 
 /*---------> unset <--------*/
+void	my_unset(char **strs, t_infos *infos);
 void	unset_variable(char *str, t_infos *infos);
 int		delete_head_envp(t_infos *infos, char *str);
 int		delete_node_envp(t_infos *infos, char *str);
@@ -69,7 +71,7 @@ int		delete_tail_envp(t_infos *infos, char *str);
 void	my_env(t_infos *infos);
 char 	*get_envp_value(char *variable_name, t_infos *infos);
 void 	set_envp_value(char *old_variable, char *current_variable, t_infos *infos);
-
+void	update_shlvl_variable(t_infos *infos);
 
 /*--------->builtins util funtions <--------*/
 int		check_for_newline_option(char *str);
@@ -80,8 +82,11 @@ void    cd(char *path);
 void	my_exit(char **strs, t_infos *infos);
 
 /*---------> execution <--------*/
-void execute_one_cmd(char **str, char **envp);
-char **copy_envp_into_array(t_infos *infos);
+void	execute_one_cmd(char **strs, char **envp);
+char	**copy_envp_into_array(t_infos *infos);
+void	print_envp_array(char **envp, t_infos *infos);
+int		get_envp_size(t_envp *envp);
+void	ft_free_envp_array(char **envp);
 
 /**AHMAYMOU*/
 

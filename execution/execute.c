@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/14 19:08:36 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/15 19:25:21 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,12 @@ void	child_process_for_one_cmd(char **strs, char **envp, pid_t pid)
 void execute_one_cmd(char **strs, char **envp)
 {
 	pid_t	pid;
+	// pid_t	pid2;
 
 	pid = fork();
 	if (pid == 0)
 		child_process_for_one_cmd(strs, envp, pid);
+	// if (pid2 == 0)
+	// 	child
 	while (wait(NULL) != -1);
 }

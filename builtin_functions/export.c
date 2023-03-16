@@ -6,11 +6,25 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/14 17:08:50 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:06:51 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void my_export(char **strs, t_infos *infos)
+{
+	int i;
+	
+	i = 1;
+	if (!strs[i])
+		export(infos);
+	while (strs[i])
+	{
+		export_variable(infos, strs[i]);
+		i++;
+	}
+}
 
 int check_variable_regex(char *str)
 {
@@ -41,13 +55,20 @@ void export(t_infos *infos)
 	temp = infos->my_envp;
 	while (temp)
 	{
-		if (!temp->variable_value)
-			printf("declare -x %s\n", temp->variable_name);
-		else if(!(*temp->variable_value))
-			printf("declare -x %s=\"\"\n", temp->variable_name);
+		if (!ft_strcmp(temp->variable_name, "PATH") && get_envp_size(infos->my_envp) == 5)
+			temp = temp->next;
+		else if (!ft_strcmp(temp->variable_name, "_") && get_envp_size(infos->my_envp) == 5)
+			temp = temp->next;
 		else
-			printf("declare -x %s=\"%s\"\n", temp->variable_name, temp->variable_value);
-		temp = temp->next;
+		{
+			if (!temp->variable_value)
+				printf("declare -x %s\n", temp->variable_name);
+			else if(!(*temp->variable_value))
+				printf("declare -x %s=\"\"\n", temp->variable_name);
+			else
+				printf("declare -x %s=\"%s\"\n", temp->variable_name, temp->variable_value);
+			temp = temp->next;	
+		}
 	}
 }
 

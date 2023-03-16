@@ -6,76 +6,41 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/14 21:26:22 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 13:01:36 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-
-void my_export(char **strs, t_infos *infos)
+void update_shlvl_variable(t_infos *infos)
 {
-	int i;
+	t_envp *temp;
+	int shlvl_old_variable_value;
+	char *shlvl_new_variable_value;
 	
-	i = 1;
-	if (!strs[i])
-		export(infos);
-	while (strs[i])
+	temp = infos->my_envp;
+	while (temp)
 	{
-		export_variable(infos, strs[i]);
-		i++;
-	}
-}
-
-void my_unset(char **strs, t_infos *infos)
-{
-	int i;
-	
-	i = 1;
-	if (!strs[i])
-		return ;
-	while (strs[i])
-	{
-		unset_variable(strs[i], infos);
-		i++;
-	}
-}
-
-int get_envp_size(t_envp *envp)
-{
-	int i;
-	t_envp *tmp;
-
-	tmp = envp;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
-
-void print_envp_array(char **envp, t_infos *infos)
-{
-	int i;
-	
-	i = 0;
-	while (i < get_envp_size(infos->my_envp))
-	{
-		ft_printf(1, "%s\n", envp[i]);
-		i++;
+		if (!ft_strcmp(temp->variable_name, "SHLVL"))
+		{
+			shlvl_old_variable_value = ft_atoi(temp->variable_value);
+			shlvl_old_variable_value++;
+			shlvl_new_variable_value = ft_itoa(shlvl_old_variable_value);
+			free(temp->variable_value);
+			temp->variable_value = shlvl_new_variable_value;
+			return ;
+		}
+		temp = temp->next;
 	}
 }
 
 void my_execution(char **strs, t_infos *infos)
 {
 	char **envp;
-	(void)strs;
-
+	
 	envp = copy_envp_into_array(infos);
 	execute_one_cmd(strs, envp);
+	ft_free_envp_array(envp);
 }
 
 void builtin_handler(char *str, t_infos *infos)
@@ -109,29 +74,6 @@ void builtin_handler(char *str, t_infos *infos)
 	free_all(strs);
 }
 
-char **copy_envp_into_array(t_infos *infos)
-{
-	char **envp;
-	t_envp *tmp;
-	char *string;
-	int i;
-	int envp_size;
-	
-	i = 0;
-	tmp = infos->my_envp;
-	envp_size = get_envp_size(infos->my_envp);
-	envp = malloc(sizeof(char *) * (envp_size + 1));
-	while (i < envp_size)
-	{
-		string = ft_strjoin(tmp->variable_name, "=", 0);
-		envp[i] = ft_strjoin(string, tmp->variable_value, 0);
-		tmp = tmp->next;
-		i++;
-	}
-	envp[i] = NULL;
-	return (envp);
-}
-
 void	prompt(t_infos *infos)
 {
 	(void)infos;
@@ -145,7 +87,7 @@ void	prompt(t_infos *infos)
 		cwd = getcwd(NULL, 0);
 		ft_printf(1, "\x1B[1;36m%s$\033[0m\n", cwd);
 		free(cwd);
-		str = readline("\033[1;32mminishell> \033[0m");
+		str = readline("\033[1;32m> \033[0m");
 		if (!str)
 		{
 			clear_history();
@@ -163,14 +105,36 @@ void koo(void)
 	system("leaks minishell");
 }
 
+void execute_using_minishell(char *executable, t_infos *infos)
+{
+	char **strs;
+	executable= ft_strjoin("bash ", executable, 0);
+	strs = ft_split(executable, ' ');
+	my_execution(strs, infos);
+	exit(EXIT_SUCCESS);
+}
+
+void print_env(char **envp)
+{
+	int i;
+	
+	i = 0;
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
+
 int main(int ac, char **av, char **envp)
 {
-	(void)ac;
-	(void)av;
 	// atexit(koo);
 	t_infos infos;
 	init(&infos);
 	duplicate_envp(envp, &infos);
+	update_shlvl_variable(&infos);
+	if (ac >= 2)
+		execute_using_minishell(av[1], &infos);
 	prompt(&infos);
 }
 

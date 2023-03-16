@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:34:10 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/14 19:25:31 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:04:17 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,15 @@ char *get_variable_name(char *string)
 	return (variable_name);
 }
 
+void add_ignored_env(t_infos *infos)
+{
+	add_back_envp(&infos->my_envp, new_node_envp("PWD", ft_strdup(getcwd(NULL, 0), 0)));
+	add_back_envp(&infos->my_envp, new_node_envp("SHLVL", ft_strdup("1", 0)));
+	add_back_envp(&infos->my_envp, new_node_envp("_", ft_strjoin(ft_strdup(getcwd(NULL, 0), 1), "./minishell", 1)));
+	add_back_envp(&infos->my_envp, new_node_envp("OLDPWD", ft_strdup("", 0)));
+	add_back_envp(&infos->my_envp, new_node_envp("PATH", ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin", 0)));
+}
+
 void duplicate_envp(char **envp, t_infos *infos)
 {
 	int i;
@@ -80,5 +89,7 @@ void duplicate_envp(char **envp, t_infos *infos)
         add_back_envp(&infos->my_envp, new_node_envp(v_name, v_value));
 		i++;
 	}
+	if (envp[0] == NULL)
+		add_ignored_env(infos);
 	set_envp_value("OLDPWD", "", infos);
 }

@@ -6,11 +6,25 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/14 16:51:31 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/15 13:14:46 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void my_unset(char **strs, t_infos *infos)
+{
+	int i;
+	
+	i = 1;
+	if (!strs[i])
+		return ;
+	while (strs[i])
+	{
+		unset_variable(strs[i], infos);
+		i++;
+	}
+}
 
 void unset_variable(char *str, t_infos *infos)
 {
