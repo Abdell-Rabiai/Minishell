@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:21:30 by ahmaymou          #+#    #+#             */
-/*   Updated: 2022/10/26 16:37:46 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/15 18:57:05 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,18 @@ static size_t	trim_last(const char *s, const char *set, size_t len_s1)
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	unsigned int	len_s1;
+	char			*new;
 	char			*to_return;
 
 	if (!s1 || !set)
 		return (NULL);
-	s1 = trim_first(s1, set);
-	len_s1 = trim_last(s1, set, ft_strlen(s1));
-	to_return = (char *)malloc((len_s1) * sizeof(char));
+	new = trim_first(s1, set);
+	if (!ft_strlen(new))
+		return (ft_strdup("", 0));
+	len_s1 = trim_last(new, set, ft_strlen(new));
+	to_return = (char *)malloc((len_s1 + 1) * sizeof(char));
 	if (!to_return)
 		return (NULL);
-	ft_strlcpy(to_return, s1, len_s1);
+	ft_strlcpy(to_return, new, len_s1);
 	return (to_return);
 }

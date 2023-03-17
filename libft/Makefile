@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
+#    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 18:47:21 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/11 17:28:12 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/11 16:46:07 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC = ft_isalpha.c ft_memcmp.c ft_strdup.c ft_strnstr.c \
         ft_calloc.c  ft_isprint.c ft_memset.c ft_strlen.c ft_toupper.c \
         ft_isalnum.c ft_memchr.c ft_strchr.c ft_strncmp.c ft_strjoin.c ft_substr.c \
 		ft_strtrim.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_split.c \
-		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strcmp.c
+		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
 
 BONUS_SRC = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
 				ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
@@ -28,38 +28,29 @@ BONUS_OBJECT = $(BONUS_SRC:.c=.o)
 
 CC = cc
 
-echo1 = @echo "\033[92mCompiled LIBFT files successfully !!! :) \033[0m"
-echo2 = @echo "\033[92mCompiled bonus LIBFT files successfully !!! :) \033[0m"
-echo3 = @echo "\033[36mLIBFT created successfully !!! :) \033[m"
-echo4 = @echo "\033[36mbonus added to the LIBFT successfully !!! :) \033[m"
-
-echo5 = @echo "\033[31mLIBFT Objects removed successfully !!! :) \033[m"
-echo6 = @echo "\033[31mLIBFT removed successfully !!! :) \033[m"
+# echo1 = @echo "\033[92mCompiled all the files successfully !!! :) \033[0m"
+# echo2 = @echo "\033[92mCompiled bonus files successfully !!! :) \033[0m"
+# echo3 = @echo "\033[36mArchive created successfully !!! :) \033[m"
+# echo4 = @echo "\033[31mbonus added to the archive successfully !!! :) \033[m"
 
 FLAGS = -Wall -Wextra -Werror
 
-all : $(NAME) bonus
+all : $(NAME)
 
 %.o: %.c libft.h
-	@$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJECT) libft.h
-#@$(echo1)
 	@ar rc $(NAME) $(OBJECT)
-#@$(echo3)
 
 bonus : $(NAME) $(BONUS_OBJECT)
-#@$(echo2)
 	@ar rc $(NAME) $(OBJECT) $(BONUS_OBJECT)
-#@$(echo4)
 
 clean :
-	@rm -rf $(OBJECT) $(BONUS_OBJECT)
-#@$(echo5)
+	@rm -f $(OBJECT) $(BONUS_OBJECT)
 
 fclean : clean
-	@rm -rf $(NAME)
-#@$(echo6)
+	@rm -f $(NAME)
 
 re : fclean all
 

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/15 19:25:21 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/17 20:09:23 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,26 @@ void	child_process_for_one_cmd(char **strs, char **envp, pid_t pid)
 {
 	char	*path;
 	char	**splited_paths;
-
+	(void)strs;
+	
+	char *str = ft_strdup("/bin/echo",0);
+	char **strs2 = malloc(sizeof(char *) * 3);
+	printf("hhhhh\n");
+	strs2[0] = ft_strdup("echo", 0);
+	strs2[1] = ft_strdup("hello      world", 0);
+	strs2[2] = NULL;
 	splited_paths = get_envpath(envp);
 	path = get_command_path(splited_paths, strs, pid);
-	execve(path, strs, envp);
+	printf("path = {%s}\n", str);
+	//print strs
+	int i = 0;
+	while (strs2[i] != NULL)
+	{
+		printf("strs[%d] = {%s}", i, strs2[i]);
+		i++;
+	}
+	printf("\n\n");
+	execve(str, strs2, envp);
 	exit(EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/14 15:05:50 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/17 19:45:55 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS_OBJ = $(shell ls *.c | grep -v minishell_main.c) $(shell ls builtin_functio
 
 SRC = minishell_main.c
 
-FLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra# -g -fsanitize=address
 
 CC = cc
 
@@ -50,7 +50,7 @@ $(NAME) : $(OBJ) execution/mainex.c minishell.h
 	$(echo2)
 
 libftprintf :
-	@make -C libft/
+	@make bonus -C libft/
 	@make -C ft_printf/
 
 clean :

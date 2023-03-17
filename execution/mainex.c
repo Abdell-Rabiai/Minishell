@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/16 22:54:46 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/17 20:06:37 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void builtin_handler(char *str, t_infos *infos)
 		free_all(strs);
 		return ;
 	}
-	if ( strs[0] && !ft_strcmp(strs[0], "echo"))
-		my_echo(strs);
+	// if ( strs[0] && !ft_strcmp(strs[0], "echo"))
+	// 	my_echo(strs);
 	else if (!ft_strcmp(strs[0], "cd"))
 		my_cd(strs, infos);
 	else if (!ft_strcmp(strs[0], "pwd"))
@@ -77,6 +77,7 @@ void builtin_handler(char *str, t_infos *infos)
 void	prompt(t_infos *infos)
 {
 	(void)infos;
+	t_list	*command;
 	char	*str;
 
 	signal(SIGINT, handle_kill);
@@ -95,6 +96,7 @@ void	prompt(t_infos *infos)
 			clear_history();
 			exit(1);
 		}
+		command = pars_error(str);
 		builtin_handler(str, infos);
 		add_history(str);
 		free(str);

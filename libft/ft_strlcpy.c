@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:38:20 by ahmaymou          #+#    #+#             */
-/*   Updated: 2022/10/25 18:51:14 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:04:37 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,16 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	}
 	*dst = '\0';
 	return (len);
+}
+
+char	*ft_strncpy(char* dst, const char* src, size_t num)
+{
+    size_t	i;
+
+	i = -1;
+    while (src[++i] && i < num)
+        dst[i] = src[i];
+    while (i < num)
+		dst[i++] = '\0';
+    return dst;
 }

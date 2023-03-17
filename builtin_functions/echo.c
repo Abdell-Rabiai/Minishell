@@ -6,13 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 12:13:59 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/14 12:14:16 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/17 17:55:10 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int check_for_newline_option(char *str) // if returns 1, it means there is no newline option
+int check_for_newline_option(char *str)
 {
 	int i;
 
@@ -34,6 +34,7 @@ int check_for_newline_option(char *str) // if returns 1, it means there is no ne
 	}
 	return (0);
 }
+
 
 void my_echo(char **strs)
 {
