@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 14:23:00 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 21:42:25 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 22:17:50 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,6 @@ t_list	*create_final_list(t_list **head)
 
 	final = NULL;
 	count = count_commands(*head);
-	printf("count :%d\n", count);
 	while (count--)
 		get_node(head, &final);
 	return (final);

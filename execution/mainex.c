@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 21:51:23 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 23:52:55 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	prompt(t_infos *infos)
 			exit(1);
 		}
 		final_list = pars_error(str);
-		// print_list(final_list, 1);
+		print_list(final_list, 1);
 		execute(final_list, infos);
 		add_history(str);
 		free(str);

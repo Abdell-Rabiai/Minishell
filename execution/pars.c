@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:20 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 21:43:50 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 22:17:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,16 +221,13 @@ t_list	*pars_error(char *str)
 		printf("minishell: syntax error, unclosed quotes\n");
 		return (free(inpStr), NULL);
 	}
-	printf("str: %s\n", inpStr);
 	fill_list(inpStr, &command);
 	assign_type(command);
 	
-	print_list(command, 0);
 	if (check_pars_errors(command))
 		return (free(inpStr), ft_lstclear(&command), NULL);
 	t_list	*final;
 	final = create_final_list(&command);
-	print_list(final, 1);
 	
 	return (free(inpStr), ft_lstclear(&command),final);
 }

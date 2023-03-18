@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 21:51:16 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 23:51:56 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, pid_t pid, t_inf
 	close(fd_in);
 	if (is_builtin(final_list) == 1)
 	{
-		printf("builtin\n");
 		execute_builtin(strs, infos);
+		exit(EXIT_SUCCESS);
 	}
     else
     {
@@ -102,8 +102,8 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, pid_t pid, t_inf
 
 int is_builtin(t_list *node)
 {
-	if (ft_strcmp(node->commands[0], "echo") == 0)
-		return (1);
+	// if (ft_strcmp(node->commands[0], "echo") == 0)
+	// 	return (1);
 	if (ft_strcmp(node->commands[0], "cd") == 0)
 		return (1);
 	if (ft_strcmp(node->commands[0], "pwd") == 0)
@@ -129,8 +129,8 @@ void execute_builtin(char **strs, t_infos *infos)
 		free_all(strs);
 		return ;
 	}
-	if (strs[0] && !ft_strcmp(strs[0], "echo"))
-		my_echo(strs);
+	// if (strs[0] && !ft_strcmp(strs[0], "echo"))
+	// 	my_echo(strs);
 	else if (!ft_strcmp(strs[0], "cd"))
 		my_cd(strs, infos);
 	else if (!ft_strcmp(strs[0], "pwd"))
@@ -149,11 +149,16 @@ void execute_builtin(char **strs, t_infos *infos)
 void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-		child_process_for_one_cmd(final_list, envp, pid, infos);
-	while (wait(NULL) != -1);
+	
+	if (is_builtin(final_list) == 1 && ft_lstsize(final_list) == 1)
+		execute_builtin(final_list->commands, infos);
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+			child_process_for_one_cmd(final_list, envp, pid, infos);
+		while (wait(NULL) != -1);
+	}
 }
 
 void execute(t_list *final_list, t_infos *infos)
@@ -167,6 +172,8 @@ void execute(t_list *final_list, t_infos *infos)
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 		return ;
 	}
+	infos->std_in = dup(STDIN_FILENO);
+	infos->std_out = dup(STDOUT_FILENO);
 	envp = copy_envp_into_array(infos);
 	if (ft_lstsize(final_list) == 1)
 		execute_one_cmd(final_list, envp, infos);

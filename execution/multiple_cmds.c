@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 21:26:44 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 23:48:25 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	child_process1(t_list *final_list, int pipe_ends[2], char **envp, pid_t pid
 	close(fd_in);
     if (is_builtin(final_list) == 1)
         {
-            printf("builtin\n");
+            // printf("builtin\n");
             execute_builtin(strs, infos);
         }
     else
@@ -113,10 +113,15 @@ void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_
 		close(pid);
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 	}
-	close(pipe_ends[0]);
-	dup2(fd_in, STDIN_FILENO);
+	if (fd_in != -2)
+	{
+		dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
+	}
+	// close(pipe_ends[0]);
+	// dup2(fd_in, STDIN_FILENO);
 	dup2(pipe_ends[1], STDOUT_FILENO);
-	close(fd_in);
+	// close(fd_in);
     if (is_builtin(final_list) == 1)
         execute_builtin(strs, infos);
     else
@@ -143,8 +148,14 @@ void	last_child_process(t_list *final_list, char **envp, pid_t pid, t_infos *inf
 		close(pid);
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 	}
-	dup2(fd_out, STDOUT_FILENO);
-	close(fd_out);
+	if (fd_out == -2)
+		dup2(infos->std_out, STDOUT_FILENO);
+	else
+	{
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+	//dup2(infos->std_in, STDIN_FILENO);
     if (is_builtin(final_list) == 1)
         execute_builtin(strs, infos);
     else
@@ -222,6 +233,8 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 		tmp = tmp->next;
         i++;
 	}
+	dup2(infos->std_out, STDOUT_FILENO);
+	dup2(infos->std_in, STDIN_FILENO);
 	while (wait(NULL) != -1)
 	{
 		

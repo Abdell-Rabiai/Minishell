@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 21:53:33 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 22:16:21 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void export_variable(t_infos *infos, char *string)
 	temp = infos->my_envp;
 	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string);
 	var_value = ft_strchr(string, '=');
-	printf("var_name = %s\n", var_name)
 	if (check_variable_regex(var_name))
 	{
 		if (var_value == NULL)

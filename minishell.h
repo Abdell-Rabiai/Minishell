@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 21:30:18 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 23:15:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_envp
 typedef struct s_infos
 {
 	struct s_envp	*my_envp;
-	// struct t_list	*my_list;
+	int std_in;
+	int std_out;
 } t_infos;
 
 

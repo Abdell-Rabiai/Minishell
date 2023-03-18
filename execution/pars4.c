@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:13:54 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 21:42:12 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 00:06:50 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,29 @@ void	expand_variables(t_list *tmp)
 		free(value);
 	}
 }
+void	remove_spaces(char *str)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+	bool	quote;
+
+	i = 0;
+	j = 0;
+	tmp = ft_strdup(str, 0);
+	quote = false;
+	while (tmp[i])
+	{
+		if (tmp[i] == '\"' || tmp[i] == '\'')
+			quote = !quote;
+		if (tmp[i] == ' ' && tmp[i + 1] == ' ' && !quote)
+			i++;
+		else
+			str[j++] = tmp[i++];
+	}
+	str[j] = '\0';
+	free(tmp);
+}
 
 void	expand_multi_vars(t_list **head)
 {
@@ -84,6 +107,7 @@ void	expand_multi_vars(t_list **head)
 		{
 			while (var_exist(tmp->content) && is_expandable(tmp->content))
 				expand_variables(tmp);
+			remove_spaces(tmp->content);
 			tmp = tmp->next;
 		}
 	}
@@ -91,18 +115,21 @@ void	expand_multi_vars(t_list **head)
 
 bool	is_expandable(char *str)
 {
-	int			i;
-	static bool	s_quote_open;
-	static bool	d_quote_open;
+	int		i;
+	int		quote;
 
 	i = -1;
+	quote = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\'' && !d_quote_open)
-			s_quote_open = !s_quote_open;
-		else if (str[i] == '\"')
-			d_quote_open = !d_quote_open;
-		if (str[i] == '$' && !s_quote_open)
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			if (quote == 0)
+				quote = str[i];
+			else if (quote == str[i])
+				quote = 0;
+		}
+		if (str[i] == '$' && (!quote || quote == '\"'))
 			return (true);
 	}
 	return (false);
