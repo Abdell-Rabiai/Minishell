@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/17 20:06:37 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 21:51:23 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,50 +34,10 @@ void update_shlvl_variable(t_infos *infos)
 	}
 }
 
-void my_execution(char **strs, t_infos *infos)
-{
-	char **envp;
-	
-	envp = copy_envp_into_array(infos);
-	execute_one_cmd(strs, envp);
-	ft_free_envp_array(envp);
-}
-
-void builtin_handler(char *str, t_infos *infos)
-{
-	char **strs;
-	int i;
-	
-	i = 0;
-	strs = ft_split(str, ' ');
-	if (!strs || !strs[0])
-	{
-		free_all(strs);
-		return ;
-	}
-	// if ( strs[0] && !ft_strcmp(strs[0], "echo"))
-	// 	my_echo(strs);
-	else if (!ft_strcmp(strs[0], "cd"))
-		my_cd(strs, infos);
-	else if (!ft_strcmp(strs[0], "pwd"))
-		my_pwd(infos);
-	else if (!ft_strcmp(strs[0], "export"))
-		my_export(strs, infos);
-	else if (!ft_strcmp(strs[0], "unset"))
-		my_unset(strs, infos);
-	else if (!ft_strcmp(strs[0], "env"))
-		my_env(infos);
-	else if (!ft_strcmp(strs[0], "exit"))
-		my_exit(strs, infos);
-	else
-		my_execution(strs, infos);
-	free_all(strs);
-}
-
 void	prompt(t_infos *infos)
 {
 	(void)infos;
-	t_list	*command;
+	t_list	*final_list;
 	char	*str;
 
 	signal(SIGINT, handle_kill);
@@ -96,8 +56,9 @@ void	prompt(t_infos *infos)
 			clear_history();
 			exit(1);
 		}
-		command = pars_error(str);
-		builtin_handler(str, infos);
+		final_list = pars_error(str);
+		// print_list(final_list, 1);
+		execute(final_list, infos);
 		add_history(str);
 		free(str);
 	}
@@ -108,14 +69,14 @@ void koo(void)
 	system("leaks minishell");
 }
 
-void execute_using_minishell(char *executable, t_infos *infos)
-{
-	char **strs;
-	executable= ft_strjoin("bash ", executable, 0);
-	strs = ft_split(executable, ' ');
-	my_execution(strs, infos);
-	exit(EXIT_SUCCESS);
-}
+// void execute_using_minishell(char *executable, t_infos *infos)
+// {
+// 	char **strs;
+// 	executable	= ft_strjoin("bash ", executable, 0);
+// 	strs = ft_split(executable, ' ');
+// 	my_execution(strs, infos);
+// 	exit(EXIT_SUCCESS);
+// }
 
 void print_env(char **envp)
 {
@@ -132,12 +93,14 @@ void print_env(char **envp)
 int main(int ac, char **av, char **envp)
 {
 	// atexit(koo);
+	(void)ac;
+	(void)av;
 	t_infos infos;
 	init(&infos);
 	duplicate_envp(envp, &infos);
 	update_shlvl_variable(&infos);
-	if (ac >= 2)
-		execute_using_minishell(av[1], &infos);
+	// if (ac >= 2)
+	// 	execute_using_minishell(av[1], &infos);
 	prompt(&infos);
 }
 

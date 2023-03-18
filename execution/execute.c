@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/17 20:09:23 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 21:51:16 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**get_envpath(char **envp)
 	return (ft_split(envp[i] + 5, ':'));
 }
 
-char	*get_command_path(char **paths, char **main_cmd, pid_t pid)
+char	*get_command_path(char **paths, char **main_cmd)
 {
 	int		i;
 	char	*str;
@@ -34,8 +34,7 @@ char	*get_command_path(char **paths, char **main_cmd, pid_t pid)
 	cmd = ft_strjoin("/", main_cmd[0], 0);
 	if (paths == NULL)
     {
-        ft_printf(1, "ERROR : %s command not found : ", cmd);
-		ft_printf(1, "All commands not available \n");
+        ft_printf(2, "minishell: %s: No such file or directory\n", main_cmd[0]);
         free(cmd);
 		free_all(paths);
 		free_all(main_cmd);
@@ -57,9 +56,8 @@ char	*get_command_path(char **paths, char **main_cmd, pid_t pid)
 	}
 	if (paths[i] == NULL)
     {
-        ft_printf(1, "ERROR : %s command not found \n", cmd);
+        ft_printf(2, "minishell: %s: command not found\n", main_cmd[0]);
         free(cmd);
-        close(pid);
 		free_all(main_cmd);
 		free_all(paths);
 		return (NULL);
@@ -72,42 +70,107 @@ char	*get_command_path(char **paths, char **main_cmd, pid_t pid)
     }
 }
 
-void	child_process_for_one_cmd(char **strs, char **envp, pid_t pid)
+void	child_process_for_one_cmd(t_list *final_list, char **envp, pid_t pid, t_infos *infos)
 {
+	int 	fd_in;
 	char	*path;
 	char	**splited_paths;
-	(void)strs;
-	
-	char *str = ft_strdup("/bin/echo",0);
-	char **strs2 = malloc(sizeof(char *) * 3);
-	printf("hhhhh\n");
-	strs2[0] = ft_strdup("echo", 0);
-	strs2[1] = ft_strdup("hello      world", 0);
-	strs2[2] = NULL;
-	splited_paths = get_envpath(envp);
-	path = get_command_path(splited_paths, strs, pid);
-	printf("path = {%s}\n", str);
-	//print strs
-	int i = 0;
-	while (strs2[i] != NULL)
+	char 	**strs;
+
+	fd_in = final_list->in_fd;
+	strs = final_list->commands;
+	if (final_list->_errno != 0)
 	{
-		printf("strs[%d] = {%s}", i, strs2[i]);
-		i++;
+		close(pid);
+		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 	}
-	printf("\n\n");
-	execve(str, strs2, envp);
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
+	if (is_builtin(final_list) == 1)
+	{
+		printf("builtin\n");
+		execute_builtin(strs, infos);
+	}
+    else
+    {
+	    splited_paths = get_envpath(envp);
+	    path = get_command_path(splited_paths, strs);
+        execve(path, strs, envp);
+    }
 	exit(EXIT_SUCCESS);
 }
 
-void execute_one_cmd(char **strs, char **envp)
+int is_builtin(t_list *node)
+{
+	if (ft_strcmp(node->commands[0], "echo") == 0)
+		return (1);
+	if (ft_strcmp(node->commands[0], "cd") == 0)
+		return (1);
+	if (ft_strcmp(node->commands[0], "pwd") == 0)
+		return (1);
+	if (ft_strcmp(node->commands[0], "export") == 0)
+		return (1);
+	if (ft_strcmp(node->commands[0], "unset") == 0)
+		return (1);
+	if (ft_strcmp(node->commands[0], "env") == 0)
+		return (1);
+	if (ft_strcmp(node->commands[0], "exit") == 0)
+		return (1);
+	return (0);
+}
+
+void execute_builtin(char **strs, t_infos *infos)
+{
+	int i;
+	
+	i = 0;
+	if (!strs || !strs[0])
+	{
+		free_all(strs);
+		return ;
+	}
+	if (strs[0] && !ft_strcmp(strs[0], "echo"))
+		my_echo(strs);
+	else if (!ft_strcmp(strs[0], "cd"))
+		my_cd(strs, infos);
+	else if (!ft_strcmp(strs[0], "pwd"))
+		my_pwd(infos);
+	else if (!ft_strcmp(strs[0], "export"))
+		my_export(strs, infos);
+	else if (!ft_strcmp(strs[0], "unset"))
+		my_unset(strs, infos);
+	else if (!ft_strcmp(strs[0], "env"))
+		my_env(infos);
+	else if (!ft_strcmp(strs[0], "exit"))
+		my_exit(strs, infos);
+	free_all(strs);
+}
+
+void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	pid_t	pid;
-	// pid_t	pid2;
 
 	pid = fork();
 	if (pid == 0)
-		child_process_for_one_cmd(strs, envp, pid);
-	// if (pid2 == 0)
-	// 	child
+		child_process_for_one_cmd(final_list, envp, pid, infos);
 	while (wait(NULL) != -1);
+}
+
+void execute(t_list *final_list, t_infos *infos)
+{
+	char 	**envp;
+
+	if (!final_list)
+		return ;
+	if (final_list->_errno != 0)
+	{
+		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
+		return ;
+	}
+	envp = copy_envp_into_array(infos);
+	if (ft_lstsize(final_list) == 1)
+		execute_one_cmd(final_list, envp, infos);
+	else
+		execute_multiple_cmds(final_list, envp, infos);
+	ft_free_envp_array(envp);
 }

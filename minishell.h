@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/17 19:25:43 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 21:30:18 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_envp
 typedef struct s_infos
 {
 	struct s_envp	*my_envp;
+	// struct t_list	*my_list;
 } t_infos;
 
 
@@ -84,12 +85,34 @@ void	my_cd(char **strs, t_infos *infos);
 void    cd(char *path, t_infos *infos);
 void	my_exit(char **strs, t_infos *infos);
 
+void	builtin_handler(t_list *final_list, t_infos *infos);
+
 /*---------> execution <--------*/
-void	execute_one_cmd(char **strs, char **envp);
+void	my_execution(t_list *final_list, t_infos *infos);
+// void	execute_using_minishell(t_list *final_list, char *executable, t_infos *infos);
 char	**copy_envp_into_array(t_infos *infos);
 void	print_envp_array(char **envp, t_infos *infos);
 int		get_envp_size(t_envp *envp);
 void	ft_free_envp_array(char **envp);
+
+/*--------->execution preprocessig */
+char	**get_envpath(char **envp);
+char	*get_command_path(char **paths, char **main_cmd);
+void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos);
+void	child_process1(t_list *final_list, int pipe_ends[2], char **envp, pid_t pid, t_infos *infos);
+void	child_process2(t_list *final_list , int pipe_ends[2], char **envp, pid_t pid, t_infos *infos);
+
+void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos);
+void	execute(t_list *final_list, t_infos *infos);
+int		is_builtin(t_list *node);
+void	execute_builtin(char **strs, t_infos *infos);
+
+
+
+
+
+
+
 
 /**AHMAYMOU*/
 
@@ -130,6 +153,9 @@ int		count_tokens(const char* str);
 char**	split_string(const char* str);
 char*	extract_token(const char* start, const char *str);
 t_list	*create_final_list(t_list **head);
-
+void	remove_quotes_node(t_list **temp);
+void	print_list(t_list *list, bool flag);
+void	remove_quotes(char *str);
+void	remove_instant_quotes(char* str);
 
 #endif

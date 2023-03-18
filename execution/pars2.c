@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:19:04 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/17 19:14:04 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/18 21:42:02 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,21 @@ int	get_cmd_quotes(char *str)
 
 int	end_word_index(char *str)
 {
-	int		i;
+	int		i = -1;
 	char	c;
+	bool	quote_open;
 
-	i = get_cmd_quotes(str);
-	if (i != -1)
-		return (i);
+	// i = get_cmd_quotes(str);
+	quote_open = false;
+	// if (i != -1)
+	// 	return (i);
 	while (str[++i])
 	{
-		if (is_spec(str[i]) && i)
+		if (str[i] == 39 || str[i] == 34)
+			quote_open = !quote_open;
+		if (is_spec(str[i]) && i && !quote_open)
 			return (i);
-		else if (is_spec(str[i]))
+		else if (is_spec(str[i]) && !quote_open)
 		{
 			c = str[i];
 			while (str[i++] == c)
