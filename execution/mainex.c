@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 23:52:55 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 16:53:27 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ void	prompt(t_infos *infos)
 	signal(SIGQUIT, handle_kill);
 	while (1)
 	{
-		char *cwd;
-		cwd = getcwd(NULL, 0);
-		if (!cwd)
-			cwd = ft_strdup(get_envp_value("PWD", infos), 0);
-		ft_printf(1, "\x1B[1;36m%s$ \033[0m", cwd);
-		free(cwd);
-		str = readline("\033[1;32mminihell> \033[0m");
+		// char *cwd;
+		// cwd = getcwd(NULL, 0);
+		// if (!cwd)
+		// 	cwd = ft_strdup(get_envp_value("PWD", infos), 0);
+		// ft_printf(1, "\x1B[1;36m%s$ \033[0m", cwd);
+		// free(cwd);
+		str = readline("bash-3.2$ ");
 		if (!str)
 		{
 			clear_history();
 			exit(1);
 		}
 		final_list = pars_error(str);
-		print_list(final_list, 1);
+		// print_list(final_list, 1);
 		execute(final_list, infos);
 		add_history(str);
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/17 15:49:21 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 18:41:00 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ void my_exit(char **strs, t_infos *infos)
 	long long exit_status;
 	if ((strs[1] && strs[2]))
 	{
-		ft_printf(1, "minishell: exit: too many arguments\n");
+		ft_printf(1, "exit\nminishell: exit: too many arguments\n");
+		exit_status = EXIT_FAILURE;
+		infos->exit_status = exit_status;
 		return ;
 	}
-	if (strs[1])
+	else if (strs[1])
 	{
 		ft_printf(1, "exit\n");
 		exit_status = ft_atoi_exit(strs[1], &i);
@@ -48,7 +50,7 @@ void my_exit(char **strs, t_infos *infos)
 	}
 	else
 		exit_status = EXIT_SUCCESS;
-	ft_printf(1, "echo $? %d\n", exit_status);
+	infos->exit_status = exit_status;
 	clear_history();
 	exit(exit_status);	
 }

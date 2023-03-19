@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:45:51 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 22:23:36 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 15:34:06 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void my_cd(char **strs, t_infos *infos)
 		return ;
 	if (!ft_strcmp(strs[1], "-"))
 	{
-		printf("OLDPWD: \n");
 		if (print_old_pwd(infos))
 			return ;
 	}

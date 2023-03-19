@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 23:48:25 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 16:30:41 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,32 +73,6 @@ void	child_process2(t_list *final_list , int pipe_ends[2], char **envp, pid_t pi
 	exit(EXIT_SUCCESS);
 }
 
-// void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
-// {
-//     pid_t	pid;
-// 	pid_t	pid1;
-//     t_list  *tmp;
-// 	int		pipe_ends[2];
-
-//     tmp = final_list;
-// 	if (pipe(pipe_ends) == -1)
-// 		perror("minishell : pipe :");
-// 	pid = fork();
-// 	if (pid == -1)
-// 		perror("minishell : fork :");
-// 	if (pid == 0)
-//         child_process1(tmp, pipe_ends, envp, pid, infos);
-//     tmp = tmp->next;
-// 	pid1 = fork();
-// 	if (pid1 == 0)
-// 		child_process2(tmp, pipe_ends, envp, pid, infos);
-// 	close(pipe_ends[1]);
-// 	close(pipe_ends[0]);
-// 	while (wait(NULL) != -1)
-// 	{
-// 	}  
-// }
-
 void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_t pid, t_infos *infos)
 {
 	int		fd_in;
@@ -118,15 +92,12 @@ void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
-	// close(pipe_ends[0]);
-	// dup2(fd_in, STDIN_FILENO);
+	close(pipe_ends[0]);
 	dup2(pipe_ends[1], STDOUT_FILENO);
-	// close(fd_in);
     if (is_builtin(final_list) == 1)
         execute_builtin(strs, infos);
     else
     {
-		printf("execve\n");
 	    splited_paths = get_envpath(envp);
 	    path = get_command_path(splited_paths, strs);
         execve(path, strs, envp);
@@ -155,7 +126,6 @@ void	last_child_process(t_list *final_list, char **envp, pid_t pid, t_infos *inf
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 	}
-	//dup2(infos->std_in, STDIN_FILENO);
     if (is_builtin(final_list) == 1)
         execute_builtin(strs, infos);
     else
@@ -216,10 +186,16 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
     while (i < ft_lstsize(final_list))
 	{
 		if (pipe(pipe_ends) == -1)
-			perror("minishell : pipe :");
+		{
+			perror("minishell: pipe:");
+			exit(EXIT_FAILURE);
+		}
 		pid = fork();
 		if (pid == -1)
-			perror("minishell : fork :");
+		{
+			perror("minishell: fork");
+			exit(EXIT_FAILURE);
+		}
 		else if (pid == 0)
 		{
 			if (i == 0)
@@ -237,7 +213,6 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	dup2(infos->std_in, STDIN_FILENO);
 	while (wait(NULL) != -1)
 	{
-		
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 23:51:56 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 18:41:51 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_command_path(char **paths, char **main_cmd)
     }
 }
 
-void	child_process_for_one_cmd(t_list *final_list, char **envp, pid_t pid, t_infos *infos)
+void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	int 	fd_in;
 	char	*path;
@@ -80,10 +80,7 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, pid_t pid, t_inf
 	fd_in = final_list->in_fd;
 	strs = final_list->commands;
 	if (final_list->_errno != 0)
-	{
-		close(pid);
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
-	}
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 	if (is_builtin(final_list) == 1)
@@ -102,8 +99,8 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, pid_t pid, t_inf
 
 int is_builtin(t_list *node)
 {
-	// if (ft_strcmp(node->commands[0], "echo") == 0)
-	// 	return (1);
+	if (ft_strcmp(node->commands[0], "echo") == 0)
+		return (1);
 	if (ft_strcmp(node->commands[0], "cd") == 0)
 		return (1);
 	if (ft_strcmp(node->commands[0], "pwd") == 0)
@@ -129,8 +126,8 @@ void execute_builtin(char **strs, t_infos *infos)
 		free_all(strs);
 		return ;
 	}
-	// if (strs[0] && !ft_strcmp(strs[0], "echo"))
-	// 	my_echo(strs);
+	if (!ft_strcmp(strs[0], "echo"))
+		my_echo(strs, infos);
 	else if (!ft_strcmp(strs[0], "cd"))
 		my_cd(strs, infos);
 	else if (!ft_strcmp(strs[0], "pwd"))
@@ -150,14 +147,15 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	pid_t	pid;
 	
-	if (is_builtin(final_list) == 1 && ft_lstsize(final_list) == 1)
+	if (is_builtin(final_list) == 1)
 		execute_builtin(final_list->commands, infos);
 	else
 	{
 		pid = fork();
 		if (pid == 0)
-			child_process_for_one_cmd(final_list, envp, pid, infos);
-		while (wait(NULL) != -1);
+			child_process_for_one_cmd(final_list, envp, infos);
+		waitpid(pid, &infos->exit_status, 0);
+		infos->exit_status =  WEXITSTATUS(infos->exit_status);
 	}
 }
 

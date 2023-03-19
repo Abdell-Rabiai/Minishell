@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 23:15:11 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 18:41:44 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct s_infos
 	struct s_envp	*my_envp;
 	int std_in;
 	int std_out;
+	int exit_status;
 } t_infos;
 
+// extern int g_exit_status;
 
 /*---------> initialize_data <--------*/
 void init(t_infos *infos);
@@ -80,7 +82,7 @@ void	add_ignored_env(t_infos *infos);
 
 /*--------->builtins util funtions <--------*/
 int		check_for_newline_option(char *str);
-void	my_echo(char **strs);
+void	my_echo(char **strs, t_infos *infos);
 void    my_pwd(t_infos *infos);
 void	my_cd(char **strs, t_infos *infos);
 void    cd(char *path, t_infos *infos);
@@ -107,8 +109,6 @@ void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos);
 void	execute(t_list *final_list, t_infos *infos);
 int		is_builtin(t_list *node);
 void	execute_builtin(char **strs, t_infos *infos);
-
-
 
 
 

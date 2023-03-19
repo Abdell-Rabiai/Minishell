@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:20 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 22:17:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 15:11:29 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void    print_list(t_list *list, bool flag)
 
     current = list;
     int i = -1;
-    printf("After tokenisation: of str\n");
     while (current)
     {
         i = -1;
