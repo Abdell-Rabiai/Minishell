@@ -6,72 +6,11 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/19 16:30:41 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 19:36:21 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	child_process1(t_list *final_list, int pipe_ends[2], char **envp, pid_t pid, t_infos *infos)
-{
-	int		fd_in;
-	char	*path;
-	char	**strs;
-	char	**splited_paths;
-
-    fd_in = final_list->in_fd;
-	strs = final_list->commands;
-    if (final_list->_errno != 0)
-	{
-		close(pid);
-		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
-	}
-	close(pipe_ends[0]);
-	dup2(fd_in, STDIN_FILENO);
-	dup2(pipe_ends[1], STDOUT_FILENO);
-	close(fd_in);
-    if (is_builtin(final_list) == 1)
-        {
-            // printf("builtin\n");
-            execute_builtin(strs, infos);
-        }
-    else
-    {
-	    splited_paths = get_envpath(envp);
-	    path = get_command_path(splited_paths, strs);
-        execve(path, strs, envp);
-    }
-	exit(EXIT_SUCCESS);
-}
-
-void	child_process2(t_list *final_list , int pipe_ends[2], char **envp, pid_t pid, t_infos *infos)
-{
-	char	*path;
-	char	**strs;
-	int		fd_out;
-	char	**splited_paths;
-    
-    fd_out = final_list->out_fd;
-	strs = final_list->commands;
-    if (final_list->_errno != 0)
-	{
-		close(pid);
-		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
-	}
-	close(pipe_ends[1]);
-	dup2(fd_out, STDOUT_FILENO);
-	dup2(pipe_ends[0], STDIN_FILENO);
-	close(fd_out);
-    if (is_builtin(final_list) == 1)
-        execute_builtin(strs, infos);
-    else
-    {
-	    splited_paths = get_envpath(envp);
-	    path = get_command_path(splited_paths, strs);
-    	execve(path, strs, envp);
-    }
-	exit(EXIT_SUCCESS);
-}
 
 void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_t pid, t_infos *infos)
 {
@@ -86,6 +25,7 @@ void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_
 	{
 		close(pid);
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
+		exit(EXIT_FAILURE);
 	}
 	if (fd_in != -2)
 	{
@@ -100,6 +40,8 @@ void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_
     {
 	    splited_paths = get_envpath(envp);
 	    path = get_command_path(splited_paths, strs);
+		if (!path)
+			exit(127);
         execve(path, strs, envp);
     }
 	exit(EXIT_SUCCESS);
@@ -118,6 +60,7 @@ void	last_child_process(t_list *final_list, char **envp, pid_t pid, t_infos *inf
 	{
 		close(pid);
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
+		exit(EXIT_FAILURE);
 	}
 	if (fd_out == -2)
 		dup2(infos->std_out, STDOUT_FILENO);
@@ -132,6 +75,8 @@ void	last_child_process(t_list *final_list, char **envp, pid_t pid, t_infos *inf
     {
 	    splited_paths = get_envpath(envp);
 	    path = get_command_path(splited_paths, strs);
+		if (!path)
+			exit(127);
     	execve(path, strs, envp);
     }
 	exit(EXIT_SUCCESS);
@@ -152,6 +97,8 @@ void	inter_process(t_list *final_list, int pipe_ends[2], char **envp, t_infos *i
     {
 	    splited_paths = get_envpath(envp);
 	    path = get_command_path(splited_paths, strs);
+		if (!path)
+			exit(127);
         execve(path, strs, envp);
     }
 	exit(EXIT_SUCCESS);
@@ -211,8 +158,7 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	}
 	dup2(infos->std_out, STDOUT_FILENO);
 	dup2(infos->std_in, STDIN_FILENO);
-	while (wait(NULL) != -1)
-	{
-	}
+	while (waitpid(pid, &infos->exit_status, 0) != -1);
+	infos->exit_status =  WEXITSTATUS(infos->exit_status);
 }
 

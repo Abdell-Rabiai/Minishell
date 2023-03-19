@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/19 18:41:51 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/19 19:36:41 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
     {
 	    splited_paths = get_envpath(envp);
 	    path = get_command_path(splited_paths, strs);
+		if (!path)
+			exit(127);
         execve(path, strs, envp);
     }
 	exit(EXIT_SUCCESS);
