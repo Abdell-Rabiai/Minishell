@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 15:27:38 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 21:38:55 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,19 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 
 	fd_in = final_list->in_fd;
 	strs = final_list->commands;
+	if (final_list->delims != NULL)
+	{
+		open_heredoc_file(final_list);
+		close(fd_in);
+		fd_in = open("/tmp/tmpfile", O_RDONLY);
+		if (!strs[0])
+			exit(EXIT_SUCCESS);
+	}
 	if (final_list->_errno != 0)
+	{
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
+		exit(EXIT_FAILURE);
+	}
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 	if (is_builtin(final_list) == 1)
@@ -101,6 +112,8 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 
 int is_builtin(t_list *node)
 {
+	if (!node->commands || !node->commands[0])
+		return (0);
 	if (ft_strcmp(node->commands[0], "echo") == 0)
 		return (1);
 	if (ft_strcmp(node->commands[0], "cd") == 0)
@@ -141,7 +154,7 @@ void execute_builtin(char **strs, t_infos *infos)
 	else if (!ft_strcmp(strs[0], "env"))
 		my_env(infos);
 	else if (!ft_strcmp(strs[0], "exit"))
-		my_exit(strs, infos);
+		my_exit(strs);
 	free_all(strs);
 }
 
@@ -149,16 +162,17 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	pid_t	pid;
 	
-	if (is_builtin(final_list) == 1)
+	if (is_builtin(final_list) == 1 && !final_list->delims)
 		execute_builtin(final_list->commands, infos);
 	else
 	{
 		pid = fork();
 		if (pid == 0)
 			child_process_for_one_cmd(final_list, envp, infos);
-		waitpid(pid, &global_es, 0);
-		global_es =  WEXITSTATUS(global_es);
+		waitpid(pid, &g_ex_status, 0);
+		g_ex_status =  WEXITSTATUS(g_ex_status);
 	}
+	unlink("/tmp/tmpfile");
 }
 
 void execute(t_list *final_list, t_infos *infos)
@@ -170,6 +184,7 @@ void execute(t_list *final_list, t_infos *infos)
 	if (final_list->_errno != 0)
 	{
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
+		g_ex_status = EXIT_FAILURE;
 		return ;
 	}
 	infos->std_in = dup(STDIN_FILENO);
@@ -178,6 +193,9 @@ void execute(t_list *final_list, t_infos *infos)
 	if (ft_lstsize(final_list) == 1)
 		execute_one_cmd(final_list, envp, infos);
 	else
+	{
+		multiple_heredocs(final_list);
 		execute_multiple_cmds(final_list, envp, infos);
+	}
 	ft_free_envp_array(envp);
 }

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 15:25:49 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 17:57:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void    my_pwd(t_infos *infos)
 		ft_printf(1, "%s\n", str);
 }
 
-void my_exit(char **strs, t_infos *infos)
+void my_exit(char **strs)
 {
 	int i = 0;
-	(void)(infos);
-	long long exit_status;
+	int exit_status;
+	unsigned char c;
 	if (strs[1])
 	{
 		ft_printf(1, "exit\n");
-		exit_status = ft_atoi_exit(strs[1], &i);
+		exit_status = (int)ft_atoi_exit(strs[1], &i);
 		if (i == 1)
 		{
 			ft_printf(1, "minishell: exit: %s: numeric argument required\n", strs[1]);
@@ -40,17 +40,14 @@ void my_exit(char **strs, t_infos *infos)
 		{
 			ft_printf(1, "minishell: exit: too many arguments\n");
 			exit_status = EXIT_FAILURE;
-			global_es = exit_status;
+			g_ex_status = exit_status;
 			return ;
 		}
-		if (exit_status >= 255 || exit_status < 0)
-			exit_status = exit_status % 256;
-		if (exit_status < 0)
-			exit_status += 256;
+		ft_memmove(&c, &exit_status, 1);
 	}
 	else
 		exit_status = EXIT_SUCCESS;
-	global_es = exit_status;
+	g_ex_status = exit_status;
 	clear_history();
 	exit(exit_status);	
 }

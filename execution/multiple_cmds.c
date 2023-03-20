@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 15:45:45 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 22:27:18 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_
 
     fd_in = final_list->in_fd;
 	strs = final_list->commands;
+	if (!strs[0])
+		exit(EXIT_SUCCESS);
     if (final_list->_errno != 0)
 	{
 		close(pid);
@@ -56,6 +58,8 @@ void	last_child_process(t_list *final_list, char **envp, pid_t pid, t_infos *inf
     
     fd_out = final_list->out_fd;
 	strs = final_list->commands;
+	if (!strs[0])
+		exit(EXIT_SUCCESS);
     if (final_list->_errno != 0)
 	{
 		close(pid);
@@ -89,6 +93,8 @@ void	inter_process(t_list *final_list, int pipe_ends[2], char **envp, t_infos *i
 	char	**splited_paths;
 
 	strs = final_list->commands;
+	if (!strs[0])
+		exit(EXIT_SUCCESS);
 	close(pipe_ends[0]);
 	dup2(pipe_ends[1], STDOUT_FILENO);
     if (is_builtin(final_list) == 1)
@@ -130,6 +136,7 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
     int i = 0;
 
     tmp = final_list;
+	
     while (i < ft_lstsize(final_list))
 	{
 		if (pipe(pipe_ends) == -1)
@@ -158,8 +165,8 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	}
 	dup2(infos->std_out, STDOUT_FILENO);
 	dup2(infos->std_in, STDIN_FILENO);
-	while (waitpid(-1, &global_es, 0) != -1);
-	// while (wait(NULL) != -1);
-	global_es =  WEXITSTATUS(global_es);
+	while (wait(NULL) != -1);
+	waitpid(-1, &g_ex_status, 0);
+	g_ex_status =  WEXITSTATUS(g_ex_status);
 }
 
