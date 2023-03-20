@@ -6,11 +6,36 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/19 16:53:27 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:24:53 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void    free_final_list(t_list *final)
+{
+    t_list    *temp;
+    int        i;
+
+    while (final)
+    {
+        i = -1;
+        temp = final;
+        final = final->next;
+        free(temp->content);
+        while (temp->commands[++i])
+            free(temp->commands[i]);
+        i = -1;
+        if (temp->delims)
+            while (temp->delims[++i].delimiter)
+                free(temp->delims[i].delimiter);
+        close(temp->in_fd);
+        close(temp->out_fd);
+        free(temp->in_file);
+        free(temp->out_file);
+        free(temp);
+    }
+}
 
 void update_shlvl_variable(t_infos *infos)
 {
@@ -44,13 +69,13 @@ void	prompt(t_infos *infos)
 	signal(SIGQUIT, handle_kill);
 	while (1)
 	{
-		// char *cwd;
-		// cwd = getcwd(NULL, 0);
-		// if (!cwd)
-		// 	cwd = ft_strdup(get_envp_value("PWD", infos), 0);
-		// ft_printf(1, "\x1B[1;36m%s$ \033[0m", cwd);
-		// free(cwd);
-		str = readline("bash-3.2$ ");
+		char *cwd;
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+			cwd = ft_strdup(get_envp_value("PWD", infos), 0);
+		ft_printf(1, "\x1B[1;36m%s$ \033[0m", cwd);
+		free(cwd);
+		str = readline("\033[1;32mbash-9.2$ \033[0m");
 		if (!str)
 		{
 			clear_history();
@@ -89,6 +114,7 @@ void print_env(char **envp)
 		i++;
 	}
 }
+int global_es;
 
 int main(int ac, char **av, char **envp)
 {

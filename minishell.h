@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/19 19:34:00 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:27:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ typedef struct s_infos
 	struct s_envp	*my_envp;
 	int std_in;
 	int std_out;
-	int exit_status;
 } t_infos;
 
-// extern int g_exit_status;
+extern int global_es;
 
 /*---------> initialize_data <--------*/
 void init(t_infos *infos);
@@ -82,7 +81,7 @@ void	add_ignored_env(t_infos *infos);
 
 /*--------->builtins util funtions <--------*/
 int		check_for_newline_option(char *str);
-void	my_echo(char **strs, t_infos *infos);
+void	my_echo(char **strs);
 void    my_pwd(t_infos *infos);
 void	my_cd(char **strs, t_infos *infos);
 void    cd(char *path, t_infos *infos);

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:20 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/19 15:11:29 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:22:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,56 +145,6 @@ int	fill_list(char *inputString, t_list **head)
 	return (expand_multi_vars(head), 0);
 }
 
-// int	check_string(char *inpStr)
-// {
-// 	while (*inpStr)
-// 	{
-// 		if (*inpStr == '>' && *(inpStr + 1) == '|')
-// 			return (print_error(*(inpStr + 1)), 1);
-// 		inpStr++;
-// 	}
-// 	return (0);
-// }
-
-// int	pars_error(char *str)
-// {
-// 	t_list	*command;
-// 	char	*inpStr;
-
-// 	command = NULL;
-// 	inpStr = ft_strtrim(str, " ");
-// 	if (!inpStr || !*inpStr)
-// 		return (free(inpStr), 0);
-// 	if (*inpStr == '|' || *inpStr == ';')
-// 	{
-// 		printf("minishell: syntax error near unexpected token `%c'\n", *(inpStr));
-// 		return (free(inpStr), 1);
-// 	}
-// 	else if (*(inpStr + ft_strlen(inpStr) - 1) == '|' || *(inpStr + ft_strlen(inpStr) - 1) == ';'
-// 		|| *(inpStr + ft_strlen(inpStr) - 1) == '>' || *(inpStr + ft_strlen(inpStr) - 1) == '<')
-// 	{
-// 		printf("minishell: syntax error near unexpected token `\\n'\n");
-// 		return (free(inpStr), 1);
-// 	}
-// 	// else if (check_string(inpStr))
-// 	// 	return (free(inpStr), 1);
-// 	if (!count_quotes(inpStr))
-// 	{
-// 		printf("minishell: syntax error, unclosed quotes\n");
-// 		return (free(inpStr), 1);
-// 	}
-// 	printf("str: %s\n", inpStr);
-// 	fill_list(inpStr, &command);
-// 	assign_type(command);
-// 	print_list(command, 0);
-// 	if (check_pars_errors(command))
-// 		return (free(inpStr), ft_lstclear(&command), 1);
-// 	t_list	*final;
-// 	final = create_final_list(&command);
-// 	print_list(final, 1);
-// 	return (free(inpStr), ft_lstclear(&command),ft_lstclear(&final), 0);
-// }
-
 t_list	*pars_error(char *str)
 {
 	t_list	*command;
@@ -228,6 +178,6 @@ t_list	*pars_error(char *str)
 	t_list	*final;
 	final = create_final_list(&command);
 	
-	return (free(inpStr), ft_lstclear(&command),final);
+	return (free(inpStr), ft_lstclear(&command), final);
 }
 

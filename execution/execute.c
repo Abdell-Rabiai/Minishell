@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/19 19:36:41 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:27:38 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void execute_builtin(char **strs, t_infos *infos)
 		return ;
 	}
 	if (!ft_strcmp(strs[0], "echo"))
-		my_echo(strs, infos);
+		my_echo(strs);
 	else if (!ft_strcmp(strs[0], "cd"))
 		my_cd(strs, infos);
 	else if (!ft_strcmp(strs[0], "pwd"))
@@ -156,8 +156,8 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 		pid = fork();
 		if (pid == 0)
 			child_process_for_one_cmd(final_list, envp, infos);
-		waitpid(pid, &infos->exit_status, 0);
-		infos->exit_status =  WEXITSTATUS(infos->exit_status);
+		waitpid(pid, &global_es, 0);
+		global_es =  WEXITSTATUS(global_es);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 12:13:59 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/19 18:41:25 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:27:20 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int check_for_newline_option(char *str)
 }
 
 
-void my_echo(char **strs, t_infos *infos)
+void my_echo(char **strs)
 {
 	int i;
 	int new_line;
@@ -56,7 +56,7 @@ void my_echo(char **strs, t_infos *infos)
 		{
 			op = 1;
 			if (!strcmp(strs[i], "$?"))
-				printf("%d", infos->exit_status);
+				printf("%d", global_es);
 			else
 				printf("%s", strs[i]);
 			if (strs[i + 1])

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:30:43 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/16 15:10:09 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 14:19:02 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,12 @@ void my_env(t_infos *infos)
 		if (temp->variable_value)
 		{
 			if (!ft_strcmp(temp->variable_name, "PATH") && get_envp_size(infos->my_envp) == 5)
-				temp = temp->next;
+				continue;
 			else if (!ft_strcmp(temp->variable_name, "OLDPWD") && get_envp_size(infos->my_envp) == 5)
-				temp = temp->next;
+				continue;
 			else
-			{
 				printf("%s=%s\n", temp->variable_name, temp->variable_value);
-				temp = temp->next;
-			}
 		}
+		temp = temp->next;
 	}
 }

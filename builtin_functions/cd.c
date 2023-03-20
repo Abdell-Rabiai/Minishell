@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:45:51 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/19 15:34:06 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 14:12:07 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ int print_old_pwd(t_infos *infos)
     char *old_pwd;
 
     old_pwd = get_envp_value("OLDPWD", infos);
+	if (!old_pwd)
+	{
+		ft_printf(2, "minishell: cd: OLDPWD not set\n");
+		return (1);
+	}
 	if (!ft_strcmp(old_pwd, ""))
     {
         ft_printf(2, "minishell: cd: OLDPWD not set\n");
