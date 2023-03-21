@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 15:45:45 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:07:02 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,13 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
     pid_t	pid;
     t_list  *tmp;
 	int		pipe_ends[2];
-    int i = 0;
+    int	 	size;
+	int		i;
 
+	size = ft_lstsize(final_list);
     tmp = final_list;
-    while (i < ft_lstsize(final_list))
+	i = 0;
+    while (i < size)
 	{
 		if (pipe(pipe_ends) == -1)
 		{
@@ -147,7 +150,7 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 		{
 			if (i == 0)
 				first_child_process(tmp, pipe_ends, envp, pid, infos);
-			else if (i == ft_lstsize(final_list) - 1)
+			else if (i == size - 1)
 				last_child_process(tmp, envp, pid, infos);
 			else
 				inter_process(tmp, pipe_ends, envp, infos);
@@ -158,8 +161,12 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	}
 	dup2(infos->std_out, STDOUT_FILENO);
 	dup2(infos->std_in, STDIN_FILENO);
-	while (waitpid(-1, &global_es, 0) != -1);
-	// while (wait(NULL) != -1);
+	while (size - 1)
+	{
+		waitpid(-1, &global_es, 0);
+		size--;
+	}
+	waitpid(pid, &global_es, 0);
 	global_es =  WEXITSTATUS(global_es);
 }
 
