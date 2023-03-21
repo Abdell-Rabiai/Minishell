@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 16:07:02 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:20:53 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,10 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	dup2(infos->std_in, STDIN_FILENO);
 	while (size - 1)
 	{
-		waitpid(-1, &global_es, 0);
+		waitpid(-1, &g_exit_status, 0);
 		size--;
 	}
-	waitpid(pid, &global_es, 0);
-	global_es =  WEXITSTATUS(global_es);
+	waitpid(pid, &g_exit_status, 0);
+	g_exit_status =  WEXITSTATUS(g_exit_status);
 }
 

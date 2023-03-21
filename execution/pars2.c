@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:19:04 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 21:42:02 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:16:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,12 @@ int	get_cmd_quotes(char *str)
 
 int	end_word_index(char *str)
 {
-	int		i = -1;
+	int		i;
 	char	c;
 	bool	quote_open;
 
-	// i = get_cmd_quotes(str);
+	i = -1;
 	quote_open = false;
-	// if (i != -1)
-	// 	return (i);
 	while (str[++i])
 	{
 		if (str[i] == 39 || str[i] == 34)
@@ -100,4 +98,3 @@ int	end_word_index(char *str)
 	}
 	return (-1);
 }
-

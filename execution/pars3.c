@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:09:49 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/18 21:42:06 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:16:38 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	print_error(char c)
 {
+	g_exit_status = 258;
 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-	ft_putchar_fd(c, 2);
+	if (c == '\n')
+		ft_putstr_fd("newline", 2);
+	else
+		ft_putchar_fd(c, 2);
 	ft_putstr_fd("'\n", 2);
 }
 
@@ -64,6 +68,7 @@ int	check_pars_errors3(t_list *temp, char *str)
 		return (1);
 	return (0);
 }
+
 int	check_pars_errors(t_list *command)
 {
 	t_list	*temp;
@@ -88,7 +93,7 @@ int	check_pars_errors(t_list *command)
 	return (0);
 }
 
-int check_pars_syntax(char *str)
+int	check_pars_syntax(char *str)
 {
 	t_type	type;
 	int		i;

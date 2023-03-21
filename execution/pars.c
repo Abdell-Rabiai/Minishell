@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:20 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/20 15:22:31 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:16:25 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void    print_list(t_list *list, bool flag)
 
     current = list;
     int i = -1;
+    printf("After tokenisation: of str\n");
     while (current)
     {
-        i = -1;
+        i = 0;
         printf("*-------------------------------*\n");
         printf("{content:%s}\n", current->content);
         printf("{type:%d}\n", current->type);
@@ -34,9 +35,19 @@ void    print_list(t_list *list, bool flag)
         printf("{delims:%p}\n", current->delims);
         if (flag)
         {
+			// printf("delims[0]:%p\n", current->delims[0].delimiter);
+			// printf("delims[0]:%p\n", current->delims[1].delimiter);
+			// printf("delims[0]:%p\n", current->delims[2].delimiter);
             if (current->delims)
-                while (current->delims[++i].delimiter)
+			{
+                while (current->delims[i].delimiter != NULL)
+				{
                     printf("(delim :%d: %s)\n", i, current->delims[i].delimiter);
+                    printf("(delim :%d: file :%s)\n", i, current->delims[i].tmp_file);
+					i++;
+				}
+				
+			}
             
         }
         //print char **commands in list
@@ -79,105 +90,50 @@ void	assign_type(t_list *command)
 		temp->type = what_type(cmd);
 		if (temp->prev && temp->type == word && temp->prev->type == in_redir)
 			temp->type = in_file;
-		else if (temp->prev && temp->type == word && (temp->prev->type == trunc || temp->prev->type == append))
+		else if (temp->prev && temp->type == word
+			&& (temp->prev->type == trunc || temp->prev->type == append))
 			temp->type = out_file;
-		else if (temp->prev && temp->type == word && temp->prev->type == here_doc)
+		else if (temp->prev && temp->type == word
+			&& temp->prev->type == here_doc)
 			temp->type = delimiter;
 		temp = temp->next;
 	}
 }
 
-void remove_instant_quotes(char* str)
+void	init(bool *d_q, bool *s_q, int *i, int *j)
 {
-    int		i;
-	bool	quote;
+	*i = 0;
+	*j = 0;
+	*d_q = false;
+	*s_q = false;
+}
+
+void	remove_instant_quotes(char *str)
+{
+	int		i;
+	bool	s_quote;
+	bool	d_quote;
 	int		j;
 
-	i = 0;
-	j = 0;
-	quote = false;
-    while (str[i])
+	init(&d_quote, &s_quote, &i, &j);
+	while (str[i])
 	{
-        if ((str[i] == '"' || str[i] == '\'') && !quote
-			&& str[i + 1] && str[i + 1] == str[i])
-            i += 2;
-		else if ((str[i] == '"' || str[i] == '\'')
-			&& str[i + 1] && str[i + 1] != str[i])
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			if (!s_quote && str[i + 1] && str[i + 1] == str[i] && !d_quote)
+				i += 2;
+			else
 			{
 				str[j++] = str[i++];
-				quote = !quote;
+				if (str[i] == '\'')
+					s_quote = !s_quote;
+				else
+					d_quote = !d_quote;
 			}
+		}
 		else
-        	str[j++] = str[i++];
-    }
-    str[j] = '\0';
-}
-
-int	fill_list(char *inputString, t_list **head)
-{
-    char		*temp;
-    int			end_word;
-	int			red_c;
-	t_list		*temp2;
-
-	temp2 = NULL;
-	red_c = 0;
-	remove_instant_quotes(inputString);
-    while (*inputString)
-    {
-        if (*inputString == ' ')
-            while (*inputString == ' ')
-                inputString++;
-        else
-        {
-            end_word = end_word_index(inputString);
-            temp = ft_substr(inputString, 0, end_word);
-			if (what_type(temp) == in_redir || what_type(temp) == trunc
-				|| what_type(temp) == append)
-				red_c++;
-			add_or_join(head, temp, &temp2, &red_c);
-            if (end_word == -1)
-                return (free(temp), expand_multi_vars(head), 0);
-            free(temp);
-            inputString += end_word;
-        }
-    }
-	return (expand_multi_vars(head), 0);
-}
-
-t_list	*pars_error(char *str)
-{
-	t_list	*command;
-	char	*inpStr;
-
-	command = NULL;
-	inpStr = ft_strtrim(str, " ");
-	if (!inpStr || !*inpStr)
-		return (free(inpStr), NULL);
-	if (*inpStr == '|' || *inpStr == ';')
-	{
-		printf("minishell: syntax error near unexpected token `%c'\n", *(inpStr));
-		return (free(inpStr), NULL);
+			str[j++] = str[i++];
 	}
-	else if (*(inpStr + ft_strlen(inpStr) - 1) == '|' || *(inpStr + ft_strlen(inpStr) - 1) == ';'
-		|| *(inpStr + ft_strlen(inpStr) - 1) == '>' || *(inpStr + ft_strlen(inpStr) - 1) == '<')
-	{
-		printf("minishell: syntax error near unexpected token `\\n'\n");
-		return (free(inpStr), NULL);
-	}
-	if (!count_quotes(inpStr))
-	{
-		printf("minishell: syntax error, unclosed quotes\n");
-		return (free(inpStr), NULL);
-	}
-	fill_list(inpStr, &command);
-	assign_type(command);
-	
-	if (check_pars_errors(command))
-		return (free(inpStr), ft_lstclear(&command), NULL);
-	t_list	*final;
-	final = create_final_list(&command);
-	
-	return (free(inpStr), ft_lstclear(&command), final);
+	str[j] = '\0';
 }
 

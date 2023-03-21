@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 12:13:59 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 15:27:20 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:21:32 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ void my_echo(char **strs)
 		else
 		{
 			op = 1;
-			if (!strcmp(strs[i], "$?"))
-				printf("%d", global_es);
-			else
 				printf("%s", strs[i]);
 			if (strs[i + 1])
 				printf(" ");

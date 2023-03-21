@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 15:25:49 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:59:17 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void my_exit(char **strs, t_infos *infos)
 		{
 			ft_printf(1, "minishell: exit: too many arguments\n");
 			exit_status = EXIT_FAILURE;
-			global_es = exit_status;
+			g_exit_status = exit_status;
 			return ;
 		}
 		if (exit_status >= 255 || exit_status < 0)
@@ -50,7 +50,7 @@ void my_exit(char **strs, t_infos *infos)
 	}
 	else
 		exit_status = EXIT_SUCCESS;
-	global_es = exit_status;
+	g_exit_status = exit_status;
 	clear_history();
 	exit(exit_status);	
 }

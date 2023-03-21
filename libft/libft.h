@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:58:35 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/17 19:24:44 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:40:48 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void				ft_putnbr_fd(int n, int fd);
 typedef struct s_delimiter
 {
 	char			*delimiter;
+	char			*tmp_file;
 	int				type;
 }					t_delim;
 
@@ -73,7 +74,7 @@ typedef struct s_list
 {
 	char			*content;
 	char			**commands;
-	int				type;
+	int				type; 
 	char			*in_file;
 	char			*out_file;
 	t_delim			*delims;

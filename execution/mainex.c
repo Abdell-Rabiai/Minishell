@@ -6,36 +6,11 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 15:24:53 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:42:20 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void    free_final_list(t_list *final)
-{
-    t_list    *temp;
-    int        i;
-
-    while (final)
-    {
-        i = -1;
-        temp = final;
-        final = final->next;
-        free(temp->content);
-        while (temp->commands[++i])
-            free(temp->commands[i]);
-        i = -1;
-        if (temp->delims)
-            while (temp->delims[++i].delimiter)
-                free(temp->delims[i].delimiter);
-        close(temp->in_fd);
-        close(temp->out_fd);
-        free(temp->in_file);
-        free(temp->out_file);
-        free(temp);
-    }
-}
 
 void update_shlvl_variable(t_infos *infos)
 {
@@ -85,6 +60,7 @@ void	prompt(t_infos *infos)
 		// print_list(final_list, 1);
 		execute(final_list, infos);
 		add_history(str);
+		free_final_list(final_list);
 		free(str);
 	}
 }
@@ -114,7 +90,7 @@ void print_env(char **envp)
 		i++;
 	}
 }
-int global_es;
+int g_exit_status;
 
 int main(int ac, char **av, char **envp)
 {
@@ -122,7 +98,7 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	t_infos infos;
-	init(&infos);
+	initt(&infos);
 	duplicate_envp(envp, &infos);
 	update_shlvl_variable(&infos);
 	// if (ac >= 2)

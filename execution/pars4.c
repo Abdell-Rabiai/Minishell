@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:13:54 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/19 00:06:50 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:16:42 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,56 +20,39 @@ char	*get_variable(char *str)
 	char	*value;
 
 	i = 0;
-	while (str[i + 1] && (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
-		i++;
-	var = ft_substr(str, 1, i);
+	if (ft_isdigit(str[1]) || str[1] == '?')
+		var = ft_substr(str, 1, 1);
+	else
+	{
+		while (str[i + 1] && (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
+			i++;
+		var = ft_substr(str, 1, i);
+	}
 	var2 = ft_substr(str, ft_strlen(var) + 1, ft_strlen(str) - ft_strlen(var));
-	value = getenv(var);
+	if (str[1] != '?')
+		value = ft_strdup(getenv(var), 0);
+	else
+		value = ft_itoa(g_exit_status);
 	if (!value)
 		value = ft_strdup("", 0);
-	value = ft_strjoin(value, var2, 0);
-	free(var);
-	free(var2);
-	return (value);
+	value = ft_strjoin(value, var2, 1);
+	return (free(var), free(var2), value);
 }
 
-bool	var_exist(char *str)
-{
-	int		i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '$')
-		{
-			if (ft_isalnum(str[i + 1]) || str[i + 1] == '_')
-				return (true);
-		}
-	}
-	return (false);
-}
-
-void	expand_variables(t_list *tmp)
+void	expand_variables(t_list *tmp, int pos)
 {
 	char	*value;
 	char	*tmp_str;
 	int		i;
 
-	i = 0;
-	if (!is_expandable((tmp->content)))
-		return ;
-	while ((tmp->content)[i] != '$' && (tmp->content)[i])
-		i++;
-	if ((tmp->content)[i] == '$')
-	{
-		tmp_str = ft_substr((tmp->content), 0, i);
-		value = get_variable((tmp->content) + i);
-		i--;
-		free(tmp->content);
-		tmp->content = ft_strjoin(tmp_str, value, 1);
-		free(value);
-	}
+	i = pos;
+	tmp_str = ft_substr((tmp->content), 0, i);
+	value = get_variable((tmp->content) + i);
+	free(tmp->content);
+	tmp->content = ft_strjoin(tmp_str, value, 1);
+	free(value);
 }
+
 void	remove_spaces(char *str)
 {
 	int		i;
@@ -105,21 +88,21 @@ void	expand_multi_vars(t_list **head)
 			tmp = tmp->next;
 		if (tmp)
 		{
-			while (var_exist(tmp->content) && is_expandable(tmp->content))
-				expand_variables(tmp);
+			check_and_expand(tmp);
 			remove_spaces(tmp->content);
 			tmp = tmp->next;
 		}
 	}
 }
 
-bool	is_expandable(char *str)
+void	check_and_expand(t_list *tmp)
 {
-	int		i;
-	int		quote;
+	int			i;
+	static int	quote;
+	char		*str;
 
 	i = -1;
-	quote = 0;
+	str = tmp->content;
 	while (str[++i])
 	{
 		if (str[i] == '\"' || str[i] == '\'')
@@ -129,8 +112,14 @@ bool	is_expandable(char *str)
 			else if (quote == str[i])
 				quote = 0;
 		}
-		if (str[i] == '$' && (!quote || quote == '\"'))
-			return (true);
+		if (str[i] == '$' && (!quote || quote == '\"')
+			&& str[i + 1] && (ft_isalnum(str[i + 1])
+				|| str[i + 1] == '_' || str[i + 1] == '?'))
+		{
+			expand_variables(tmp, i);
+			str = tmp->content;
+			i = -1;
+			quote = 0;
+		}
 	}
-	return (false);
 }
