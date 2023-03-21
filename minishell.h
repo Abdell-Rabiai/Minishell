@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 18:59:29 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:52:59 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ typedef enum TYPE
 	delimiter,/*4*/
 	in_file,/*5*/
 	append,/*6*/
-	out_file,/*7*/
+	tr_out_file,/*7*/
+	app_out_file,/*8*/
 	Pipe,/*8*/
 	_delimiter/*9*/
 }			t_type;

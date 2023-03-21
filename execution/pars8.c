@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars8.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:35:45 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 18:12:54 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:12:26 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	remove_quotes_node(t_list **temp)
 	in_quotes = 0;
 	num_tokens = 0;
 	(*temp)->commands = split_string((*temp)->content, in_quotes, num_tokens);
-		while ((*temp)->commands[++i])
-			remove_quotes((*temp)->commands[i]);
+	while ((*temp)->commands[++i])
+		remove_quotes((*temp)->commands[i]);
 	i = -1;
 	if ((*temp)->delims)
 	{

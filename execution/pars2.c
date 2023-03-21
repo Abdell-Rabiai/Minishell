@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:19:04 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:16:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:41:30 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	count_quotes(char *str)
 
 bool	is_spec(char str)
 {
-	if (str == '<' || str == '>' || str == '|' || str == ' ')
+	if (str == '<' || str == '>' || str == '|' || str == ' ' || str == '\t')
 		return (true);
 	else
 		return (false);

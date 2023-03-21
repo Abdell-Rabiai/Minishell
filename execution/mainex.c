@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 21:51:17 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:57:13 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,25 @@ void    prompt(t_infos *infos)
 {
     (void)infos;
     t_list    *final_list;
-    char    *cwd;
-    char    *tmp;
+    // char    *cwd;
+    // char    *tmp;
     char    *str;
 
     signal(SIGINT, handle_kill);
     signal(SIGQUIT, handle_kill);
     while (1)
     {
-        cwd = getcwd(NULL, 0);
-        if (!cwd)
-            cwd = ft_strdup(get_envp_value("PWD", infos), 0);
-        cwd = repalce_path_with_tilda(cwd);
-        tmp = ft_strjoin("\x1B[1;36m", cwd, 2);
-        cwd = ft_strjoin(tmp, "$ \033[0m", 1);
-        cwd = ft_strjoin(cwd, "\033[1;32mbash-9.2$ \033[0m", 1);
-		if (!cwd)
-			cwd = ft_strdup("ana mwader :( $:", 0);
-        str = readline(cwd);
-        free(cwd);
+        // cwd = getcwd(NULL, 0);
+        // if (!cwd)
+        //     cwd = ft_strdup(get_envp_value("PWD", infos), 0);
+        // cwd = repalce_path_with_tilda(cwd);
+        // tmp = ft_strjoin("\x1B[1;36m", cwd, 2);
+        // cwd = ft_strjoin(tmp, "$ \033[0m", 1);
+        // cwd = ft_strjoin(cwd, "\033[1;32mbash-9.2$ \033[0m", 1);
+		// if (!cwd)
+		// 	cwd = ft_strdup("ana mwader :( $:", 0);
+        str = readline("BASH:8.5$ ");
+        // free(cwd);
         if (!str)
         {
             clear_history();

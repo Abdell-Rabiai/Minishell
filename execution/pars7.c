@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars7.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:35:01 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:16:54 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:43:09 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*tmp_here_doc_file_gen(void)
 
 int	open_fill(t_list **head, t_list **temp, int i)
 {
-	if ((*head)->type == in_file || (*head)->type == out_file)
+	if ((*head)->type == in_file || (*head)->type == tr_out_file
+		|| (*head)->type == app_out_file)
 		open_files(head, temp);
 	else if ((*head)->type == delimiter)
 	{
@@ -67,8 +68,8 @@ int	open_fill(t_list **head, t_list **temp, int i)
 		}
 	}
 	if (*head)
-		free_node(head, ((*head)->type != delimiter
-				&& (*head)->type != in_file && (*head)->type != out_file));
+		free_node(head, ((*head)->type != delimiter && (*head)->type != in_file
+			&& (*head)->type != app_out_file && (*head)->type != tr_out_file));
 	(*temp)->type = word;
 	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars6.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 14:23:00 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:16:51 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:40:09 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	open_out_file(t_list **head, t_list **temp, char *file_name)
 {
 	if ((*temp)->out_fd != -2 && !(*temp)->_errno)
 		close((*temp)->out_fd);
-	if ((*head)->prev->type == trunc && !(*temp)->_errno)
+	if ((*head)->type == tr_out_file && !(*temp)->_errno)
 		(*temp)->out_fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if ((*head)->prev->type == append && !(*temp)->_errno)
+	else if ((*head)->type == app_out_file && !(*temp)->_errno)
 		(*temp)->out_fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*temp)->out_fd == -1 && !(*temp)->_errno)
 		return (free((*temp)->out_file)
@@ -75,7 +75,7 @@ int	open_files(t_list **head, t_list **temp)
 
 	file_name = (*head)->content;
 	remove_quotes(file_name);
-	if ((*head)->prev->type == in_redir)
+	if ((*head)->type == in_file)
 	{
 		if ((*temp)->in_fd != -2 && !(*temp)->_errno)
 			close((*temp)->in_fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars4.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:13:54 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 18:58:26 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:04:28 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*get_variable(char *str, t_infos *infos)
 	char	*var;
 	char	*var2;
 	char	*value;
-
 	i = 0;
 	if (ft_isdigit(str[1]) || str[1] == '?')
 		var = ft_substr(str, 1, 1);
@@ -68,7 +67,7 @@ void	remove_spaces(char *str)
 	{
 		if (tmp[i] == '\"' || tmp[i] == '\'')
 			quote = !quote;
-		if (tmp[i] == ' ' && tmp[i + 1] == ' ' && !quote)
+		if ((tmp[i] == ' ' || tmp[i] == '\t') && tmp[i + 1] == ' ' && !quote)
 			i++;
 		else
 			str[j++] = tmp[i++];

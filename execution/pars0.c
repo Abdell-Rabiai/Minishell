@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars0.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:33:22 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 18:57:18 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:06:05 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	fill_list(char *inputString, t_list **head)
 	red_c = 0;
 	while (*inputString)
 	{
-		while (*inputString == ' ')
+		while (*inputString == ' ' || *inputString == '\t')
 			inputString++;
 		end_word = end_word_index(inputString);
 		temp = ft_substr(inputString, 0, end_word);
