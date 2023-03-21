@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 16:20:53 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:51:25 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_t pid, t_infos *infos)
 {
 	int		fd_in;
+	int		fd_out;
 	char	*path;
 	char	**strs;
 	char	**splited_paths;
 
     fd_in = final_list->in_fd;
+	fd_out = final_list->out_fd;
 	strs = final_list->commands;
     if (final_list->_errno != 0)
 	{
@@ -27,13 +29,29 @@ void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, pid_
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 		exit(EXIT_FAILURE);
 	}
+	if (final_list->delims != NULL)
+	{
+		if (fd_in == -2)
+			fd_in = open(get_last_heredoc_filename(final_list), O_RDONLY);
+			dup2(fd_in, STDIN_FILENO);
+		if (!strs[0])
+			exit(EXIT_SUCCESS);
+	}
+	if (fd_out != -2)
+	{
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+	else
+	{
+		close(pipe_ends[0]);
+		dup2(pipe_ends[1], STDOUT_FILENO);
+	}
 	if (fd_in != -2)
 	{
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
-	close(pipe_ends[0]);
-	dup2(pipe_ends[1], STDOUT_FILENO);
     if (is_builtin(final_list) == 1)
         execute_builtin(strs, infos);
     else
@@ -52,15 +70,30 @@ void	last_child_process(t_list *final_list, char **envp, pid_t pid, t_infos *inf
 	char	*path;
 	char	**strs;
 	int		fd_out;
+	int 	fd_in;
 	char	**splited_paths;
     
     fd_out = final_list->out_fd;
+	fd_in = final_list->in_fd;
 	strs = final_list->commands;
     if (final_list->_errno != 0)
 	{
 		close(pid);
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 		exit(EXIT_FAILURE);
+	}
+	if (final_list->delims != NULL)
+	{
+		if (fd_in == -2)
+			fd_in = open(get_last_heredoc_filename(final_list), O_RDONLY);
+			dup2(fd_in, STDIN_FILENO);
+		if (!strs[0])
+			exit(EXIT_SUCCESS);
+	}
+	if (fd_in != -2)
+	{
+		dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
 	}
 	if (fd_out == -2)
 		dup2(infos->std_out, STDOUT_FILENO);
@@ -87,10 +120,47 @@ void	inter_process(t_list *final_list, int pipe_ends[2], char **envp, t_infos *i
 	char	*path;
 	char	**strs;
 	char	**splited_paths;
+	int		fd_out;
+	int		fd_in;
 
+	fd_out = final_list->out_fd;
+	fd_in = final_list->in_fd;
 	strs = final_list->commands;
-	close(pipe_ends[0]);
-	dup2(pipe_ends[1], STDOUT_FILENO);
+	if (!strs[0])
+		exit(EXIT_SUCCESS);
+	if (final_list->_errno != 0)
+	{
+		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
+		exit(EXIT_FAILURE);
+	}
+	if (final_list->delims != NULL)
+	{
+		if (fd_in == -2)
+			fd_in = open(get_last_heredoc_filename(final_list), O_RDONLY);
+			dup2(fd_in, STDIN_FILENO);
+		if (!strs[0])
+			exit(EXIT_SUCCESS);
+	}
+	if (fd_out != -2)
+	{
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+	else
+	{
+		close(pipe_ends[0]);
+		dup2(pipe_ends[1], STDOUT_FILENO);
+	}
+	if (fd_in != -2)
+	{
+		dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
+	}
+	// else
+	// {
+	// 	close(pipe_ends[1]);
+	// 	dup2(pipe_ends[0], STDIN_FILENO);
+	// }
     if (is_builtin(final_list) == 1)
         execute_builtin(strs, infos);
     else

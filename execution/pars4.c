@@ -6,13 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:13:54 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:16:42 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:58:26 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_variable(char *str)
+char	*get_variable(char *str, t_infos *infos)
 {
 	int		i;
 	char	*var;
@@ -30,7 +30,7 @@ char	*get_variable(char *str)
 	}
 	var2 = ft_substr(str, ft_strlen(var) + 1, ft_strlen(str) - ft_strlen(var));
 	if (str[1] != '?')
-		value = ft_strdup(getenv(var), 0);
+		value = ft_strdup(get_envp_value(var, infos), 0);
 	else
 		value = ft_itoa(g_exit_status);
 	if (!value)
@@ -39,7 +39,7 @@ char	*get_variable(char *str)
 	return (free(var), free(var2), value);
 }
 
-void	expand_variables(t_list *tmp, int pos)
+void	expand_variables(t_list *tmp, int pos, t_infos *infos)
 {
 	char	*value;
 	char	*tmp_str;
@@ -47,7 +47,7 @@ void	expand_variables(t_list *tmp, int pos)
 
 	i = pos;
 	tmp_str = ft_substr((tmp->content), 0, i);
-	value = get_variable((tmp->content) + i);
+	value = get_variable((tmp->content) + i, infos);
 	free(tmp->content);
 	tmp->content = ft_strjoin(tmp_str, value, 1);
 	free(value);
@@ -77,7 +77,7 @@ void	remove_spaces(char *str)
 	free(tmp);
 }
 
-void	expand_multi_vars(t_list **head)
+void	expand_multi_vars(t_list **head, t_infos *infos)
 {
 	t_list	*tmp;
 
@@ -88,14 +88,14 @@ void	expand_multi_vars(t_list **head)
 			tmp = tmp->next;
 		if (tmp)
 		{
-			check_and_expand(tmp);
+			check_and_expand(tmp, infos);
 			remove_spaces(tmp->content);
 			tmp = tmp->next;
 		}
 	}
 }
 
-void	check_and_expand(t_list *tmp)
+void	check_and_expand(t_list *tmp, t_infos *infos)
 {
 	int			i;
 	static int	quote;
@@ -116,7 +116,7 @@ void	check_and_expand(t_list *tmp)
 			&& str[i + 1] && (ft_isalnum(str[i + 1])
 				|| str[i + 1] == '_' || str[i + 1] == '?'))
 		{
-			expand_variables(tmp, i);
+			expand_variables(tmp, i, infos);
 			str = tmp->content;
 			i = -1;
 			quote = 0;

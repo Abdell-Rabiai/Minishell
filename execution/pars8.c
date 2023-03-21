@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:35:45 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:26:10 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:12:54 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,8 @@ void	remove_quotes_node(t_list **temp)
 	in_quotes = 0;
 	num_tokens = 0;
 	(*temp)->commands = split_string((*temp)->content, in_quotes, num_tokens);
-	if ((*temp)->commands && (*temp)->commands[0]
-		&& ft_strcmp((*temp)->commands[0], "export"))
-	{
 		while ((*temp)->commands[++i])
 			remove_quotes((*temp)->commands[i]);
-	}
 	i = -1;
 	if ((*temp)->delims)
 	{

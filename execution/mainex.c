@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 16:42:20 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 21:51:17 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,50 +34,71 @@ void update_shlvl_variable(t_infos *infos)
 	}
 }
 
-void	prompt(t_infos *infos)
+char    *repalce_path_with_tilda(char *str)
 {
-	(void)infos;
-	t_list	*final_list;
-	char	*str;
+    int        slashes;
+    char    *tmp;
 
-	signal(SIGINT, handle_kill);
-	signal(SIGQUIT, handle_kill);
-	while (1)
-	{
-		char *cwd;
-		cwd = getcwd(NULL, 0);
+    slashes = 0;
+	if (!str)
+		return (NULL);
+    tmp = str;
+    while (*str)
+    {
+        if (*str == '/')
+            slashes++;
+        if (slashes == 3)
+            break ;
+        str++;
+    }
+	if (slashes == 3)
+		str = ft_strjoin("~", str, 0);
+	else
+		str = tmp;
+    // free(tmp);
+    return (str);
+}
+
+void    prompt(t_infos *infos)
+{
+    (void)infos;
+    t_list    *final_list;
+    char    *cwd;
+    char    *tmp;
+    char    *str;
+
+    signal(SIGINT, handle_kill);
+    signal(SIGQUIT, handle_kill);
+    while (1)
+    {
+        cwd = getcwd(NULL, 0);
+        if (!cwd)
+            cwd = ft_strdup(get_envp_value("PWD", infos), 0);
+        cwd = repalce_path_with_tilda(cwd);
+        tmp = ft_strjoin("\x1B[1;36m", cwd, 2);
+        cwd = ft_strjoin(tmp, "$ \033[0m", 1);
+        cwd = ft_strjoin(cwd, "\033[1;32mbash-9.2$ \033[0m", 1);
 		if (!cwd)
-			cwd = ft_strdup(get_envp_value("PWD", infos), 0);
-		ft_printf(1, "\x1B[1;36m%s$ \033[0m", cwd);
-		free(cwd);
-		str = readline("\033[1;32mbash-9.2$ \033[0m");
-		if (!str)
-		{
-			clear_history();
-			exit(1);
-		}
-		final_list = pars_error(str);
-		// print_list(final_list, 1);
-		execute(final_list, infos);
-		add_history(str);
-		free_final_list(final_list);
-		free(str);
-	}
+			cwd = ft_strdup("ana mwader :( $:", 0);
+        str = readline(cwd);
+        free(cwd);
+        if (!str)
+        {
+            clear_history();
+            exit(1);
+        }
+        final_list = pars_error(str, infos);
+        execute(final_list, infos);
+        add_history(str);
+        free_final_list(final_list);
+        free(str);
+    }
 }
 
 void koo(void)
 {
 	system("leaks minishell");
 }
-
-// void execute_using_minishell(char *executable, t_infos *infos)
-// {
-// 	char **strs;
-// 	executable	= ft_strjoin("bash ", executable, 0);
-// 	strs = ft_split(executable, ' ');
-// 	my_execution(strs, infos);
-// 	exit(EXIT_SUCCESS);
-// }
 
 void print_env(char **envp)
 {

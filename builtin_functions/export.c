@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/18 22:16:21 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 20:10:47 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 	temp = infos->my_envp;
     while (temp)
 	{
-		if (!ft_strncmp(temp->variable_name, var_name, ft_strlen(temp->variable_name)))
+		if (!strcmp(temp->variable_name, var_name))
 		{	
 			if(!var_value)
 				return (free(var_name)) ;

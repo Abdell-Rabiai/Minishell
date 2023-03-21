@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:23:58 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:59:29 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,10 @@ void	execute(t_list *final_list, t_infos *infos);
 int		is_builtin(t_list *node);
 void	execute_builtin(char **strs, t_infos *infos);
 
-
-
-
+/*------------> heredoc--------->*/
+char *get_last_heredoc_filename(t_list *final_list);
+void open_heredoc_file(t_list *final_list);
+void handle_multiple_here_docs(t_list *final_list);
 
 
 /**AHMAYMOU*/
@@ -132,7 +133,7 @@ typedef enum TYPE
 
 void	free_final_list(t_list *final);
 void	prompt(t_infos *infos);
-t_list	*pars_error(char *str);
+t_list	*pars_error(char *str, t_infos *infos);
 void	print_error(char c);
 void	handle_kill(int sig);
 bool	count_quotes(char *str);
@@ -145,9 +146,9 @@ t_type	what_type(char *cmd);
 int		check_pars_errors(t_list *command);
 int		check_pars_syntax(char *str);
 int		check_pars_erros2(t_list *temp, char *str);
-void	expand_variables(t_list *head, int pos);
-void	expand_multi_vars(t_list **head);
-void	check_and_expand(t_list *tmp);
+void	expand_variables(t_list *head, int pos, t_infos *infos);
+void	expand_multi_vars(t_list **head, t_infos *infos);
+void	check_and_expand(t_list *tmp, t_infos *infos);
 int		count_tokens(const char *str);
 char	**split_string(const char *str, int in_quotes, int num_tokens);
 char	*extract_token(const char *start, const char *str);
@@ -163,6 +164,6 @@ int		count_delimiter(t_list *temp);
 t_type	which_delimiter(char *str);
 void	finish_node(t_list **final, t_list *temp, int i);
 int		count_commands(t_list *temp);
-int		fill_check_final(char *inpstr, t_list **final, t_list **command);
+int		fill_check_final(char *inpstr, t_list **final, t_list **command, t_infos *infos);
 
 #endif
