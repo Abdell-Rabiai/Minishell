@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/20 18:44:55 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:24:53 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void update_shlvl_variable(t_infos *infos)
 		}
 		temp = temp->next;
 	}
-	if (!temp)
-		export_variable(infos, "SHLVL=1");
 }
 
 void	prompt(t_infos *infos)
@@ -96,17 +94,14 @@ void koo(void)
 	system("leaks minishell");
 }
 
-void execute_using_minishell(char *executable, t_infos *infos)
-{
-	char **strs;
-	char **envp;
-
-	executable	= ft_strjoin("bash ", executable, 0);
-	strs = ft_split(executable, ' ');
-	envp = copy_envp_into_array(infos);
-	execve("/bin/bash", strs, envp);
-	exit(127);
-}
+// void execute_using_minishell(char *executable, t_infos *infos)
+// {
+// 	char **strs;
+// 	executable	= ft_strjoin("bash ", executable, 0);
+// 	strs = ft_split(executable, ' ');
+// 	my_execution(strs, infos);
+// 	exit(EXIT_SUCCESS);
+// }
 
 void print_env(char **envp)
 {
@@ -119,7 +114,7 @@ void print_env(char **envp)
 		i++;
 	}
 }
-int g_ex_status;
+int global_es;
 
 int main(int ac, char **av, char **envp)
 {
@@ -130,8 +125,8 @@ int main(int ac, char **av, char **envp)
 	init(&infos);
 	duplicate_envp(envp, &infos);
 	update_shlvl_variable(&infos);
-	if (ac >= 2)
-		execute_using_minishell(av[1], &infos);
+	// if (ac >= 2)
+	// 	execute_using_minishell(av[1], &infos);
 	prompt(&infos);
 }
 

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/20 20:06:03 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:27:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_infos
 	int std_out;
 } t_infos;
 
-extern int g_ex_status;
+extern int global_es;
 
 /*---------> initialize_data <--------*/
 void init(t_infos *infos);
@@ -85,7 +85,7 @@ void	my_echo(char **strs);
 void    my_pwd(t_infos *infos);
 void	my_cd(char **strs, t_infos *infos);
 void    cd(char *path, t_infos *infos);
-void	my_exit(char **strs);
+void	my_exit(char **strs, t_infos *infos);
 
 void	builtin_handler(t_list *final_list, t_infos *infos);
 
@@ -109,9 +109,7 @@ void	execute(t_list *final_list, t_infos *infos);
 int		is_builtin(t_list *node);
 void	execute_builtin(char **strs, t_infos *infos);
 
-/**----------------->HEREDOC*/
-void open_heredoc_file(t_list *final_list);
-void multiple_heredocs(t_list *final_list);
+
 
 
 
