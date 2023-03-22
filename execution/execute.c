@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 21:51:14 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:13:57 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 	if (final_list->delims != NULL)
 	{
-		open_heredoc_file(final_list);
+		open_heredoc_file(final_list, infos);
 		if (fd_in == -2)
 			fd_in = open(get_last_heredoc_filename(final_list), O_RDONLY);
 		if (!strs[0])
@@ -199,7 +199,7 @@ void execute(t_list *final_list, t_infos *infos)
 		execute_one_cmd(final_list, envp, infos);
 	else
 	{
-		handle_multiple_here_docs(final_list);
+		handle_multiple_here_docs(final_list, infos);
 		execute_multiple_cmds(final_list, envp, infos);
 	}
 	ft_free_envp_array(envp);

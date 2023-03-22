@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 21:52:59 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:15:37 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	execute_builtin(char **strs, t_infos *infos);
 
 /*------------> heredoc--------->*/
 char *get_last_heredoc_filename(t_list *final_list);
-void open_heredoc_file(t_list *final_list);
-void handle_multiple_here_docs(t_list *final_list);
+void open_heredoc_file(t_list *final_list, t_infos *infos);
+void handle_multiple_here_docs(t_list *final_list, t_infos *infos);
 
 
 /**AHMAYMOU*/
@@ -150,6 +150,8 @@ int		check_pars_erros2(t_list *temp, char *str);
 void	expand_variables(t_list *head, int pos, t_infos *infos);
 void	expand_multi_vars(t_list **head, t_infos *infos);
 void	check_and_expand(t_list *tmp, t_infos *infos);
+char	*get_variable(char *str, t_infos *infos);
+
 int		count_tokens(const char *str);
 char	**split_string(const char *str, int in_quotes, int num_tokens);
 char	*extract_token(const char *start, const char *str);
