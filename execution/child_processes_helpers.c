@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   first_child_helpers.c                              :+:      :+:    :+:   */
+/*   child_processes_helpers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:11:49 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 00:38:36 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 02:49:12 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void first_errno_and_open_heredocs(t_list *final_list, char **strs)
+void	first_errno_and_open_heredocs(t_list *final_list, char **strs)
 {
     if (final_list->_errno != 0)
 	{
@@ -26,10 +26,10 @@ void first_errno_and_open_heredocs(t_list *final_list, char **strs)
 		dup2(final_list->in_fd, STDIN_FILENO);
 		if (!strs[0])
 			exit(EXIT_SUCCESS);
-	}	
+	}
 }
 
-void first_check_for_inout_output_files(t_list *final_list, int pipe_ends[2])
+void	first_check_for_inout_output_files(t_list *final_list, int pipe_ends[2])
 {
 	if (final_list->out_fd != -2)
 	{
@@ -48,7 +48,7 @@ void first_check_for_inout_output_files(t_list *final_list, int pipe_ends[2])
 	}
 }
 
-void last_check_for_input_output_files(t_list *final_list, t_infos *infos)
+void	last_check_for_input_output_files(t_list *final_list, t_infos *infos)
 {
 	if (final_list->in_fd != -2)
 	{

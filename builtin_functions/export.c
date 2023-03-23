@@ -6,15 +6,15 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/22 21:37:29 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 21:37:28 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void my_export(char **strs, t_infos *infos)
+void	my_export(char **strs, t_infos *infos)
 {
-	int i;
+	int	i;
 	
 	i = 1;
 	if (!strs[i])
@@ -28,9 +28,9 @@ void my_export(char **strs, t_infos *infos)
 
 int check_variable_regex(char *str)
 {
-	int i;
-	i = 0;
+	int	i;
 
+	i = 0;
 	if (str[i] != '_' && !ft_isalpha(str[i]))
 		return (1);
 	i++;
@@ -74,7 +74,7 @@ void export(t_infos *infos)
 
 void add_variable(t_infos *infos, char *var_name, char *var_value, bool concatenate)
 {
-    t_envp 	*temp;
+    t_envp	*temp;
 
 	temp = infos->my_envp;
     while (temp)
@@ -104,7 +104,7 @@ void export_variable(t_infos *infos, char *string)
 {
 	t_envp 	*temp;
 	char	*var_value;
-	char 	*var_name;
+	char	*var_name;
 
 	temp = infos->my_envp;
 	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string);
@@ -116,7 +116,7 @@ void export_variable(t_infos *infos, char *string)
 		else
 			ft_printf(2, "minishell: export: `%s%s': not a valid identifier\n", var_name,var_value);
 		free(var_name);
-		return ;
+		exit(EXIT_FAILURE);
 	}
 	if (var_value)
 		var_value++;

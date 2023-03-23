@@ -6,16 +6,16 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/22 17:49:21 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 21:38:06 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void my_unset(char **strs, t_infos *infos)
+void	my_unset(char **strs, t_infos *infos)
 {
-	int i;
-	
+	int	i;
+
 	i = 1;
 	if (!strs[i])
 		return ;
@@ -26,13 +26,13 @@ void my_unset(char **strs, t_infos *infos)
 	}
 }
 
-void unset_variable(char *str, t_infos *infos)
+void	unset_variable(char *str, t_infos *infos)
 {
 
 	if (check_variable_regex(str))
 	{
 		ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", str);
-		return ;
+		exit(EXIT_FAILURE);
 	}
 	if (delete_head_envp(infos, str))
 		return ;
@@ -45,9 +45,10 @@ void unset_variable(char *str, t_infos *infos)
 	}
 }
 
-int delete_head_envp(t_infos *infos, char *str)
+int	delete_head_envp(t_infos *infos, char *str)
 {
-	t_envp *temp;
+	t_envp	*temp;
+
 	temp = infos->my_envp;
 	if (!ft_strcmp(temp->variable_name, str))
 	{
@@ -61,10 +62,11 @@ int delete_head_envp(t_infos *infos, char *str)
 		return (0);
 }
 
-int delete_node_envp(t_infos *infos, char *str)
+int	delete_node_envp(t_infos *infos, char *str)
 {
-	t_envp *temp;
-	t_envp *curr;
+	t_envp	*temp;
+	t_envp	*curr;
+
 	temp = infos->my_envp;
 	while (temp->next)
 	{
@@ -83,10 +85,11 @@ int delete_node_envp(t_infos *infos, char *str)
 	return (0);
 }
 
-int delete_tail_envp(t_infos *infos, char *str)
+int	delete_tail_envp(t_infos *infos, char *str)
 {
-	t_envp *temp;
-	t_envp *previous;
+	t_envp	*temp;
+	t_envp	*previous;
+
 	temp = infos->my_envp;
 	while (temp->next)
 	{

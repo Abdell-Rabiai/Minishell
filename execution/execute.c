@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 00:04:20 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 21:46:19 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ void execute_builtin(char **strs, t_infos *infos)
 		my_env(infos);
 	else if (!ft_strcmp(strs[0], "exit"))
 		my_exit(strs);
+	exit(EXIT_SUCCESS);
 }
 
 void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
@@ -212,7 +213,13 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 	pid_t	pid;
 	
 	if (is_builtin(final_list) == 1 && !final_list->delims)
-		execute_builtin(final_list->commands, infos);
+	{
+		pid = fork();
+		if (pid == 0)
+			execute_builtin(final_list->commands, infos);
+		waitpid(pid, &g_exit_status, 0);
+		g_exit_status =  WEXITSTATUS(g_exit_status);
+	}
 	else
 	{
 		pid = fork();
@@ -227,13 +234,9 @@ void execute(t_list *final_list, t_infos *infos)
 {
 	char 	**envp;
 
+	infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
 	if (!final_list)
 		return ;
-	if (final_list->_errno != 0)
-	{
-		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
-		return ;
-	}
 	infos->std_in = dup(STDIN_FILENO);
 	infos->std_out = dup(STDOUT_FILENO);
 	envp = copy_envp_into_array(infos);
@@ -245,4 +248,5 @@ void execute(t_list *final_list, t_infos *infos)
 		execute_multiple_cmds(final_list, envp, infos);
 	}
 	ft_free_envp_array(envp);
+	free(infos->pids);
 }

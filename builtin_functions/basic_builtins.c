@@ -6,18 +6,18 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/22 18:24:07 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 21:35:30 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    my_pwd(t_infos *infos)
+void	my_pwd(t_infos *infos)
 {
-	char    str[256] = "";
+	char	str[256] = "";
 
 	if (!getcwd(str, sizeof(str)))
-	{	
+	{
 		if (get_envp_value("PWD", infos))
 			ft_printf(1, "%s\n", get_envp_value("PWD", infos));
 		else
@@ -27,10 +27,10 @@ void    my_pwd(t_infos *infos)
 		ft_printf(1, "%s\n", str);
 }
 
-void my_exit(char **strs)
+void	my_exit(char **strs)
 {
 	int	i;
-
+	
 	i = 0;
 	if (strs[1])
 	{
@@ -39,12 +39,12 @@ void my_exit(char **strs)
 		if (i == 1)
 		{
 			ft_printf(2, "my_minishell: exit: %s: numeric argument required\n", strs[1]);
-			g_exit_status = 255;
+			exit(255);
 		}
 		else if (!i && (strs[1] && strs[2]))
 		{
-			ft_printf(1, "my_minishell: exit: too many arguments\n");
-			g_exit_status = EXIT_FAILURE;
+			ft_printf(2, "my_minishell: exit: too many arguments\n");
+			exit(EXIT_FAILURE);
 			return ;
 		}
 	}

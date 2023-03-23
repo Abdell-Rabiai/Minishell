@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 01:21:32 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 21:28:24 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void create_pipe(int pipe_ends[2])
 	}
 }
 
-pid_t my_fork()
+pid_t my_fork(t_infos *infos, int i)
 {
 	pid_t	pid;
 
@@ -106,14 +106,26 @@ pid_t my_fork()
 		perror("minishell: fork:");
 		exit(EXIT_FAILURE);
 	}
+	infos->pids[i] = pid;
 	return (pid);
 }
 
-void my_wait_all(pid_t pid)
+void my_wait_all(pid_t pid, int pipe_ends[2], int size, t_infos *infos)
 {
-	while (waitpid(-1, &g_exit_status, 0) > 0);
-	waitpid(pid, &g_exit_status, 0);
-	g_exit_status =  WEXITSTATUS(g_exit_status);
+	(void)pid;
+	int		i;
+	
+	i = 0;
+	close(pipe_ends[0]);
+	close(pipe_ends[1]);
+	
+	while (i < size)
+	{
+		waitpid(infos->pids[i], &g_exit_status, 0);
+		i++;
+	}
+	if (WIFEXITED(g_exit_status))
+		g_exit_status =  WEXITSTATUS(g_exit_status);
 }
 
 void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
@@ -126,7 +138,7 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	while (infos->help.i < infos->help.size)
 	{
 		create_pipe(infos->help.pipe_ends);
-		infos->help.pid = my_fork();
+		infos->help.pid = my_fork(infos, infos->help.i);
 		if (infos->help.pid == 0)
 		{
 			if (infos->help.i == 0)
@@ -142,5 +154,5 @@ void execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	}
 	dup2(infos->std_out, STDOUT_FILENO);
 	dup2(infos->std_in, STDIN_FILENO);
-	my_wait_all(infos->help.pid);
+	my_wait_all(infos->help.pid, infos->help.pipe_ends, infos->help.size, infos);
 }

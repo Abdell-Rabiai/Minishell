@@ -6,13 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 12:13:59 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/22 17:48:31 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 02:36:42 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int check_for_newline_option(char *str)
+int	check_for_newline_option(char *str)
 {
 	int i;
 
@@ -35,11 +35,11 @@ int check_for_newline_option(char *str)
 	return (0);
 }
 
-void my_echo(char **strs)
+void	my_echo(char **strs)
 {
-	int i;
-	int new_line;
-	int op;
+	int	i;
+	int	new_line;
+	int	op;
 
 	new_line = 0;
 	i = 1;
