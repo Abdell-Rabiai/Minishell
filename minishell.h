@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/23 00:50:32 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 01:22:07 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
 
+typedef struct s_help // to help with norminette
+{
+	int		i;
+	pid_t	pid;
+	int		size;
+	int		pipe_ends[2];
+} t_help;
 typedef struct s_envp
 {
 	char			*variable_name;
@@ -38,6 +45,7 @@ typedef struct s_infos
 	struct s_envp	*my_envp;
 	int std_in;
 	int std_out;
+	t_help help;
 } t_infos;
 
 extern int g_exit_status;
