@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 16:59:17 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/22 18:24:07 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,42 @@
 
 void    my_pwd(t_infos *infos)
 {
-	char    str[256];
+	char    str[256] = "";
 
 	if (!getcwd(str, sizeof(str)))
-		ft_printf(1, "%s\n", get_envp_value("PWD", infos));
+	{	
+		if (get_envp_value("PWD", infos))
+			ft_printf(1, "%s\n", get_envp_value("PWD", infos));
+		else
+			ft_printf(1, "Oops! Ana Mwder :) the location where you are doesn't appear to exist, try go somewhere else\n");
+	}
 	else
 		ft_printf(1, "%s\n", str);
 }
 
-void my_exit(char **strs, t_infos *infos)
+void my_exit(char **strs)
 {
-	int i = 0;
-	(void)(infos);
-	long long exit_status;
+	int	i;
+
+	i = 0;
 	if (strs[1])
 	{
 		ft_printf(1, "exit\n");
-		exit_status = ft_atoi_exit(strs[1], &i);
+		g_exit_status = (unsigned char)ft_atoi_exit(strs[1], &i);
 		if (i == 1)
 		{
-			ft_printf(1, "minishell: exit: %s: numeric argument required\n", strs[1]);
-			exit_status = 255;
+			ft_printf(2, "my_minishell: exit: %s: numeric argument required\n", strs[1]);
+			g_exit_status = 255;
 		}
 		else if (!i && (strs[1] && strs[2]))
 		{
-			ft_printf(1, "minishell: exit: too many arguments\n");
-			exit_status = EXIT_FAILURE;
-			g_exit_status = exit_status;
+			ft_printf(1, "my_minishell: exit: too many arguments\n");
+			g_exit_status = EXIT_FAILURE;
 			return ;
 		}
-		if (exit_status >= 255 || exit_status < 0)
-			exit_status = exit_status % 256;
-		if (exit_status < 0)
-			exit_status += 256;
 	}
 	else
-		exit_status = EXIT_SUCCESS;
-	g_exit_status = exit_status;
+		g_exit_status = EXIT_SUCCESS;
 	clear_history();
-	exit(exit_status);	
+	exit(g_exit_status);	
 }

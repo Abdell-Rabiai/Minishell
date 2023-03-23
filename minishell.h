@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/22 12:15:37 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 00:50:32 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void    export(t_infos *infos);
 void	swap_envp_nodes(t_envp *tmp_envp, t_envp *tmp);
 void	sort_envp(t_infos *infos);
 void	export_variable(t_infos *infos, char *string);
-void	add_variable(t_infos *infos, char *var_name, char *var_value);
+void	add_variable(t_infos *infos, char *var_name, char *var_value, bool concatenate);
 int		check_variable_regex(char *str);
 char 	*get_variable_value(char *string);
 char	*get_variable_name(char *string);
@@ -85,13 +85,11 @@ void	my_echo(char **strs);
 void    my_pwd(t_infos *infos);
 void	my_cd(char **strs, t_infos *infos);
 void    cd(char *path, t_infos *infos);
-void	my_exit(char **strs, t_infos *infos);
+void	my_exit(char **strs);
 
 void	builtin_handler(t_list *final_list, t_infos *infos);
 
 /*---------> execution <--------*/
-void	my_execution(t_list *final_list, t_infos *infos);
-// void	execute_using_minishell(t_list *final_list, char *executable, t_infos *infos);
 char	**copy_envp_into_array(t_infos *infos);
 void	print_envp_array(char **envp, t_infos *infos);
 int		get_envp_size(t_envp *envp);
@@ -101,8 +99,10 @@ void	ft_free_envp_array(char **envp);
 char	**get_envpath(char **envp);
 char	*get_command_path(char **paths, char **main_cmd);
 void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos);
-void	child_process1(t_list *final_list, int pipe_ends[2], char **envp, pid_t pid, t_infos *infos);
-void	child_process2(t_list *final_list , int pipe_ends[2], char **envp, pid_t pid, t_infos *infos);
+void	first_errno_and_open_heredocs(t_list *final_list, char **strs);
+void	first_check_for_inout_output_files(t_list *final_list, int pipe_ends[2]);
+void	last_check_for_input_output_files(t_list *final_list, t_infos *infos);
+void	inter_check_for_input_output_files(t_list *final_list, t_infos *infos);
 
 void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos);
 void	execute(t_list *final_list, t_infos *infos);
@@ -170,3 +170,23 @@ int		count_commands(t_list *temp);
 int		fill_check_final(char *inpstr, t_list **final, t_list **command, t_infos *infos);
 
 #endif
+
+\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

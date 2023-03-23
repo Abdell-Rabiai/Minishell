@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 20:10:47 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/22 21:37:29 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void export(t_infos *infos)
 	}
 }
 
-void add_variable(t_infos *infos, char *var_name, char *var_value)
+void add_variable(t_infos *infos, char *var_name, char *var_value, bool concatenate)
 {
     t_envp 	*temp;
 
@@ -82,8 +82,8 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 		if (!strcmp(temp->variable_name, var_name))
 		{	
 			if(!var_value)
-				return (free(var_name)) ;
-			else if (var_name[ft_strlen(var_name) - 1] == '+')
+				return (free(var_name));
+			else if (concatenate == true)
 			{
 				if (!temp->variable_value)
 					temp->variable_value = ft_strdup("", 0);
@@ -91,11 +91,7 @@ void add_variable(t_infos *infos, char *var_name, char *var_value)
 				return (free(var_name));
 			}
 			else
-			{
-				free(temp->variable_value);
-				temp->variable_value = ft_strdup(var_value, 0);
-				return (free(var_name));
-			}
+				return (free(temp->variable_value), temp->variable_value = ft_strdup(var_value, 0), free(var_name));
 		}
 		temp = temp->next;
 	}
@@ -124,5 +120,11 @@ void export_variable(t_infos *infos, char *string)
 	}
 	if (var_value)
 		var_value++;
-    add_variable(infos, var_name, var_value);
+	if (var_name[ft_strlen(var_name) - 1] == '+')
+	{
+		var_name[ft_strlen(var_name) - 1] = '\0';
+		add_variable(infos, var_name, var_value, true);
+	}
+	else
+		add_variable(infos, var_name, var_value, false);
 }

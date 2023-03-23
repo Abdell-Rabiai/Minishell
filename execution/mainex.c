@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 21:57:13 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/22 22:45:24 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,25 @@ void    prompt(t_infos *infos)
 {
     (void)infos;
     t_list    *final_list;
-    // char    *cwd;
-    // char    *tmp;
+    char    *cwd;
+    char    *tmp;
     char    *str;
 
     signal(SIGINT, handle_kill);
     signal(SIGQUIT, handle_kill);
     while (1)
     {
-        // cwd = getcwd(NULL, 0);
-        // if (!cwd)
-        //     cwd = ft_strdup(get_envp_value("PWD", infos), 0);
-        // cwd = repalce_path_with_tilda(cwd);
-        // tmp = ft_strjoin("\x1B[1;36m", cwd, 2);
-        // cwd = ft_strjoin(tmp, "$ \033[0m", 1);
-        // cwd = ft_strjoin(cwd, "\033[1;32mbash-9.2$ \033[0m", 1);
-		// if (!cwd)
-		// 	cwd = ft_strdup("ana mwader :( $:", 0);
-        str = readline("BASH:8.5$ ");
-        // free(cwd);
+        cwd = getcwd(NULL, 0);
+        if (!cwd)
+            cwd = ft_strdup(get_envp_value("PWD", infos), 0);
+        cwd = repalce_path_with_tilda(cwd);// good cwd should be freed
+        tmp = ft_strjoin("\x1B[1;36m", cwd, 2);//good tmp should be freed
+        cwd = ft_strjoin(tmp, "$ \033[0m", 1); //good cwd should be freed
+        cwd = ft_strjoin(cwd, "\033[1;32mbash-9.2$ \033[0m", 1);
+		if (!cwd)
+			cwd = ft_strdup("\033[1;32mbash-9.2$ \033[0m", 0);
+        str = readline(cwd);
+        free(cwd);
         if (!str)
         {
             clear_history();
@@ -95,35 +95,30 @@ void    prompt(t_infos *infos)
     }
 }
 
-void koo(void)
+void execute_using_minishell(char *executable, t_infos *infos)
 {
-	system("leaks minishell");
+	char **strs;
+    char **envp;
+
+	executable = ft_strjoin("bash ", executable, 0);
+	strs = ft_split(executable, ' ');
+    free(executable);
+    envp = copy_envp_into_array(infos);
+    execve("/bin/bash", strs, envp);
+    free_all(strs);
+	exit(127);
 }
 
-void print_env(char **envp)
-{
-	int i;
-	
-	i = 0;
-	while (envp[i])
-	{
-		printf("%s\n", envp[i]);
-		i++;
-	}
-}
 int g_exit_status;
 
 int main(int ac, char **av, char **envp)
 {
-	// atexit(koo);
-	(void)ac;
-	(void)av;
 	t_infos infos;
 	initt(&infos);
 	duplicate_envp(envp, &infos);
 	update_shlvl_variable(&infos);
-	// if (ac >= 2)
-	// 	execute_using_minishell(av[1], &infos);
+	if (ac >= 2)
+		execute_using_minishell(av[1], &infos);
 	prompt(&infos);
 }
 

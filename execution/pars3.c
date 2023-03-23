@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:09:49 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 21:45:38 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:02:45 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check_pars_errors3(t_list *temp, char *str)
 		&& temp->next->type != tr_out_file && temp->next->type != app_out_file)
 		return (print_error(*str), 1);
 	if (check_pars_erros2(temp, str))
-		return (print_error(*str), 1);
+		return (1);
 	if (check_pars_syntax(temp->content))
 		return (1);
 	return (0);

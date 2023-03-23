@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 12:13:59 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 16:21:32 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:48:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int check_for_newline_option(char *str)
 	}
 	return (0);
 }
-
 
 void my_echo(char **strs)
 {

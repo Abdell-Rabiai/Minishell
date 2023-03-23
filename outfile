@@ -7,23 +7,20 @@ echo4 = @echo "\033[31mMINISHELL removed successfully !!! :) \033[m"
 	$(echo3)
 	$(echo4)
        0
-total 400
-drwxr-xr-x  18 arabiai  candidate     612 Mar 21 22:00 .
-drwxr-xr-x  24 arabiai  candidate     816 Mar 21 21:43 ..
-drwxr-xr-x  12 arabiai  candidate     408 Mar 21 21:59 .git
--rw-r--r--   1 arabiai  candidate    2225 Mar 21 21:23 Makefile
--rw-r--r--   1 arabiai  candidate      36 Mar  6 19:34 README.md
-drwxr-xr-x  18 arabiai  candidate     612 Mar 21 22:00 builtin_functions
-drwxr-xr-x  27 arabiai  candidate     918 Mar 21 22:00 execution
-drwxr-xr-x   8 arabiai  candidate     272 Mar 21 22:00 ft_printf
--rw-r--r--   1 arabiai  candidate     986 Mar 21 16:18 initialize_data.c
--rw-r--r--   1 arabiai  candidate    3048 Mar 21 22:00 initialize_data.o
-drwxr-xr-x  94 arabiai  candidate    3196 Mar 21 22:00 libft
--rw-r--r--   1 arabiai  candidate    7280 Mar 21 22:00 libftprintf.a
--rwxr-xr-x   1 arabiai  candidate  158368 Mar 21 22:00 minishell
-drwxr-xr-x   3 arabiai  candidate     102 Mar 21 22:00 minishell.dSYM
--rw-r--r--   1 arabiai  candidate    6035 Mar 21 21:52 minishell.h
--rw-r--r--   1 arabiai  candidate    2982 Mar 14 14:09 minishell_main.c
--rw-r--r--   1 arabiai  candidate     341 Mar 21 22:00 outfile
--rw-r--r--   1 arabiai  candidate    1194 Mar 21 22:00 outfile
-
+total 192
+drwxr-xr-x  16 arabiai  candidate    544 Mar 23 00:53 .
+drwxr-xr-x  26 arabiai  candidate    884 Mar 22 21:44 ..
+drwxr-xr-x  12 arabiai  candidate    408 Mar 23 00:09 .git
+-rw-r--r--   1 arabiai  candidate   2226 Mar 22 13:08 Makefile
+-rw-r--r--   1 arabiai  candidate     36 Mar  6 19:34 README.md
+drwxr-xr-x  18 arabiai  candidate    612 Mar 23 00:53 builtin_functions
+drwxr-xr-x  29 arabiai  candidate    986 Mar 23 00:53 execution
+drwxr-xr-x   8 arabiai  candidate    272 Mar 23 00:53 ft_printf
+-rw-r--r--   1 arabiai  candidate    986 Mar 21 16:18 initialize_data.c
+-rw-r--r--   1 arabiai  candidate    624 Mar 23 00:53 initialize_data.o
+drwxr-xr-x  94 arabiai  candidate   3196 Mar 23 00:53 libft
+-rw-r--r--   1 arabiai  candidate   7280 Mar 23 00:53 libftprintf.a
+-rwxr-xr-x   1 arabiai  candidate  55292 Mar 23 00:53 minishell
+-rw-r--r--   1 arabiai  candidate   6098 Mar 23 00:50 minishell.h
+-rw-r--r--   1 arabiai  candidate   2982 Mar 14 14:09 minishell_main.c
+-rw-r--r--   1 arabiai  candidate    341 Mar 23 00:53 outfile
