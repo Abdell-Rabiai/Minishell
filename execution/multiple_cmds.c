@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 21:28:24 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 23:52:28 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	first_child_process(t_list *final_list, int pipe_ends[2], char **envp, t_in
 	char	**strs;
 	char	**splited_paths;
 
+	signal(SIGQUIT, SIG_DFL);
 	strs = final_list->commands;
 	first_errno_and_open_heredocs(final_list, strs);
 	first_check_for_inout_output_files(final_list, pipe_ends);
@@ -40,6 +41,7 @@ void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
 	char	**strs;
 	char	**splited_paths;
 	
+	signal(SIGQUIT, SIG_DFL);
 	strs = final_list->commands;
 	first_errno_and_open_heredocs(final_list, strs);
 	last_check_for_input_output_files(final_list, infos);
@@ -62,6 +64,7 @@ void	inter_process(t_list *final_list, int pipe_ends[2], char **envp, t_infos *i
 	char	**strs;
 	char	**splited_paths;
 
+	signal(SIGQUIT, SIG_DFL);
 	strs = final_list->commands;
 	if (!strs[0])
 		exit(EXIT_SUCCESS);
@@ -78,36 +81,6 @@ void	inter_process(t_list *final_list, int pipe_ends[2], char **envp, t_infos *i
 		execve(path, strs, envp);
 	}
 	exit(EXIT_SUCCESS);
-}
-
-void	redirect_process(int pipe_ends[2])
-{
-	close(pipe_ends[1]);
-	dup2(pipe_ends[0], STDIN_FILENO);
-	close(pipe_ends[0]);
-}
-
-void create_pipe(int pipe_ends[2])
-{
-	if (pipe(pipe_ends) == -1)
-	{
-		perror("minishell: pipe:");
-		exit(EXIT_FAILURE);
-	}
-}
-
-pid_t my_fork(t_infos *infos, int i)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("minishell: fork:");
-		exit(EXIT_FAILURE);
-	}
-	infos->pids[i] = pid;
-	return (pid);
 }
 
 void my_wait_all(pid_t pid, int pipe_ends[2], int size, t_infos *infos)

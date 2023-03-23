@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:30:43 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 02:42:43 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 21:51:48 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,6 @@ void	add_ignored_env(t_infos *infos)
 	add_back_envp(&infos->my_envp, new_node_envp("OLDPWD", ft_strdup("", 0)));
 	add_back_envp(&infos->my_envp, new_node_envp("PATH"
 		, ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin", 0)));
-}
-
-char	*get_envp_value(char *variable_name, t_infos *infos)
-{
-	t_envp	*tmp;
-
-	tmp = infos->my_envp;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->variable_name, variable_name) == 0)
-			return (tmp->variable_value);
-		tmp = tmp->next;
-	}
-	return (NULL);
 }
 
 void	swap_envp_nodes(t_envp *tmp_envp, t_envp *tmp)

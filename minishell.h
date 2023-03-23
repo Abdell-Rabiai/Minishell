@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/23 21:15:27 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 22:32:20 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ char 	*get_envp_value(char *variable_name, t_infos *infos);
 void 	set_envp_value(char *old_variable, char *current_variable, t_infos *infos);
 void	update_shlvl_variable(t_infos *infos);
 void	add_ignored_env(t_infos *infos);
+char	*get_envp_value(char *variable_name, t_infos *infos);
+
 
 /*--------->builtins util funtions <--------*/
 int		check_for_newline_option(char *str);
@@ -94,6 +96,8 @@ void	my_echo(char **strs);
 void    my_pwd(t_infos *infos);
 void	my_cd(char **strs, t_infos *infos);
 void    cd(char *path, t_infos *infos);
+void	set_envp_value(char *old_variable, char *new_value, t_infos *infos);
+int		print_old_pwd(t_infos *infos);
 void	my_exit(char **strs);
 
 void	builtin_handler(t_list *final_list, t_infos *infos);
@@ -113,18 +117,30 @@ void	first_check_for_inout_output_files(t_list *final_list, int pipe_ends[2]);
 void	last_check_for_input_output_files(t_list *final_list, t_infos *infos);
 void	inter_check_for_input_output_files(t_list *final_list, t_infos *infos);
 
+/**--------------->pipeline------------->*/
 void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos);
 void	execute(t_list *final_list, t_infos *infos);
+void	check_for_inout_output_files(int fd_in, int fd_out);
+char	*get_command_path(char **paths, char **main_cmd);
+char	*return_command_if_found(char **paths, char **main_cmd, char *cmd);
+int		check_command_if_accessible(char *cmd, char **paths);
+int		check_paths_if_null(char **paths, char **main_cmd, char *cmd);
+char	**get_envpath(char **envp);
 int		is_builtin(t_list *node);
 void	execute_builtin(char **strs, t_infos *infos);
+void	redirect_process(int pipe_ends[2]);
+void	create_pipe(int pipe_ends[2]);
+pid_t	my_fork(t_infos *infos, int i);
 
 /*------------> heredoc--------->*/
 char *get_last_heredoc_filename(t_list *final_list);
 void open_heredoc_file(t_list *final_list, t_infos *infos);
 void handle_multiple_here_docs(t_list *final_list, t_infos *infos);
+void open_heredoc_if_found(t_list *final_list, t_infos *infos, char **strs);
+char *check_and_expand_heredoc(char *str, t_infos *infos);
+char *expand_variables_heredoc(char *str, int pos, t_infos *infos);
+void handle_multiple_here_docs(t_list *final_list, t_infos *infos);
 
-
-/**AHMAYMOU*/
 
 typedef enum TYPE
 {

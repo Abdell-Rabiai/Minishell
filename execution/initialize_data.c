@@ -6,11 +6,11 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:35:55 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/21 16:18:58 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 23:42:30 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void initt(t_infos *infos)
 {

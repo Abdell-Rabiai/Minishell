@@ -6,117 +6,11 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 21:46:19 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 23:51:55 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	**get_envpath(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH", 4) == NULL)
-		i++;
-	if (envp[i] == NULL)
-		return (NULL);
-	return (ft_split(envp[i] + 5, ':'));
-}
-
-int check_paths_if_null(char **paths, char **main_cmd, char *cmd)
-{
-	if (paths == NULL)
-	{
-		ft_printf(2, "minishell: %s: No such file or directory\n", main_cmd[0]);
-		free_all(main_cmd);
-		free(cmd);
-		if (paths)
-			free_all(paths);
-		return (1);
-	}
-	return (0);
-}
-
-int check_command_if_accessible(char *cmd, char **paths)
-{
-	if (access(cmd, F_OK | X_OK) == 0)
-	{
-		free(cmd);
-		free_all(paths);
-		return (1);
-	}
-	return (0);
-}
-
-char *return_command_if_found(char **paths, char **main_cmd, char *cmd)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	while (paths[i] != NULL)
-	{
-		str = ft_strjoin(paths[i], cmd, 0);
-		if (access(str, F_OK) == 0)
-			break ;
-		i++;
-		free(str);
-	}
-	if (paths[i] == NULL)
-    {
-		if (!str)
-			exit(EXIT_FAILURE);
-        ft_printf(2, "minishell: %s: command not found\n", main_cmd[0]);
-		return (free(cmd), free_all(main_cmd), free_all(paths), NULL);
-    }
-	else
-        return (free(cmd), free_all(paths), str);
-}
-
-char	*get_command_path(char **paths, char **main_cmd)
-{
-	int		i;
-	char	*cmd;
-	char 	*str;
-
-	i = 0;
-	cmd = ft_strjoin("/", main_cmd[0], 0);
-	if (check_paths_if_null(paths, main_cmd, cmd) == 1)
-		return (NULL);
-	if (check_command_if_accessible(main_cmd[0], paths) == 1)
-        return (main_cmd[0]);
-
-	str = return_command_if_found(paths, main_cmd, cmd);
-	return (str);
-}
-
-void check_for_inout_output_files(int fd_in, int fd_out)
-{	
-	if (fd_in != -2)
-	{
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
-	}
-	if (fd_out != -2)
-	{
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-	}
-}
-
-void open_heredoc_if_found(t_list *final_list, t_infos *infos, char **strs)
-{
-
-	if (final_list->delims != NULL)
-	{
-		open_heredoc_file(final_list, infos);
-		if (final_list->in_fd == -2)
-			final_list->in_fd = open(get_last_heredoc_filename(final_list), O_RDONLY);
-		if (!strs[0])
-			exit(EXIT_SUCCESS);
-	}
-}
 
 void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
@@ -124,6 +18,7 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 	char	**splited_paths;
 	char 	**strs;
 
+	signal(SIGQUIT, SIG_DFL);
 	strs = final_list->commands;
 	if (final_list->_errno != 0)
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
@@ -143,18 +38,6 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
         execve(path, strs, envp);
     }
 	exit(EXIT_SUCCESS);
-}
-
-void str_to_lower(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		str[i] = ft_tolower(str[i]);
-		i++;
-	}
 }
 
 int is_builtin(t_list *node)
@@ -186,6 +69,7 @@ void execute_builtin(char **strs, t_infos *infos)
 	int i;
 	
 	i = 0;
+	signal(SIGQUIT, SIG_DFL);
 	if (!strs || !strs[0])
 	{
 		free_all(strs);
@@ -211,13 +95,19 @@ void execute_builtin(char **strs, t_infos *infos)
 void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	pid_t	pid;
-	
+
+	if (final_list->_errno != 0)
+	{
+		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
+		return ;
+	}
 	if (is_builtin(final_list) == 1 && !final_list->delims)
 	{
 		pid = fork();
 		if (pid == 0)
 			execute_builtin(final_list->commands, infos);
 		waitpid(pid, &g_exit_status, 0);
+		if (WIFEXITED(g_exit_status))
 		g_exit_status =  WEXITSTATUS(g_exit_status);
 	}
 	else
@@ -226,7 +116,8 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 		if (pid == 0)
 			child_process_for_one_cmd(final_list, envp, infos);
 		waitpid(pid, &g_exit_status, 0);
-		g_exit_status =  WEXITSTATUS(g_exit_status);
+		if (WIFEXITED(g_exit_status))
+			g_exit_status = WEXITSTATUS(g_exit_status);
 	}
 }
 

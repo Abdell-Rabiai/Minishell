@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/22 13:08:24 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/23 23:44:11 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ NAME = minishell
 bold := $(shell tput bold)
 sgr0 := $(shell tput sgr0)
 
-SRCS_OBJ = $(shell ls *.c | grep -v minishell_main.c) $(shell ls builtin_functions/*.c ) $(shell ls execution/*.c | grep -v mainex.c)
+SRCS_OBJ = $(shell ls ebuiltin_functions/*.c ) $(shell ls eparsing/*.c ) $(shell ls execution/*.c | grep -v mainex.c)
 
-SRC = minishell_main.c
+SRC = execution/mainex.c
 
 FLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
 
@@ -46,7 +46,7 @@ all : libftprintf $(NAME)
 
 $(NAME) : $(OBJ) execution/mainex.c minishell.h 
 	$(echo1)
-	@$(CC) $(FLAGS) $(SRC) execution/mainex.c $(OBJ) $(LIBS) -lreadline $(READLINE_LIB) -o $(NAME)
+	@$(CC) $(FLAGS) $(SRC) $(OBJ) $(LIBS) -lreadline $(READLINE_LIB) -o $(NAME)
 	$(echo2)
 
 libftprintf :

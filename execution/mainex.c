@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/22 22:45:24 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/23 23:50:14 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ void    prompt(t_infos *infos)
     char    *str;
 
     signal(SIGINT, handle_kill);
-    signal(SIGQUIT, handle_kill);
+    signal(SIGQUIT, SIG_IGN);
     while (1)
     {
         cwd = getcwd(NULL, 0);
         if (!cwd)
             cwd = ft_strdup(get_envp_value("PWD", infos), 0);
-        cwd = repalce_path_with_tilda(cwd);// good cwd should be freed
-        tmp = ft_strjoin("\x1B[1;36m", cwd, 2);//good tmp should be freed
-        cwd = ft_strjoin(tmp, "$ \033[0m", 1); //good cwd should be freed
+        cwd = repalce_path_with_tilda(cwd);
+        tmp = ft_strjoin("\x1B[1;36m", cwd, 2);
+        cwd = ft_strjoin(tmp, "$ \033[0m", 1);
         cwd = ft_strjoin(cwd, "\033[1;32mbash-9.2$ \033[0m", 1);
 		if (!cwd)
 			cwd = ft_strdup("\033[1;32mbash-9.2$ \033[0m", 0);
