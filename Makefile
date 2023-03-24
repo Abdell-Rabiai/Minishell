@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/24 02:12:34 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/24 23:10:13 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,12 +33,12 @@ BANNER=\
 																									 
 parser = $(addprefix src/a_parser/,expansions.c files_opener.c files_opener2.c final_list.c split_cmds.c)
 
-lexer = $(addprefix src/a_lexer/,fill_check_1st_list.c get_words.c syntax_checker.c syntax_checker2.c)
+lexer = $(addprefix src/a_lexer/,fill_check_1st_list.c get_words.c syntax_checker.c syntax_checker2.c syntax_checker3.c)
 
 execution = $(addprefix src/execution/,child_processes_helpers.c execute_helpers.c initialize_data.c\
 		execute_helpers1.c execute.c heredoc_helpers.c heredoc.c multiple_cmds.c multiple_cmds_helpers.c handle_signals.c)
 
-ebuiltin_functions = $(addprefix src/ebuiltin_functions/,echo.c env.c cd.c export.c export_helpers.c\
+ebuiltin_functions = $(addprefix src/ebuiltin_functions/,echo.c env.c cd.c export.c export_helpers.c export_helpers1.c\
 	cd_helpers1.c unset.c basic_builtins.c env_helpers.c)
 
 SRCS_OBJ = $(execution) $(ebuiltin_functions) $(parser) $(lexer)

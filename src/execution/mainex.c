@@ -6,11 +6,13 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 21:01:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:11:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_g	g_g;
 
 char	*repalce_path_with_tilda(char *str)
 {
@@ -73,6 +75,7 @@ void	prompt(t_infos *infos)
 		if (!str)
 		{
 			clear_history();
+			ft_printf(1, "exit\n");
 			exit(1);
 		}
 		final_list = pars_error(str, infos);
@@ -96,7 +99,6 @@ void	execute_using_minishell(char *executable, t_infos *infos)
 	free_all(strs);
 	exit(127);
 }
-
 
 int	main(int ac, char **av, char **envp)
 {

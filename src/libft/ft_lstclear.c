@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 13:06:07 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/20 15:18:07 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:04:55 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_lstclear(t_list **lst)
 	{
 		next = curr->next;
 		free(curr->content);
-		// free_all(curr->commands);
 		free(curr);
 		curr = next;
 	}

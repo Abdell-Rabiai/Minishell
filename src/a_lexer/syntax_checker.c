@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:09:49 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 20:36:48 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:08:06 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,31 +90,6 @@ int	check_pars_errors(t_list *command)
 		if (check_pars_errors3(temp, str))
 			return (1);
 		temp = temp->next;
-	}
-	return (0);
-}
-
-int	check_pars_syntax(char *str)
-{
-	t_type	type;
-	int		i;
-
-	i = 0;
-	type = what_type(str);
-	while (str[i])
-	{
-		if (ft_strlen(str + i) > 1 && !ft_strncmp(str + i, "&&", 2))
-			return (print_error(str[i]), 1);
-		if (type == 2 || type == 6)
-			i += 2;
-		else if (!type)
-			return (0);
-		else
-			i += 1;
-		if ((str[i] && what_type(str + i) == type)
-			|| (str[i] && what_type(str + i) == 1 && type == 6)
-			|| (str[i] && what_type(str + i) == 3 && type == 2))
-			return (print_error(str[i]), 1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:32:05 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/20 12:14:20 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:05:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ long long	ft_atoi_exit(const char *str, int *i)
 	{
 		result *= 10;
 		result += *str - '0';
-		if ((result > __LONG_LONG_MAX__ && sign == 1) || (result - 1 > __LONG_LONG_MAX__ && sign == -1))
+		if ((result > __LONG_LONG_MAX__ && sign == 1)
+			|| (result - 1 > __LONG_LONG_MAX__ && sign == -1))
 			*i = 1;
 		str++;
 	}

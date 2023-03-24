@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 20:37:18 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:04:06 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	my_exit(char **strs)
 	else
 		g_g.g_exit_status = EXIT_SUCCESS;
 	clear_history();
+	ft_printf(1, "exit\n");
 	exit(g_g.g_exit_status);
 }

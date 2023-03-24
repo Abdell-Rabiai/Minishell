@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 20:36:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:11:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_g
 	int		g_heredoc_cmd;
 }	t_g;
 
-t_g g_g;
+extern t_g	g_g;
 /*---------> initialize_data <--------*/
 void	initt(t_infos *infos);
 
@@ -73,6 +73,8 @@ void	sort_envp(t_infos *infos);
 void	export_variable(t_infos *infos, char *string);
 void	add_variable(t_infos *infos, char *var_name, char *var_value,
 			bool concatenate);
+void	not_avalid_identifier(char *var_name, char *var_value);
+void	add_the_variable(t_infos *infos, char *var_name, char *var_value);
 int		check_variable_regex(char *str);
 char	*get_variable_value(char *string);
 char	*get_variable_name(char *string);

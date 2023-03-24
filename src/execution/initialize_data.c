@@ -6,15 +6,14 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:35:55 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 23:42:30 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 22:37:28 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void initt(t_infos *infos)
+void	initt(t_infos *infos)
 {
 	(void)infos;
 	infos->my_envp = NULL;
 }
-

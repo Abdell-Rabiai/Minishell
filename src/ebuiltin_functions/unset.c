@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/23 21:38:06 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 22:47:58 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	my_unset(char **strs, t_infos *infos)
 
 void	unset_variable(char *str, t_infos *infos)
 {
-
 	if (check_variable_regex(str))
 	{
 		ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", str);
@@ -73,7 +72,7 @@ int	delete_node_envp(t_infos *infos, char *str)
 		if (!ft_strcmp(temp->next->variable_name, str))
 		{
 			curr = temp->next;
-			temp->next = temp->next->next; 
+			temp->next = temp->next->next;
 			free(curr->variable_name);
 			free(curr->variable_value);
 			free(curr);

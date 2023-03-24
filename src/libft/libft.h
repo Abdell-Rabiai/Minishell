@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:58:35 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:40:48 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 22:56:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <stdint.h>
-
 
 void				*ft_memset(void *dest, int c, size_t n);
 void				ft_bzero(void *b, size_t n);
@@ -39,7 +38,7 @@ char				*ft_strnstr(const char *haystack,
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);
-long long	ft_atoi_exit(const char *str, int *i);
+long long			ft_atoi_exit(const char *str, int *i);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);
@@ -74,7 +73,7 @@ typedef struct s_list
 {
 	char			*content;
 	char			**commands;
-	int				type; 
+	int				type;
 	char			*in_file;
 	char			*out_file;
 	t_delim			*delims;

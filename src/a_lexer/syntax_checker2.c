@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars.c                                             :+:      :+:    :+:   */
+/*   syntax_checker2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:08:20 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 21:41:39 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/24 23:07:17 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,17 @@
 
 /*temp function */
 
-void    print_list(t_list *list, bool flag)
+void	finish_node(t_list **final, t_list *temp, int i)
 {
-    t_list    *current;
-
-    current = list;
-    int i = -1;
-    printf("After tokenisation: of str\n");
-    while (current)
-    {
-        i = 0;
-        printf("*-------------------------------*\n");
-        printf("{content:%s}\n", current->content);
-        printf("{type:%d}\n", current->type);
-        printf("{in_fd:%d}\n", current->in_fd);
-        printf("{out_fd:%d}\n", current->out_fd);
-        printf("{in_file:%s}\n", current->in_file);
-        printf("{out_file:%s}\n", current->out_file);
-        printf("{_errno:%d / %s}\n", current->_errno, strerror(current->_errno));
-        printf("{delims:%p}\n", current->delims);
-        if (flag)
-        {
-            if (current->delims)
-			{
-                while (current->delims[i].delimiter != NULL)
-				{
-                    printf("(delim :%d: %s)\n", i, current->delims[i].delimiter);
-                    printf("(delim :%d: file :%s)\n", i, current->delims[i].tmp_file);
-					i++;
-				}
-				
-			}
-            
-        }
-        if (current->commands)
-        {
-            int j = -1;
-            while (current->commands[++j])
-                printf("commands[%d] = [%s]\n", j, current->commands[j]);
-        }
-        if (current->next)
-            printf("->");
-        current = current->next;
-    }
+	if (i == -1)
+	{
+		free(temp->delims);
+		temp->delims = NULL;
+	}
+	else
+		temp->delims[++i].delimiter = NULL;
+	remove_quotes_node(&temp);
+	ft_lstadd_back(final, temp);
 }
 
 t_type	what_type(char *cmd)
@@ -133,4 +101,3 @@ void	remove_instant_quotes(char *str)
 	}
 	str[j] = '\0';
 }
-

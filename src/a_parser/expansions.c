@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:13:54 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 20:37:05 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:05:58 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*get_variable(char *str, t_infos *infos)
 	char	*var;
 	char	*var2;
 	char	*value;
+
 	i = 0;
 	if (ft_isdigit(str[1]) || str[1] == '?')
 		var = ft_substr(str, 1, 1);

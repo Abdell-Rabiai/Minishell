@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars7.c                                            :+:      :+:    :+:   */
+/*   files_opener2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:35:01 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 21:43:09 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/24 23:07:04 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	open_fill(t_list **head, t_list **temp, int i)
 	}
 	if (*head)
 		free_node(head, ((*head)->type != delimiter && (*head)->type != in_file
-			&& (*head)->type != app_out_file && (*head)->type != tr_out_file));
+				&& (*head)->type != app_out_file
+				&& (*head)->type != tr_out_file));
 	(*temp)->type = word;
 	return (i);
 }
@@ -98,17 +99,4 @@ void	remove_quotes(char *str)
 			str[j++] = str[i];
 	}
 	str[j] = '\0';
-}
-
-void	finish_node(t_list **final, t_list *temp, int i)
-{
-	if (i == -1)
-	{
-		free(temp->delims);
-		temp->delims = NULL;
-	}
-	else
-		temp->delims[++i].delimiter = NULL;
-	remove_quotes_node(&temp);
-	ft_lstadd_back(final, temp);
 }
