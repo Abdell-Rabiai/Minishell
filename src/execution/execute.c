@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 21:57:17 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:28:22 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	child_process_for_one_cmd(t_list *final_list,
 	check_for_inout_output_files(final_list->in_fd, final_list->out_fd);
 	if (is_builtin(final_list) == 1)
 	{
-		execute_builtin(strs, infos);
+		execute_builtin(strs, infos, final_list);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -65,12 +65,13 @@ int	is_builtin(t_list *node)
 	return (0);
 }
 
-void	execute_builtin(char **strs, t_infos *infos)
+void	execute_builtin(char **strs, t_infos *infos, t_list *final_list)
 {
 	int	i;
 
 	i = 0;
 	signal(SIGQUIT, SIG_DFL);
+	check_for_inout_output_files(final_list->in_fd, final_list->out_fd);
 	if (!strs || !strs[0])
 	{
 		free_all(strs);
@@ -103,7 +104,7 @@ void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 	}
 	if (is_builtin(final_list) == 1 && !final_list->delims)
 	{
-		execute_builtin(final_list->commands, infos);
+		execute_builtin(final_list->commands, infos, final_list);
 		g_g.g_exit_status = EXIT_SUCCESS;
 	}
 	else
@@ -139,6 +140,8 @@ void	execute(t_list *final_list, t_infos *infos)
 			execute_multiple_cmds(final_list, envp, infos);
 		g_g.g_heredoc_cmd = 0;
 	}
+	dup2(infos->std_out, STDOUT_FILENO);
+	dup2(infos->std_in, STDIN_FILENO);
 	unlink_heredoc_files(final_list);
 	ft_free_envp_array(envp);
 	free(infos->pids);

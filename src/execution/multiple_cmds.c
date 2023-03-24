@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 20:37:54 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:28:10 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	first_child_process(t_list *final_list, int pipe_ends[2]
 	first_errno_and_open_heredocs(final_list, strs);
 	first_check_for_inout_output_files(final_list, pipe_ends);
 	if (is_builtin(final_list) == 1)
-		execute_builtin(strs, infos);
+		execute_builtin(strs, infos, final_list);
 	else
 	{
 		splited_paths = get_envpath(envp);
@@ -47,7 +47,7 @@ void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
 	first_errno_and_open_heredocs(final_list, strs);
 	last_check_for_input_output_files(final_list, infos);
 	if (is_builtin(final_list) == 1)
-		execute_builtin(strs, infos);
+		execute_builtin(strs, infos, final_list);
 	else
 	{
 		splited_paths = get_envpath(envp);
@@ -73,7 +73,7 @@ void	inter_process(t_list *final_list, int pipe_ends[2]
 	first_errno_and_open_heredocs(final_list, strs);
 	first_check_for_inout_output_files(final_list, pipe_ends);
 	if (is_builtin(final_list) == 1)
-		execute_builtin(strs, infos);
+		execute_builtin(strs, infos, final_list);
 	else
 	{
 		splited_paths = get_envpath(envp);
@@ -127,7 +127,5 @@ void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 		tmp = tmp->next;
 		infos->help.i++;
 	}
-	dup2(infos->std_out, STDOUT_FILENO);
-	dup2(infos->std_in, STDIN_FILENO);
 	my_wait_all(infos->help.pipe_ends, infos->help.size, infos);
 }

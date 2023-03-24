@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 23:11:01 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:22:48 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int		check_command_if_accessible(char *cmd, char **paths);
 int		check_paths_if_null(char **paths, char **main_cmd, char *cmd);
 char	**get_envpath(char **envp);
 int		is_builtin(t_list *node);
-void	execute_builtin(char **strs, t_infos *infos);
+void	execute_builtin(char **strs, t_infos *infos, t_list *final_list);
 void	redirect_process(int pipe_ends[2]);
 void	create_pipe(int pipe_ends[2]);
 pid_t	my_fork(t_infos *infos, int i);
