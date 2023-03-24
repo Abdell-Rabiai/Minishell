@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 21:37:28 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 00:12:59 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void export_variable(t_infos *infos, char *string)
 		else
 			ft_printf(2, "minishell: export: `%s%s': not a valid identifier\n", var_name,var_value);
 		free(var_name);
-		exit(EXIT_FAILURE);
 	}
 	if (var_value)
 		var_value++;

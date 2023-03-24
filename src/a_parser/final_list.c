@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:35:45 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 18:12:26 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/22 23:38:02 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	get_node(t_list **head, t_list **final)
 	if (*head && (*head)->type == Pipe)
 		free_node(head, 1);
 	temp->delims = malloc(count_delimiter(*head) * sizeof(t_delim));
+	if (!temp->delims)
+		return ;
 	while ((*head) && (*head)->type != Pipe)
 	{
 		if ((*head)->type == word)

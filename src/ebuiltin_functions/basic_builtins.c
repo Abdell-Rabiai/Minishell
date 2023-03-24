@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basic_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 21:35:30 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 00:12:26 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	my_exit(char **strs)
 		if (i == 1)
 		{
 			ft_printf(2, "my_minishell: exit: %s: numeric argument required\n", strs[1]);
-			exit(255);
+			g_exit_status = 255;
 		}
 		else if (!i && (strs[1] && strs[2]))
 		{
 			ft_printf(2, "my_minishell: exit: too many arguments\n");
-			exit(EXIT_FAILURE);
+			g_exit_status = EXIT_FAILURE;
 			return ;
 		}
 	}

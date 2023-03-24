@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 22:08:24 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 22:08:42 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 02:40:06 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void open_heredoc_if_found(t_list *final_list, t_infos *infos, char **strs)
 {
-
 	if (final_list->delims != NULL)
 	{
 		open_heredoc_file(final_list, infos);

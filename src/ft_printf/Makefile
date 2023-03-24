@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
+#    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/14 14:20:54 by arabiai           #+#    #+#              #
-#    Updated: 2023/03/11 17:28:03 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/24 00:44:24 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ../libftprintf.a
+NAME = libftprintf.a
 
 bold := $(shell tput bold)
 sgr0 := $(shell tput sgr0)

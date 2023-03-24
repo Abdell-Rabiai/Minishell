@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/23 22:32:20 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 02:38:28 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
 
-typedef struct s_help // to help with norminette
+typedef struct s_help
 {
 	int		i;
 	pid_t	pid;
 	int		size;
 	int		pipe_ends[2];
 } t_help;
+
 typedef struct s_envp
 {
 	char			*variable_name;
@@ -43,10 +44,10 @@ typedef struct s_envp
 typedef struct s_infos
 {
 	struct s_envp	*my_envp;
-	int std_in;
-	int std_out;
-	t_help help;
-	int *pids;
+	int 			std_in;
+	int 			std_out;
+	t_help			help;
+	int				*pids;
 } t_infos;
 
 extern int g_exit_status;
@@ -116,6 +117,7 @@ void	first_errno_and_open_heredocs(t_list *final_list, char **strs);
 void	first_check_for_inout_output_files(t_list *final_list, int pipe_ends[2]);
 void	last_check_for_input_output_files(t_list *final_list, t_infos *infos);
 void	inter_check_for_input_output_files(t_list *final_list, t_infos *infos);
+void    handle_execve_signal_errors(int status);
 
 /**--------------->pipeline------------->*/
 void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos);
@@ -140,6 +142,7 @@ void open_heredoc_if_found(t_list *final_list, t_infos *infos, char **strs);
 char *check_and_expand_heredoc(char *str, t_infos *infos);
 char *expand_variables_heredoc(char *str, int pos, t_infos *infos);
 void handle_multiple_here_docs(t_list *final_list, t_infos *infos);
+void handle_signal(int signal);
 
 
 typedef enum TYPE
@@ -195,23 +198,3 @@ int		count_commands(t_list *temp);
 int		fill_check_final(char *inpstr, t_list **final, t_list **command, t_infos *infos);
 
 #endif
-
-\
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,7 +6,7 @@
 #    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 18:47:21 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/11 16:46:07 by ahmaymou         ###   ########.fr        #
+#    Updated: 2023/03/22 16:14:35 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ FLAGS = -Wall -Wextra -Werror
 all : $(NAME)
 
 %.o: %.c libft.h
-	$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJECT) libft.h
 	@ar rc $(NAME) $(OBJECT)

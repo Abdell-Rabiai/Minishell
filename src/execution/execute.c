@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 23:51:55 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 03:08:12 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void execute_builtin(char **strs, t_infos *infos)
 		my_env(infos);
 	else if (!ft_strcmp(strs[0], "exit"))
 		my_exit(strs);
-	exit(EXIT_SUCCESS);
 }
 
 void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
@@ -103,12 +102,8 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 	}
 	if (is_builtin(final_list) == 1 && !final_list->delims)
 	{
-		pid = fork();
-		if (pid == 0)
-			execute_builtin(final_list->commands, infos);
-		waitpid(pid, &g_exit_status, 0);
-		if (WIFEXITED(g_exit_status))
-		g_exit_status =  WEXITSTATUS(g_exit_status);
+		execute_builtin(final_list->commands, infos);
+		g_exit_status =  EXIT_SUCCESS;
 	}
 	else
 	{
@@ -118,6 +113,29 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 		waitpid(pid, &g_exit_status, 0);
 		if (WIFEXITED(g_exit_status))
 			g_exit_status = WEXITSTATUS(g_exit_status);
+		else
+			handle_execve_signal_errors(g_exit_status);
+	}
+}
+
+void unlink_heredoc_files(t_list *final_list)
+{
+	int i;
+	t_list *current;
+
+	current = final_list;
+	i = 0;
+	while (current)
+	{
+		if (!current->delims)
+			return ;
+		i = 0;
+		while (current->delims[i].delimiter)
+		{
+			unlink(current->delims[i].tmp_file);
+			i++;
+		}
+		current = current->next;
 	}
 }
 
@@ -138,6 +156,7 @@ void execute(t_list *final_list, t_infos *infos)
 		handle_multiple_here_docs(final_list, infos);
 		execute_multiple_cmds(final_list, envp, infos);
 	}
+	unlink_heredoc_files(final_list);
 	ft_free_envp_array(envp);
 	free(infos->pids);
 }

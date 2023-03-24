@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 23:50:14 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 02:33:59 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,12 @@ char    *repalce_path_with_tilda(char *str)
     }
 	if (slashes == 3)
 		str = ft_strjoin("~", str, 0);
+    else if (slashes == 2)
+		str = ft_strjoin("~", "", 0);
 	else
 		str = tmp;
-    // free(tmp);
+    if (slashes == 3 || slashes == 2)
+        free(tmp);
     return (str);
 }
 
@@ -114,6 +117,7 @@ int g_exit_status;
 int main(int ac, char **av, char **envp)
 {
 	t_infos infos;
+
 	initt(&infos);
 	duplicate_envp(envp, &infos);
 	update_shlvl_variable(&infos);

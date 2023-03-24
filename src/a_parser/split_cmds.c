@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:54:39 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 17:42:31 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/22 23:37:41 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	*extract_token(const char *start, const char *str)
 
 	len = str - start;
 	token = malloc((len + 1) * sizeof(char));
+	if (!token)
+		return (NULL);
 	ft_strncpy(token, start, len);
 	token[len] = '\0';
 	return (token);
