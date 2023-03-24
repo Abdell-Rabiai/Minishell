@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:11:49 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 02:49:12 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:40:45 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	first_errno_and_open_heredocs(t_list *final_list, char **strs)
 {
-    if (final_list->_errno != 0)
+	if (final_list->_errno != 0)
 	{
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
 		exit(EXIT_FAILURE);
@@ -22,7 +22,8 @@ void	first_errno_and_open_heredocs(t_list *final_list, char **strs)
 	if (final_list->delims != NULL)
 	{
 		if (final_list->in_fd == -2)
-			final_list->in_fd = open(get_last_heredoc_filename(final_list), O_RDONLY);
+			final_list->in_fd = open(get_last_heredoc_filename(final_list),
+					O_RDONLY);
 		dup2(final_list->in_fd, STDIN_FILENO);
 		if (!strs[0])
 			exit(EXIT_SUCCESS);

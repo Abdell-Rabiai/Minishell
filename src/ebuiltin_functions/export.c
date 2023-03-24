@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 00:12:59 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:00:54 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	my_export(char **strs, t_infos *infos)
 {
 	int	i;
-	
+
 	i = 1;
 	if (!strs[i])
 		export(infos);
@@ -26,7 +26,7 @@ void	my_export(char **strs, t_infos *infos)
 	}
 }
 
-int check_variable_regex(char *str)
+int	check_variable_regex(char *str)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ int check_variable_regex(char *str)
 	while (str[i])
 	{
 		if (str[i] == '+' && !str[i + 1])
-			return (0) ;
+			return (0);
 		if (str[i] != '_' && !ft_isalnum(str[i]))
 			return (1);
 		i++;
@@ -45,34 +45,35 @@ int check_variable_regex(char *str)
 	return (0);
 }
 
-void export(t_infos *infos)
+void	export(t_infos *infos)
 {
-	int i;
-	t_envp *temp;
+	t_envp		*temp;
 
-	i = 0;
 	sort_envp(infos);
 	temp = infos->my_envp;
 	while (temp)
 	{
-		if (!ft_strcmp(temp->variable_name, "PATH") && get_envp_size(infos->my_envp) == 5)
+		if (!ft_strcmp(temp->variable_name, "PATH")
+			&& get_envp_size(infos->my_envp) == 5)
 			temp = temp->next;
-		else if (!ft_strcmp(temp->variable_name, "_") && get_envp_size(infos->my_envp) == 5)
+		else if (!ft_strcmp(temp->variable_name, "_")
+			&& get_envp_size(infos->my_envp) == 5)
 			temp = temp->next;
 		else
 		{
 			if (!temp->variable_value)
 				printf("declare -x %s\n", temp->variable_name);
-			else if(!(*temp->variable_value))
+			else if (!(*temp->variable_value))
 				printf("declare -x %s=\"\"\n", temp->variable_name);
 			else
-				printf("declare -x %s=\"%s\"\n", temp->variable_name, temp->variable_value);
-			temp = temp->next;	
+				printf("declare -x %s=\"%s\"\n", temp->variable_name,
+					temp->variable_value);
+			temp = temp->next;
 		}
 	}
 }
 
-void add_variable(t_infos *infos, char *var_name, char *var_value, bool concatenate)
+void	add_variable(t_infos *infos, char *var_name, char *var_value, bool concatenate)
 {
     t_envp	*temp;
 

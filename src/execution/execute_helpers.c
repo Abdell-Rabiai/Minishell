@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:57:20 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 22:08:39 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 17:41:53 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**get_envpath(char **envp)
 	return (ft_split(envp[i] + 5, ':'));
 }
 
-int check_paths_if_null(char **paths, char **main_cmd, char *cmd)
+int	check_paths_if_null(char **paths, char **main_cmd, char *cmd)
 {
 	if (paths == NULL)
 	{
@@ -38,7 +38,7 @@ int check_paths_if_null(char **paths, char **main_cmd, char *cmd)
 	return (0);
 }
 
-int check_command_if_accessible(char *cmd, char **paths)
+int	check_command_if_accessible(char *cmd, char **paths)
 {
 	if (access(cmd, F_OK | X_OK) == 0)
 	{
@@ -49,7 +49,7 @@ int check_command_if_accessible(char *cmd, char **paths)
 	return (0);
 }
 
-char *return_command_if_found(char **paths, char **main_cmd, char *cmd)
+char	*return_command_if_found(char **paths, char **main_cmd, char *cmd)
 {
 	char	*str;
 	int		i;
@@ -64,30 +64,28 @@ char *return_command_if_found(char **paths, char **main_cmd, char *cmd)
 		free(str);
 	}
 	if (paths[i] == NULL)
-    {
+	{
 		if (!str)
 			exit(EXIT_FAILURE);
-        ft_printf(2, "minishell: %s: command not found\n", main_cmd[0]);
+		ft_printf(2, "minishell: %s: command not found\n", main_cmd[0]);
 		return (free(cmd), free_all(main_cmd), free_all(paths), NULL);
-    }
+	}
 	else
-        return (free(cmd), free_all(paths), str);
+		return (free(cmd), free_all(paths), str);
 }
 
 char	*get_command_path(char **paths, char **main_cmd)
 {
 	int		i;
 	char	*cmd;
-	char 	*str;
+	char	*str;
 
 	i = 0;
 	cmd = ft_strjoin("/", main_cmd[0], 0);
 	if (check_paths_if_null(paths, main_cmd, cmd) == 1)
 		return (NULL);
 	if (check_command_if_accessible(main_cmd[0], paths) == 1)
-        return (main_cmd[0]);
-
+		return (main_cmd[0]);
 	str = return_command_if_found(paths, main_cmd, cmd);
 	return (str);
 }
-

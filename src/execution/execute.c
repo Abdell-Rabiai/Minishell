@@ -6,17 +6,18 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 03:08:12 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 21:01:30 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
+void	child_process_for_one_cmd(t_list *final_list,
+	char **envp, t_infos *infos)
 {
 	char	*path;
 	char	**splited_paths;
-	char 	**strs;
+	char	**strs;
 
 	signal(SIGQUIT, SIG_DFL);
 	strs = final_list->commands;
@@ -29,20 +30,20 @@ void	child_process_for_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 		execute_builtin(strs, infos);
 		exit(EXIT_SUCCESS);
 	}
-    else
-    {
-	    splited_paths = get_envpath(envp);
-	    path = get_command_path(splited_paths, strs);
+	else
+	{
+		splited_paths = get_envpath(envp);
+		path = get_command_path(splited_paths, strs);
 		if (!path)
 			exit(127);
-        execve(path, strs, envp);
-    }
+		execve(path, strs, envp);
+	}
 	exit(EXIT_SUCCESS);
 }
 
-int is_builtin(t_list *node)
+int	is_builtin(t_list *node)
 {
-	char *str;
+	char	*str;
 
 	if (!node->commands || !node->commands[0])
 		return (0);
@@ -64,10 +65,10 @@ int is_builtin(t_list *node)
 	return (0);
 }
 
-void execute_builtin(char **strs, t_infos *infos)
+void	execute_builtin(char **strs, t_infos *infos)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	signal(SIGQUIT, SIG_DFL);
 	if (!strs || !strs[0])
@@ -91,7 +92,7 @@ void execute_builtin(char **strs, t_infos *infos)
 		my_exit(strs);
 }
 
-void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
+void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	pid_t	pid;
 
@@ -103,46 +104,26 @@ void execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 	if (is_builtin(final_list) == 1 && !final_list->delims)
 	{
 		execute_builtin(final_list->commands, infos);
-		g_exit_status =  EXIT_SUCCESS;
+		g_g.g_exit_status = EXIT_SUCCESS;
 	}
 	else
 	{
 		pid = fork();
 		if (pid == 0)
 			child_process_for_one_cmd(final_list, envp, infos);
-		waitpid(pid, &g_exit_status, 0);
-		if (WIFEXITED(g_exit_status))
-			g_exit_status = WEXITSTATUS(g_exit_status);
+		waitpid(pid, &g_g.g_exit_status, 0);
+		if (WIFEXITED(g_g.g_exit_status))
+			g_g.g_exit_status = WEXITSTATUS(g_g.g_exit_status);
 		else
-			handle_execve_signal_errors(g_exit_status);
+			handle_execve_signal_errors(g_g.g_exit_status);
 	}
 }
 
-void unlink_heredoc_files(t_list *final_list)
+void	execute(t_list *final_list, t_infos *infos)
 {
-	int i;
-	t_list *current;
+	char	**envp;
 
-	current = final_list;
-	i = 0;
-	while (current)
-	{
-		if (!current->delims)
-			return ;
-		i = 0;
-		while (current->delims[i].delimiter)
-		{
-			unlink(current->delims[i].tmp_file);
-			i++;
-		}
-		current = current->next;
-	}
-}
-
-void execute(t_list *final_list, t_infos *infos)
-{
-	char 	**envp;
-
+	g_g.g_heredoc_cmd = -2;
 	infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
 	if (!final_list)
 		return ;

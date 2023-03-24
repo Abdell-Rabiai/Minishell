@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars0.c                                            :+:      :+:    :+:   */
+/*   fill_check_1st_list.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:33:22 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 18:06:05 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:42:23 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	free_final_list(t_list *final)
 	}
 }
 
-int	fill_check_final(char *inpstr, t_list **final, t_list **command, t_infos *infos)
+int	fill_check_final(char *inpstr, t_list **final,
+		t_list **command, t_infos *infos)
 {
 	fill_list(inpstr, command);
 	assign_type(*command);
@@ -88,7 +89,6 @@ int	fill_check_final(char *inpstr, t_list **final, t_list **command, t_infos *in
 		return (free(inpstr), ft_lstclear(command), 1);
 	expand_multi_vars(command, infos);
 	*final = create_final_list(command);
-	// print_list(*final, 1);
 	return (0);
 }
 
@@ -112,7 +112,7 @@ t_list	*pars_error(char *str, t_infos *infos)
 	if (!count_quotes(inpstr))
 	{
 		printf("minishell: syntax error, unclosed quotes\n");
-		return (free(inpstr), NULL);
+		return (g_g.g_exit_status = 258, free(inpstr), NULL);
 	}
 	if (fill_check_final(inpstr, &final, &command, infos))
 		return (NULL);

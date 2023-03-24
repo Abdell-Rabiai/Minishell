@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars3.c                                            :+:      :+:    :+:   */
+/*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 19:09:49 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/22 18:59:22 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:36:48 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_error(char c)
 {
-	g_exit_status = 258;
+	g_g.g_exit_status = 258;
 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 	if (c == '\n')
 		ft_putstr_fd("newline", 2);

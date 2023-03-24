@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars2.c                                            :+:      :+:    :+:   */
+/*   get_words.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 18:19:04 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/21 17:41:30 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:20:07 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	handle_kill(int sig)
 {
-	(void)sig;
-	if (sig == SIGINT)
+	if (sig == SIGINT && g_g.g_heredoc_cmd != -2)
 	{
 		write(1, "\n", 1);
 		rl_clear_history();
@@ -23,7 +22,10 @@ void	handle_kill(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else if (sig == SIGQUIT)
+	else if (sig == SIGINT)
+		write(1, "\n", 2);
+	g_g.g_heredoc_cmd = 0;
+	if (sig == SIGQUIT)
 		return ;
 }
 

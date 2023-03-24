@@ -6,15 +6,15 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:48:54 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 21:50:18 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:06:02 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void set_envp_value(char *old_variable, char *new_value, t_infos *infos)
+void	set_envp_value(char *old_variable, char *new_value, t_infos *infos)
 {
-	t_envp *temp;
+	t_envp	*temp;
 
 	temp = infos->my_envp;
 	while (temp)
@@ -31,7 +31,7 @@ void set_envp_value(char *old_variable, char *new_value, t_infos *infos)
 
 int	print_old_pwd(t_infos *infos)
 {
-	char *old_pwd;
+	char	*old_pwd;
 
 	old_pwd = get_envp_value("OLDPWD", infos);
 	if (!old_pwd)

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:34:10 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/23 02:44:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:10:40 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*get_variable_value(char *string)
 	return (variable_value);
 }
 
-char *get_variable_name(char *string)
+char	*get_variable_name(char *string)
 {
 	int		i;
 	char	*variable_name;
@@ -66,11 +66,11 @@ char *get_variable_name(char *string)
 	return (variable_name);
 }
 
-void duplicate_envp(char **envp, t_infos *infos)
+void	duplicate_envp(char **envp, t_infos *infos)
 {
 	int		i;
-    char	*v_name;
-    char	*v_value;
+	char	*v_name;
+	char	*v_value;
 
 	i = 0;
 	while (envp[i] != NULL)

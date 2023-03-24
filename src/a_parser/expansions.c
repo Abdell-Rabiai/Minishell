@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:13:54 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 00:25:48 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:37:05 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_variable(char *str, t_infos *infos)
 	if (str[1] != '?')
 		value = ft_strdup(get_envp_value(var, infos), 0);
 	else
-		value = ft_itoa(g_exit_status);
+		value = ft_itoa(g_g.g_exit_status);
 	if (!value)
 		value = ft_strdup("", 0);
 	value = ft_strjoin(value, var2, 1);
