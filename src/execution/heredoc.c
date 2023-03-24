@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:37:37 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 21:18:34 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 21:34:26 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	open_heredoc_file(t_list *final_list, t_infos *infos)
 	char	*lim;
 	t_list	*current;
 
+	signal(SIGINT, &handle_signal);
 	current = final_list;
 	if (!current)
 		return ;
 	i = -1;
-	signal(SIGINT, &handle_signal);
 	while (current->delims[++i].delimiter)
 	{
 		fd = open(current->delims[i].tmp_file, O_CREAT | O_RDWR | O_TRUNC, 777);

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 21:01:30 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 21:57:17 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 		g_g.g_exit_status = EXIT_SUCCESS;
 	}
 	else
-	{
+	{	
+		g_g.g_heredoc_cmd = -2;
 		pid = fork();
 		if (pid == 0)
 			child_process_for_one_cmd(final_list, envp, infos);
@@ -123,7 +124,6 @@ void	execute(t_list *final_list, t_infos *infos)
 {
 	char	**envp;
 
-	g_g.g_heredoc_cmd = -2;
 	infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
 	if (!final_list)
 		return ;
@@ -135,7 +135,9 @@ void	execute(t_list *final_list, t_infos *infos)
 	else
 	{
 		handle_multiple_here_docs(final_list, infos);
-		execute_multiple_cmds(final_list, envp, infos);
+		if (g_g.g_heredoc_cmd == -1)
+			execute_multiple_cmds(final_list, envp, infos);
+		g_g.g_heredoc_cmd = 0;
 	}
 	unlink_heredoc_files(final_list);
 	ft_free_envp_array(envp);

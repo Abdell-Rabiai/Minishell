@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 22:09:38 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 21:13:50 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 21:55:49 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	handle_multiple_here_docs(t_list *final_list, t_infos *infos)
 	pid_t	pid;
 	t_list	*current;
 
-	g_g.g_heredoc_cmd = -2;
 	current = final_list;
 	i = -1;
 	pid = fork();
+	g_g.g_heredoc_cmd = -2;
 	if (pid == 0)
 	{
 		while (current)
@@ -32,7 +32,12 @@ void	handle_multiple_here_docs(t_list *final_list, t_infos *infos)
 		}
 		exit(EXIT_SUCCESS);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &g_g.g_exit_status, 0);
+	g_g.g_exit_status = WEXITSTATUS(g_g.g_exit_status);
+	if (g_g.g_exit_status == EXIT_FAILURE)
+		g_g.g_heredoc_cmd = -2;
+	else
+		g_g.g_heredoc_cmd = -1;
 }
 
 char	*expand_variables_heredoc(char *str, int pos, t_infos *infos)
