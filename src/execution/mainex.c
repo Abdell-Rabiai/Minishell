@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 23:11:31 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 00:48:55 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ void	execute_using_minishell(char *executable, t_infos *infos)
 	execve("/bin/bash", strs, envp);
 	free_all(strs);
 	exit(127);
+}
+
+void lek()
+{
+	system("leaks minishell");
 }
 
 int	main(int ac, char **av, char **envp)

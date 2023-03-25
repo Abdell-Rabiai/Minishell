@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 23:28:10 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 01:38:06 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 			else
 				inter_process(tmp, infos->help.pipe_ends, envp, infos);
 		}
+		if (tmp->delims != NULL && !tmp->next)
+			wait(NULL);
 		redirect_process(infos->help.pipe_ends);
 		tmp = tmp->next;
 		infos->help.i++;

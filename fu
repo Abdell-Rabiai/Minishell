@@ -1,0 +1,21 @@
+ebuiltin_functions = $(addprefix src/ebuiltin_functions/,echo.c env.c cd.c export.c export_helpers.c export_helpers1.c\
+	@echo "\n"
+	@echo "$(LightPurple)"
+	echo "$(LIGHTRED)                     Copyright : Black-Hole1004, Abdellrabiai :) \n$(Color_Off)"
+	@echo "\n\n\t$(Cyan) Enjoooy :)\n $(Color_Off)"
+13
+13
+13
+13
+13
+total 152
+drwxr-xr-x  10 arabiai  candidate    340 Mar 25 01:41 .
+drwxr-xr-x  22 arabiai  candidate    748 Mar 25 00:21 ..
+drwxr-xr-x  12 arabiai  candidate    408 Mar 25 01:27 .git
+-rw-r--r--   1 arabiai  candidate   4825 Mar 24 23:10 Makefile
+-rw-r--r--   1 arabiai  candidate     36 Mar 24 01:29 README.md
+-rw-r--r--   1 arabiai  candidate    304 Mar 25 01:41 fu
+-rw-r--r--   1 arabiai  candidate      0 Mar 25 01:41 fuck
+-rw-r--r--   1 arabiai  candidate   1411 Mar 25 01:40 full
+-rwxr-xr-x   1 arabiai  candidate  55548 Mar 25 01:38 minishell
+drwxr-xr-x   9 arabiai  candidate    306 Mar 24 01:29 src
