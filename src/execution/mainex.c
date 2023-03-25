@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 00:48:55 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 22:40:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	prompt(t_infos *infos)
 	char	*cwd;
 	char	*str;
 
-	signal(SIGINT, handle_kill);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		cwd = prepare_path(infos);
@@ -109,6 +107,8 @@ int	main(int ac, char **av, char **envp)
 {
 	t_infos	infos;
 
+	signal(SIGINT, handle_kill);
+	signal(SIGQUIT, SIG_IGN);
 	initt(&infos);
 	duplicate_envp(envp, &infos);
 	update_shlvl_variable(&infos);

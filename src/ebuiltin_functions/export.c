@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:22:16 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 22:49:13 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 21:02:54 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ void	export_variable(t_infos *infos, char *string)
 	var_name = ft_substr(string, 0, ft_strchr(string, '=') - string);
 	var_value = ft_strchr(string, '=');
 	if (check_variable_regex(var_name))
+	{
 		not_avalid_identifier(var_name, var_value);
+		return ;
+	}
 	if (var_value)
 		var_value++;
 	if (var_name[ft_strlen(var_name) - 1] == '+')

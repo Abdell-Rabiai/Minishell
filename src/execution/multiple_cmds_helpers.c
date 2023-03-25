@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 22:30:00 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 17:56:32 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 22:34:02 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ pid_t	my_fork(t_infos *infos, int i)
 {
 	pid_t	pid;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 	{

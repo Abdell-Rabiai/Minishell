@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 22:42:57 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 22:47:42 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 21:02:12 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	not_avalid_identifier(char *var_name, char *var_value)
 	else
 		ft_printf(2, "minishell: export: `%s%s': not a"
 			"valid identifier\n", var_name, var_value);
+	g_g.g_exit_status = 1;
 	free(var_name);
 }
 

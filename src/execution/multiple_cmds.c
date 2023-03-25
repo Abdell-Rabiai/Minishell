@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 01:38:06 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 22:34:42 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	first_child_process(t_list *final_list, int pipe_ends[2]
 	first_errno_and_open_heredocs(final_list, strs);
 	first_check_for_inout_output_files(final_list, pipe_ends);
 	if (is_builtin(final_list) == 1)
-		execute_builtin(strs, infos, final_list);
+		execute_builtin(strs, infos, final_list, 0);
 	else
 	{
 		splited_paths = get_envpath(envp);
@@ -33,7 +33,10 @@ void	first_child_process(t_list *final_list, int pipe_ends[2]
 			exit(127);
 		execve(path, strs, envp);
 	}
-	exit(EXIT_SUCCESS);
+	if (g_g.g_exit_status != EXIT_FAILURE)
+		exit(EXIT_SUCCESS);
+	else
+		exit(EXIT_FAILURE);
 }
 
 void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
@@ -47,7 +50,7 @@ void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
 	first_errno_and_open_heredocs(final_list, strs);
 	last_check_for_input_output_files(final_list, infos);
 	if (is_builtin(final_list) == 1)
-		execute_builtin(strs, infos, final_list);
+		execute_builtin(strs, infos, final_list, 0);
 	else
 	{
 		splited_paths = get_envpath(envp);
@@ -56,7 +59,10 @@ void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
 			exit(127);
 		execve(path, strs, envp);
 	}
-	exit(EXIT_SUCCESS);
+	if (g_g.g_exit_status != EXIT_FAILURE)
+		exit(EXIT_SUCCESS);
+	else
+		exit(EXIT_FAILURE);
 }
 
 void	inter_process(t_list *final_list, int pipe_ends[2]
@@ -73,7 +79,7 @@ void	inter_process(t_list *final_list, int pipe_ends[2]
 	first_errno_and_open_heredocs(final_list, strs);
 	first_check_for_inout_output_files(final_list, pipe_ends);
 	if (is_builtin(final_list) == 1)
-		execute_builtin(strs, infos, final_list);
+		execute_builtin(strs, infos, final_list, 0);
 	else
 	{
 		splited_paths = get_envpath(envp);
@@ -82,7 +88,10 @@ void	inter_process(t_list *final_list, int pipe_ends[2]
 			exit(127);
 		execve(path, strs, envp);
 	}
-	exit(EXIT_SUCCESS);
+	if (g_g.g_exit_status != EXIT_FAILURE)
+		exit(EXIT_SUCCESS);
+	else
+		exit(EXIT_FAILURE);
 }
 
 void	my_wait_all(int pipe_ends[2], int size, t_infos *infos)
@@ -101,6 +110,8 @@ void	my_wait_all(int pipe_ends[2], int size, t_infos *infos)
 		g_g.g_exit_status = WEXITSTATUS(g_g.g_exit_status);
 	else if (WIFSIGNALED(g_g.g_exit_status))
 		handle_execve_signal_errors(g_g.g_exit_status);
+	signal(SIGINT, handle_kill);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)

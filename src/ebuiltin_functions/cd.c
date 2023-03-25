@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:45:51 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 18:08:45 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 21:20:27 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,23 @@ void	cd(char *path, t_infos *infos)
 
 	update_old_pwd(infos);
 	if (chdir(path))
-		ft_printf(2, "bash: cd: %s: No such file or directory\n", path);
+	{
+		ft_printf(2, "bash: my_cd: %s: No such file or directory\n", path);
+		g_g.g_exit_status = EXIT_FAILURE;
+		return ;
+	}
 	set_current_directory(infos, path);
 	current_dir = getcwd(NULL, 0);
 	if (!current_dir)
+	{
 		ft_printf(2, "minishell: cd: error retrieving current directory:"
 			"getcwd: cannot access parent directories:"
 			"No such file or directory\n");
+		g_g.g_exit_status = EXIT_FAILURE;
+		return ;
+	}
 	free(current_dir);
+	g_g.g_exit_status = EXIT_SUCCESS;
 }
 
 void	my_cd(char **strs, t_infos *infos)
