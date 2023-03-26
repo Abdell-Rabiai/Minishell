@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/25 20:48:08 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 20:25:13 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,11 @@ void	ft_free_envp_array(char **envp);
 char	**get_envpath(char **envp);
 char	*get_command_path(char **paths, char **main_cmd);
 void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos);
+void	execute_simple_cmd(t_list *final_list, char **envp, t_infos *infos);
+void	child_process_for_one_cmd(t_list *final_list,
+			char **envp, t_infos *infos);
+void	execute_simple_cmd(t_list *final_list, char **envp, t_infos *infos);
+int		check_infile_outfile_errors(t_list *final_list);
 void	first_errno_and_open_heredocs(t_list *final_list, char **strs);
 void	first_check_for_inout_output_files(t_list *final_list,
 			int pipe_ends[2]);
@@ -139,7 +144,8 @@ int		check_command_if_accessible(char *cmd, char **paths);
 int		check_paths_if_null(char **paths, char **main_cmd, char *cmd);
 char	**get_envpath(char **envp);
 int		is_builtin(t_list *node);
-void	execute_builtin(char **strs, t_infos *infos, t_list *final_list, pid_t pid);
+void	execute_builtin(char **strs, t_infos *infos,
+			t_list *final_list, pid_t pid);
 void	redirect_process(int pipe_ends[2]);
 void	create_pipe(int pipe_ends[2]);
 pid_t	my_fork(t_infos *infos, int i);
@@ -209,4 +215,3 @@ int		fill_check_final(char *inpstr, t_list **final,
 			t_list **command, t_infos *infos);
 
 #endif
-

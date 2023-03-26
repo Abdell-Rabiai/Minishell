@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 22:40:31 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 20:26:03 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,6 @@ void	execute_using_minishell(char *executable, t_infos *infos)
 	exit(127);
 }
 
-void lek()
-{
-	system("leaks minishell");
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_infos	infos;
@@ -115,4 +110,5 @@ int	main(int ac, char **av, char **envp)
 	if (ac >= 2)
 		execute_using_minishell(av[1], &infos);
 	prompt(&infos);
+	ft_free_envp(&infos.my_envp);
 }

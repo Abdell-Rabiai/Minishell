@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 22:44:12 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 20:26:38 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	child_process_for_one_cmd(t_list *final_list,
 	char	**strs;
 
 	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, handle_kill);
 	strs = final_list->commands;
 	if (final_list->_errno != 0)
 		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
@@ -47,7 +48,7 @@ int	is_builtin(t_list *node)
 
 	if (!node->commands || !node->commands[0])
 		return (0);
-	str = node->commands[0];
+	str = str_lower(node->commands[0]);
 	if (ft_strcmp(node->commands[0], "export") == 0)
 		return (1);
 	if (ft_strcmp(node->commands[0], "unset") == 0)
@@ -65,11 +66,11 @@ int	is_builtin(t_list *node)
 	return (0);
 }
 
-void	execute_builtin(char **strs, t_infos *infos, t_list *final_list, pid_t pid)
+void	execute_builtin(char **strs, t_infos *infos, t_list *final_list,
+		pid_t pid)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
 	signal(SIGQUIT, SIG_DFL);
 	check_for_inout_output_files(final_list->in_fd, final_list->out_fd);
 	if (!strs || !strs[0])
@@ -77,39 +78,29 @@ void	execute_builtin(char **strs, t_infos *infos, t_list *final_list, pid_t pid)
 		free_all(strs);
 		return ;
 	}
-	if (!ft_strcmp(strs[0], "echo"))
-		my_echo(strs);
-	else if (!ft_strcmp(strs[0], "cd"))
-		my_cd(strs, infos);
-	else if (!ft_strcmp(strs[0], "pwd"))
-		my_pwd(infos);
-	else if (!ft_strcmp(strs[0], "export"))
+	str = str_lower(strs[0]);
+	if (!ft_strcmp(strs[0], "export"))
 		my_export(strs, infos);
 	else if (!ft_strcmp(strs[0], "unset"))
 		my_unset(strs, infos);
-	else if (!ft_strcmp(strs[0], "env"))
-		my_env(infos);
 	else if (!ft_strcmp(strs[0], "exit"))
 		my_exit(strs, pid);
+	else if (!ft_strcmp(str, "echo"))
+		my_echo(strs);
+	else if (!ft_strcmp(str, "cd"))
+		my_cd(strs, infos);
+	else if (!ft_strcmp(str, "pwd"))
+		my_pwd(infos);
+	else if (!ft_strcmp(str, "env"))
+		my_env(infos);
 }
 
 void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
-	pid_t	pid;
-
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	if (final_list->out_file && !ft_strcmp(final_list->out_file, ""))
-	{
-		ft_printf(2, "minishell: :ambiguous redirect\n");
+	if (check_infile_outfile_errors(final_list) == 1)
 		return ;
-	}
-	else if (final_list->_errno != 0)
-	{	
-		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
-		g_g.g_exit_status = EXIT_FAILURE;
-		return ;
-	}
 	if (is_builtin(final_list) == 1 && !final_list->delims)
 	{
 		execute_builtin(final_list->commands, infos, final_list, 1);
@@ -117,18 +108,7 @@ void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 			g_g.g_exit_status = EXIT_SUCCESS;
 	}
 	else
-	{	
-		g_g.g_heredoc_cmd = -2;
-		pid = fork();
-		if (pid == 0)
-			child_process_for_one_cmd(final_list, envp, infos);
-		waitpid(pid, &g_g.g_exit_status, 0);
-		if (WIFEXITED(g_g.g_exit_status))
-			g_g.g_exit_status = WEXITSTATUS(g_g.g_exit_status);
-		else
-			handle_execve_signal_errors(g_g.g_exit_status);
-		g_g.g_heredoc_cmd = 0;
-	}
+		execute_simple_cmd(final_list, envp, infos);
 	signal(SIGINT, handle_kill);
 	signal(SIGQUIT, SIG_IGN);
 }

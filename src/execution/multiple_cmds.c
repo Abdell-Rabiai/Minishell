@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 22:34:42 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/25 23:41:34 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	first_child_process(t_list *final_list, int pipe_ends[2]
 	char	**splited_paths;
 
 	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, handle_kill);
 	strs = final_list->commands;
 	first_errno_and_open_heredocs(final_list, strs);
 	first_check_for_inout_output_files(final_list, pipe_ends);
@@ -46,6 +47,7 @@ void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
 	char	**splited_paths;
 
 	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, handle_kill);
 	strs = final_list->commands;
 	first_errno_and_open_heredocs(final_list, strs);
 	last_check_for_input_output_files(final_list, infos);
@@ -73,6 +75,7 @@ void	inter_process(t_list *final_list, int pipe_ends[2]
 	char	**splited_paths;
 
 	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, handle_kill);
 	strs = final_list->commands;
 	if (!strs[0])
 		exit(EXIT_SUCCESS);

@@ -1,0 +1,7 @@
+
+exec_test "exit wrong"
+exec_test "exit wrong_command"
+exec_test "gdagadgag"
+exec_test "ls -Z"
+exec_test "cd gdhahahad"
+exec_test "ls -la | wtf"

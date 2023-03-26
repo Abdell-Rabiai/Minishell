@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:58:35 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 22:56:11 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 20:22:58 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+char				*str_lower(char *str);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *str, bool to_free);
 void				ft_striteri(char *s, void (*f)(unsigned int, char*));
