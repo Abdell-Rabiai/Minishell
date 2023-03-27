@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:32:05 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 23:05:11 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 22:48:30 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ long long	ft_atoi_exit(const char *str, int *i)
 
 	result = 0;
 	sign = 1;
+	*i = 0;
 	while (is_whitespace(*str))
 		str++;
 	if (*str && (*str == '-' || *str == '+'))

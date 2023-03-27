@@ -6,14 +6,16 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 22:30:00 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 22:34:02 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/27 01:15:04 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	redirect_process(int pipe_ends[2])
+void	redirect_process(int pipe_ends[2], t_list *tmp)
 {
+	close(tmp->out_fd);
+	close(tmp->in_fd);
 	close(pipe_ends[1]);
 	dup2(pipe_ends[0], STDIN_FILENO);
 	close(pipe_ends[0]);
@@ -21,6 +23,7 @@ void	redirect_process(int pipe_ends[2])
 
 void	create_pipe(int pipe_ends[2])
 {
+
 	if (pipe(pipe_ends) == -1)
 	{
 		perror("minishell: pipe:");

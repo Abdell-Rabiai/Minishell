@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 20:45:50 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 22:47:15 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ void	my_pwd(t_infos *infos)
 		ft_printf(1, "%s\n", str);
 }
 
-void	my_exit(char **strs, pid_t pid)
+void	my_exit(char **strs, pid_t pid, t_infos *infos)
 {
-	int	i;
+	static int	i;
 
-	i = 0;
 	if (pid != 0)
 		ft_printf(1, "exit\n");
 	if (strs[1])
@@ -54,5 +53,6 @@ void	my_exit(char **strs, pid_t pid)
 	else
 		g_g.g_exit_status = EXIT_SUCCESS;
 	clear_history();
+	ft_free_envp_array(infos->envp);
 	exit(g_g.g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 23:41:34 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/27 01:25:04 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,17 @@ void	inter_process(t_list *final_list, int pipe_ends[2]
 		exit(EXIT_FAILURE);
 }
 
-void	my_wait_all(int pipe_ends[2], int size, t_infos *infos)
+void	my_wait_all(t_infos *infos, t_list *final_list)
 {
 	int	i;
 
+	(void)final_list;
 	i = 0;
-	close(pipe_ends[0]);
-	close(pipe_ends[1]);
-	while (i < size)
+	close(infos->help.pipe_ends[0]);
+	close(infos->help.pipe_ends[1]);
+	// close(final_list->in_fd);
+	// close(final_list->out_fd);
+	while (i < infos->help.size)
 	{
 		waitpid(infos->pids[i], &g_g.g_exit_status, 0);
 		i++;
@@ -137,11 +140,11 @@ void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 			else
 				inter_process(tmp, infos->help.pipe_ends, envp, infos);
 		}
-		if (tmp->delims != NULL && !tmp->next)
+		if (tmp->delims != NULL && tmp->next)
 			wait(NULL);
-		redirect_process(infos->help.pipe_ends);
+		redirect_process(infos->help.pipe_ends, tmp);
 		tmp = tmp->next;
 		infos->help.i++;
 	}
-	my_wait_all(infos->help.pipe_ends, infos->help.size, infos);
+	my_wait_all(infos, final_list);
 }

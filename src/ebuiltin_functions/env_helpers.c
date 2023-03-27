@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:16:02 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 17:49:56 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 22:32:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char	**copy_envp_into_array(t_infos *infos)
 	envp = malloc(sizeof(char *) * (envp_size + 1));
 	while (i < envp_size)
 	{
+		if (!tmp->variable_value)
+			tmp->variable_value = ft_strdup("", 0);
 		string = ft_strjoin(tmp->variable_name, "=", 0);
 		envp[i] = ft_strjoin(string, tmp->variable_value, 1);
 		tmp = tmp->next;

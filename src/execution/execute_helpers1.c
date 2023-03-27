@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 22:08:24 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/26 20:25:51 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/27 01:01:05 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	execute_simple_cmd(t_list *final_list, char **envp, t_infos *infos)
 	pid = fork();
 	if (pid == 0)
 		child_process_for_one_cmd(final_list, envp, infos);
+	close(final_list->in_fd);
+	close(final_list->out_fd);
 	waitpid(pid, &g_g.g_exit_status, 0);
 	if (WIFEXITED(g_g.g_exit_status))
 		g_g.g_exit_status = WEXITSTATUS(g_g.g_exit_status);

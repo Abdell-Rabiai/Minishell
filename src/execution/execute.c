@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/26 20:26:38 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/26 22:42:56 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	execute_builtin(char **strs, t_infos *infos, t_list *final_list,
 	else if (!ft_strcmp(strs[0], "unset"))
 		my_unset(strs, infos);
 	else if (!ft_strcmp(strs[0], "exit"))
-		my_exit(strs, pid);
+		my_exit(strs, pid, infos);
 	else if (!ft_strcmp(str, "echo"))
 		my_echo(strs);
 	else if (!ft_strcmp(str, "cd"))
@@ -123,6 +123,7 @@ void	execute(t_list *final_list, t_infos *infos)
 	infos->std_in = dup(STDIN_FILENO);
 	infos->std_out = dup(STDOUT_FILENO);
 	envp = copy_envp_into_array(infos);
+	infos->envp = envp;
 	if (ft_lstsize(final_list) == 1)
 		execute_one_cmd(final_list, envp, infos);
 	else

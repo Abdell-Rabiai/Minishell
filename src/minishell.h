@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/26 20:25:13 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/27 01:07:54 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_envp
 typedef struct s_infos
 {
 	struct s_envp	*my_envp;
+	char			**envp;
 	int				std_in;
 	int				std_out;
 	t_help			help;
@@ -108,7 +109,7 @@ void	my_cd(char **strs, t_infos *infos);
 void	cd(char *path, t_infos *infos);
 void	set_envp_value(char *old_variable, char *new_value, t_infos *infos);
 int		print_old_pwd(t_infos *infos);
-void	my_exit(char **strs, pid_t pid);
+void	my_exit(char **strs, pid_t pid, t_infos *infos);
 
 void	builtin_handler(t_list *final_list, t_infos *infos);
 
@@ -146,7 +147,7 @@ char	**get_envpath(char **envp);
 int		is_builtin(t_list *node);
 void	execute_builtin(char **strs, t_infos *infos,
 			t_list *final_list, pid_t pid);
-void	redirect_process(int pipe_ends[2]);
+void	redirect_process(int pipe_ends[2], t_list *tmp);
 void	create_pipe(int pipe_ends[2]);
 pid_t	my_fork(t_infos *infos, int i);
 
