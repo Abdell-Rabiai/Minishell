@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/26 22:44:25 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/27 02:49:14 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ char	*prepare_path(t_infos *infos)
 		cwd = ft_strdup(get_envp_value("PWD", infos), 0);
 	cwd = repalce_path_with_tilda(cwd);
 	tmp = ft_strjoin("\x1B[1;36m", cwd, 2);
-	cwd = ft_strjoin(tmp, "$ \033[0m", 1);
-	cwd = ft_strjoin(cwd, "\033[1;32mbash-9.2$ \033[0m", 1);
+	cwd = ft_strjoin(tmp, "$> \033[0m", 1);
+	cwd = ft_strjoin(cwd, "\033[1;32mbtsh-5.2$ \033[0m", 1);
 	if (!cwd)
-		cwd = ft_strdup("\033[1;32mbash-9.2$ \033[0m", 0);
+		cwd = ft_strdup("\033[1;32mbtsh-5.2$ \033[0m", 0);
 	return (cwd);
 }
 

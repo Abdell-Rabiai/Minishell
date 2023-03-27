@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/24 23:10:13 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/27 03:07:43 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ banner2:
 		printf "%s\n" "$$s" ; \
 		sleep 0.03 ; \
 	done ; \
-	echo "$(LIGHTRED)                     Copyright : Black-Hole1004, Abdellrabiai :) \n$(Color_Off)"
+	echo "$(LIGHTRED)                     Copyright : Black-Hole1004, Abdell-rabiai :) \n$(Color_Off)"
 
 %.o: %.c $(HEADER)
 	@printf "$(GREEN) Generating minishell objects... %-33.33s\r" $@
