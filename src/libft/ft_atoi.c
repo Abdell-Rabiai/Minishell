@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:32:05 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/26 22:48:30 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/28 05:11:28 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,27 @@ int	ft_atoi(const char *str)
 	return (result * (sign));
 }
 
+void	handle_atoi_sign(const char *str, int *sign)
+{
+	if (*str && (*str == '-' || *str == '+'))
+	{
+		if (*str == '-')
+			*sign *= (-1);
+		str++;
+	}
+}
+
 long long	ft_atoi_exit(const char *str, int *i)
 {
 	long double	result;
-	long long	sign;
+	int			sign;
 
 	result = 0;
 	sign = 1;
 	*i = 0;
 	while (is_whitespace(*str))
 		str++;
-	if (*str && (*str == '-' || *str == '+'))
-	{
-		if (*str == '-')
-		sign *= (-1);
-		str++;
-	}
+	handle_atoi_sign(str, &sign);
 	if (!ft_isdigit(*str))
 		*i = 1;
 	while (*str && ft_isdigit((*str)))

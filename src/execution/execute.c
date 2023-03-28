@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/26 22:42:56 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/28 05:00:14 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	child_process_for_one_cmd(t_list *final_list,
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, handle_kill);
 	strs = final_list->commands;
-	if (final_list->_errno != 0)
-		ft_printf(2, "minishell: %s:\n", strerror(final_list->_errno));
-	open_heredoc_if_found(final_list, infos, strs);
+	first_errno_and_open_heredocs(final_list, strs);
 	check_for_inout_output_files(final_list->in_fd, final_list->out_fd);
 	if (is_builtin(final_list) == 1)
 	{
@@ -115,27 +113,28 @@ void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 
 void	execute(t_list *final_list, t_infos *infos)
 {
-	char	**envp;
-
-	infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
 	if (!final_list)
 		return ;
+	infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
 	infos->std_in = dup(STDIN_FILENO);
 	infos->std_out = dup(STDOUT_FILENO);
-	envp = copy_envp_into_array(infos);
-	infos->envp = envp;
+	infos->envp = copy_envp_into_array(infos);
 	if (ft_lstsize(final_list) == 1)
-		execute_one_cmd(final_list, envp, infos);
+	{
+		handle_heredoc(final_list, infos);
+		if (g_g.g_heredoc_cmd == -1)
+			execute_one_cmd(final_list, infos->envp, infos);
+	}
 	else
 	{
 		handle_multiple_here_docs(final_list, infos);
 		if (g_g.g_heredoc_cmd == -1)
-			execute_multiple_cmds(final_list, envp, infos);
-		g_g.g_heredoc_cmd = 0;
+			execute_multiple_cmds(final_list, infos->envp, infos);
 	}
+	g_g.g_heredoc_cmd = 0;
 	dup2(infos->std_out, STDOUT_FILENO);
 	dup2(infos->std_in, STDIN_FILENO);
 	unlink_heredoc_files(final_list);
-	ft_free_envp_array(envp);
+	ft_free_envp_array(infos->envp);
 	free(infos->pids);
 }

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/27 03:03:34 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/27 22:29:14 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ pid_t	my_fork(t_infos *infos, int i);
 char	*get_last_heredoc_filename(t_list *final_list);
 void	open_heredoc_file(t_list *final_list, t_infos *infos);
 void	handle_multiple_here_docs(t_list *final_list, t_infos *infos);
-void	open_heredoc_if_found(t_list *final_list, t_infos *infos, char **strs);
+void	handle_heredoc(t_list *final_list, t_infos *infos);
 char	*check_and_expand_heredoc(char *str, t_infos *infos);
 char	*expand_variables_heredoc(char *str, int pos, t_infos *infos);
 void	handle_multiple_here_docs(t_list *final_list, t_infos *infos);

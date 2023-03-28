@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/27 01:25:04 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/28 05:02:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	my_wait_all(t_infos *infos, t_list *final_list)
 	i = 0;
 	close(infos->help.pipe_ends[0]);
 	close(infos->help.pipe_ends[1]);
-	// close(final_list->in_fd);
-	// close(final_list->out_fd);
+	close(final_list->in_fd);
+	close(final_list->out_fd);
 	while (i < infos->help.size)
 	{
 		waitpid(infos->pids[i], &g_g.g_exit_status, 0);
