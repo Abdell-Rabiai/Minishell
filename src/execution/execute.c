@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/28 05:00:14 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/30 01:57:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void	execute(t_list *final_list, t_infos *infos)
 {
 	if (!final_list)
 		return ;
-	infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
 	infos->std_in = dup(STDIN_FILENO);
 	infos->std_out = dup(STDOUT_FILENO);
 	infos->envp = copy_envp_into_array(infos);

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:16:02 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/26 22:32:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/30 01:05:04 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ char	**copy_envp_into_array(t_infos *infos)
 	tmp = infos->my_envp;
 	envp_size = get_envp_size(infos->my_envp);
 	envp = malloc(sizeof(char *) * (envp_size + 1));
+	if (!envp)
+		return (NULL);
 	while (i < envp_size)
 	{
-		if (!tmp->variable_value)
-			tmp->variable_value = ft_strdup("", 0);
 		string = ft_strjoin(tmp->variable_name, "=", 0);
-		envp[i] = ft_strjoin(string, tmp->variable_value, 1);
+		envp[i] = ft_strjoin_env(string, tmp->variable_value, 1);
 		tmp = tmp->next;
 		i++;
 	}
@@ -82,19 +82,19 @@ char	**copy_envp_into_array(t_infos *infos)
 void	update_shlvl_variable(t_infos *infos)
 {
 	t_envp	*temp;
-	int		shlvl_old_variable_value;
-	char	*shlvl_new_variable_value;
+	int		shlvl_old_value;
+	char	*shlvl_new_value;
 
 	temp = infos->my_envp;
 	while (temp)
 	{
 		if (!ft_strcmp(temp->variable_name, "SHLVL"))
 		{
-			shlvl_old_variable_value = ft_atoi(temp->variable_value);
-			shlvl_old_variable_value++;
-			shlvl_new_variable_value = ft_itoa(shlvl_old_variable_value);
+			shlvl_old_value = ft_atoi(temp->variable_value);
+			shlvl_old_value++;
+			shlvl_new_value = ft_itoa(shlvl_old_value);
 			free(temp->variable_value);
-			temp->variable_value = shlvl_new_variable_value;
+			temp->variable_value = shlvl_new_value;
 			return ;
 		}
 		temp = temp->next;

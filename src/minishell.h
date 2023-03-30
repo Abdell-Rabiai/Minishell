@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/27 22:29:14 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/30 01:57:28 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_infos
 	int				std_out;
 	t_help			help;
 	int				*pids;
+	bool			ignore;
 }	t_infos;
 
 typedef struct s_g

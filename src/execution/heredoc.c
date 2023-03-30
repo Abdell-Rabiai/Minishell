@@ -6,17 +6,11 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:37:37 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/27 22:24:15 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/28 22:37:31 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	handle_signal(int signal)
-{
-	if (signal == SIGINT)
-		exit(EXIT_FAILURE);
-}
 
 void	loop(char *lim, int type, t_infos *infos, int fd)
 {
@@ -24,7 +18,7 @@ void	loop(char *lim, int type, t_infos *infos, int fd)
 
 	while (1)
 	{
-		str = readline("TABI3A>> ");
+		str = readline("Here>> ");
 		if (!str)
 			break ;
 		if (!ft_strcmp(str, lim))

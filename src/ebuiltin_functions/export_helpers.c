@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 21:34:10 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/24 18:10:40 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/30 01:55:24 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void	duplicate_envp(char **envp, t_infos *infos)
 		i++;
 	}
 	if (envp[0] == NULL)
+	{
 		add_ignored_env(infos);
+		infos->ignore = true;
+	}
+	else
+		infos->ignore = false;
 	set_envp_value("OLDPWD", "", infos);
 }
