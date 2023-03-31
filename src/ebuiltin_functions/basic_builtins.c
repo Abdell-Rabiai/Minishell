@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:34:06 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/26 22:47:15 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/31 01:46:37 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	my_pwd(t_infos *infos)
 		if (get_envp_value("PWD", infos))
 			ft_printf(1, "%s\n", get_envp_value("PWD", infos));
 		else
-			ft_printf(1, "Oops! Ana Mwder :) the location where you are doesn't"
-				"appear to exist, try go somewhere else\n");
+			ft_printf(1, "Oops! i'm lost, the location where you are doesn't"
+				" appear to exist, try go somewhere else\n");
 	}
 	else
 		ft_printf(1, "%s\n", str);

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:45:51 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/25 21:20:27 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/31 01:47:17 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	cd(char *path, t_infos *infos)
 	if (!current_dir)
 	{
 		ft_printf(2, "minishell: cd: error retrieving current directory:"
-			"getcwd: cannot access parent directories:"
-			"No such file or directory\n");
+			" getcwd: cannot access parent directories:"
+			" No such file or directory\n");
 		g_g.g_exit_status = EXIT_FAILURE;
 		return ;
 	}

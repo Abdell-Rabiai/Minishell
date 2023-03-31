@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:30:43 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/30 02:03:37 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/31 01:42:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	add_ignored_env(t_infos *infos)
 {
-	add_back_envp(&infos->my_envp, new_node_envp("PWD",
+	add_back_envp(&infos->my_envp, new_node_envp(ft_strdup("PWD", 0),
 			ft_strdup(getcwd(NULL, 0), 1)));
-	add_back_envp(&infos->my_envp, new_node_envp("SHLVL", ft_strdup("1", 0)));
-	add_back_envp(&infos->my_envp, new_node_envp("_",
+	add_back_envp(&infos->my_envp, new_node_envp(ft_strdup("SHLVL", 0),
+			ft_strdup("1", 0)));
+	add_back_envp(&infos->my_envp, new_node_envp(ft_strdup("_", 0),
 			ft_strjoin(ft_strdup(getcwd(NULL, 0), 1), "./minishell", 1)));
-	add_back_envp(&infos->my_envp, new_node_envp("OLDPWD", ft_strdup("", 0)));
-	add_back_envp(&infos->my_envp, new_node_envp("PATH",
+	add_back_envp(&infos->my_envp, new_node_envp(ft_strdup("OLDPWD", 0),
+			ft_strdup("", 0)));
+	add_back_envp(&infos->my_envp, new_node_envp(ft_strdup("PATH", 0),
 			ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin", 0)));
 }
 

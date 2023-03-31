@@ -6,7 +6,7 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/03/30 01:03:40 by arabiai          ###   ########.fr        #
+#    Updated: 2023/03/31 01:34:30 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SRCS_OBJ = $(execution) $(ebuiltin_functions) $(parser) $(lexer)
 
 SRC = src/execution/mainex.c
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 HEADER = src/minishell.h
 
