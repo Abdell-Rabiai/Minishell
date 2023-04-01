@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:45:51 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/31 01:47:17 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/01 22:05:38 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,19 @@ void	set_current_directory(t_infos *infos, char *path)
 {
 	char	*tmp;
 	char	*removed_pwd;
+	char	*slash_path;
+	char	*old_pwd;
 
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
-	{
-		removed_pwd = ft_strjoin(get_envp_value("OLDPWD", infos),
-				ft_strjoin("/", path, 0), 2);
+	{	
+		slash_path = ft_strjoin("/", path, 0);
+		old_pwd = get_envp_value("OLDPWD", infos);
+		removed_pwd = ft_strjoin(old_pwd, slash_path, 2);
 		set_envp_value("PWD", removed_pwd, infos);
 		free(removed_pwd);
+		if (!old_pwd)
+			free(slash_path);
 	}
 	else
 		set_envp_value("PWD", tmp, infos);

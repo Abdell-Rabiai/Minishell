@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/28 22:44:32 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/01 22:46:56 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ char	*prepare_path(t_infos *infos)
 	if (!cwd)
 		cwd = ft_strdup(get_envp_value("PWD", infos), 0);
 	cwd = repalce_path_with_tilda(cwd);
-	tmp = ft_strjoin("\x1B[1;36m", cwd, 2);
-	cwd = ft_strjoin(tmp, "$> \033[0m", 1);
-	cwd = ft_strjoin(cwd, "\033[1;32mBTsh-5.2$ \033[0m", 1);
+	tmp = ft_strjoin("\001\x1B[1;36m\002", cwd, 2);
+	cwd = ft_strjoin(tmp, "$> \001\033[0m\002", 1);
+	cwd = ft_strjoin(cwd, "\001\033[1;32m\002BTsh-5.2$ \001\033[0m\002", 1);
 	if (!cwd)
-		cwd = ft_strdup("\033[1;32mBTsh-5.2$ \033[0m", 0);
+		cwd = ft_strdup("\001\033[1;32m\002BTsh-5.2$ \001\033[0m\002", 0);
 	return (cwd);
 }
 
@@ -76,12 +76,17 @@ void	prompt(t_infos *infos)
 			ft_printf(1, "exit\n");
 			exit(1);
 		}
+		add_history(str);
 		final_list = pars_error(str, infos);
+		if (!final_list)
+		{
+			free(str);
+			continue ;
+		}
 		infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
 		if (!infos->pids)
 			return (free_final_list(final_list), free(str));
 		execute(final_list, infos);
-		add_history(str);
 		free_final_list(final_list);
 		free(str);
 	}

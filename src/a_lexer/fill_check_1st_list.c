@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:33:22 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/24 20:42:23 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/01 21:38:34 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ t_list	*pars_error(char *str, t_infos *infos)
 		|| *(inpstr + ft_strlen(inpstr) - 1) == ';'
 		|| *(inpstr + ft_strlen(inpstr) - 1) == '>'
 		|| *(inpstr + ft_strlen(inpstr) - 1) == '<')
-		return (print_error('\n'), free(inpstr), NULL);
+		return (print_error('\n'), free(inpstr), free(str), NULL);
 	if (!count_quotes(inpstr))
 	{
 		printf("minishell: syntax error, unclosed quotes\n");
-		return (g_g.g_exit_status = 258, free(inpstr), NULL);
+		return (g_g.g_exit_status = 258, free(inpstr), free(str), NULL);
 	}
 	if (fill_check_final(inpstr, &final, &command, infos))
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/30 01:57:01 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/01 20:49:23 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ void	execute(t_list *final_list, t_infos *infos)
 	g_g.g_heredoc_cmd = 0;
 	dup2(infos->std_out, STDOUT_FILENO);
 	dup2(infos->std_in, STDIN_FILENO);
+	close(infos->std_out);
+	close(infos->std_in);
 	unlink_heredoc_files(final_list);
 	ft_free_envp_array(infos->envp);
 	free(infos->pids);
