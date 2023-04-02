@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 22:08:24 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/27 22:29:05 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/02 02:34:11 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_infile_outfile_errors(t_list *final_list)
 {
-	if (final_list->out_file && !ft_strcmp(final_list->out_file, ""))
+	if ((final_list->out_file && !ft_strcmp(final_list->out_file, "")))
 	{
 		ft_printf(2, "minishell: :ambiguous redirect\n");
 		return (1);

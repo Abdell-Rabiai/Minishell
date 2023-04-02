@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:16:02 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/30 01:05:04 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/02 02:26:08 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*get_envp_value(char *variable_name, t_infos *infos)
 	t_envp	*tmp;
 
 	tmp = infos->my_envp;
+	if (!variable_name)
+		return (NULL);
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->variable_name, variable_name) == 0)

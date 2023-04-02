@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/04/01 22:46:56 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/02 19:39:43 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,7 @@ void	prompt(t_infos *infos)
 			free(str);
 			continue ;
 		}
-		infos->pids = malloc(sizeof(pid_t) * ft_lstsize(final_list));
-		if (!infos->pids)
-			return (free_final_list(final_list), free(str));
-		execute(final_list, infos);
-		free_final_list(final_list);
-		free(str);
+		prompt_helper(str, final_list, infos);
 	}
 }
 
