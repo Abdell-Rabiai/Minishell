@@ -30,8 +30,8 @@ void	unset_variable(char *str, t_infos *infos)
 {
 	if (check_variable_regex(str))
 	{
-		ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", str);
-		exit(EXIT_FAILURE);
+		ft_printf(2, "minishell: unsetttt: `%s': not a valid identifier\n", str);
+		return ;
 	}
 	if (delete_head_envp(infos, str))
 		return ;
