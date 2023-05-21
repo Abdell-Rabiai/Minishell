@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/04/03 21:15:29 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/02 18:43:43 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,6 @@ void	handle_multiple_here_docs(t_list *final_list, t_infos *infos);
 void	unlink_heredoc_files(t_list *final_list);
 void	handle_signal(int signal);
 
-/*help with norm*/
 void	prompt_helper(char *str, t_list *final_list, t_infos *infos);
 
 typedef enum TYPE

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 12:21:30 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/03/15 18:57:05 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/05/21 23:05:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_set(const char *set, const char c)
+static int	is_set(const char *set, const char c) // " ", l
 {
 	int	i;
 
@@ -21,7 +21,7 @@ static int	is_set(const char *set, const char c)
 	{
 		if (set[i] == c)
 			return (1);
-	i++;
+		i++;
 	}
 	return (0);
 }
