@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/06/09 20:55:58 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/09 21:20:28 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,9 @@ void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 		}
 		if (tmp->delims != NULL && tmp->next)
 			wait(NULL);
-		redirect_process(infos->help.pipe_ends, tmp);
+		close(infos->help.pipe_ends[1]);
+		dup2(infos->help.pipe_ends[0], STDIN_FILENO);
+		close(infos->help.pipe_ends[0]);
 		tmp = tmp->next;
 		infos->help.i++;
 	}
