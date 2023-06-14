@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/06/09 13:10:06 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/14 18:29:35 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@ int		is_builtin(t_list *node);
 void	execute_builtin(char **strs, t_infos *infos,
 			t_list *final_list, pid_t pid);
 void	redirect_process(int pipe_ends[2], t_list *tmp);
-void	create_pipe(int pipe_ends[2]);
-pid_t	my_fork(t_infos *infos, int i);
+void	create_pipe(t_infos *info, int *i);
+pid_t	my_fork(t_infos *info, int *i);
 
 /*------------> heredoc--------->*/
 char	*get_last_heredoc_filename(t_list *final_list);

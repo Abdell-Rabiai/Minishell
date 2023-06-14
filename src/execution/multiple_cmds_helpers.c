@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 22:30:00 by arabiai           #+#    #+#             */
-/*   Updated: 2023/03/28 05:01:50 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/14 18:31:41 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void	redirect_process(int pipe_ends[2], t_list *tmp)
 	close(pipe_ends[0]);
 }
 
-void	create_pipe(int pipe_ends[2])
+void	create_pipe(t_infos *info, int *i)
 {
-	if (pipe(pipe_ends) == -1)
+	if (pipe(info->help.pipe_ends) == -1)
 	{
 		perror("minishell: pipe:");
-		exit(EXIT_FAILURE);
+		*i = info->help.size;
+		return ;
 	}
 }
 
-pid_t	my_fork(t_infos *infos, int i)
+pid_t	my_fork(t_infos *info, int *i)
 {
 	pid_t	pid;
 
@@ -40,8 +41,9 @@ pid_t	my_fork(t_infos *infos, int i)
 	if (pid == -1)
 	{
 		perror("minishell: fork:");
-		exit(EXIT_FAILURE);
+		*i = info->help.size;
+		return (-1);
 	}
-	infos->pids[i] = pid;
+	info->pids[*i] = pid;
 	return (pid);
 }
