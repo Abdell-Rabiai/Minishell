@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/06/14 18:29:35 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/15 20:11:23 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,5 +217,8 @@ void	finish_node(t_list **final, t_list *temp, int i);
 int		count_commands(t_list *temp);
 int		fill_check_final(char *inpstr, t_list **final,
 			t_list **command, t_infos *infos);
+
+int	check_command_if_accessible(char *cmd, char **paths);
+void	execute_using_minishell(char *executable, t_infos *infos);
 
 #endif

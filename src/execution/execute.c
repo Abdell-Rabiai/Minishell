@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/05/30 13:10:49 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/15 20:18:45 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,17 @@ void	child_process_for_one_cmd(t_list *final_list,
 	{
 		splited_paths = get_envpath(envp);
 		path = get_command_path(splited_paths, strs);
-		if (!path)
-			exit(127);
-		execve(path, strs, envp);
+		if (path[0] != '/')
+		{
+			execute_using_minishell(path, infos);
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			if (!path)
+				exit(127);
+			execve(path, strs, envp);
+		}
 	}
 	exit(EXIT_SUCCESS);
 }
@@ -96,7 +104,7 @@ void	execute_builtin(char **strs, t_infos *infos, t_list *final_list,
 void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 {
 	signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (check_infile_outfile_errors(final_list) == 1)
 		return ;
 	if (is_builtin(final_list) == 1 && !final_list->delims)
@@ -108,7 +116,7 @@ void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 	else
 		execute_simple_cmd(final_list, envp, infos);
 	signal(SIGINT, handle_kill);
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	execute(t_list *final_list, t_infos *infos)
