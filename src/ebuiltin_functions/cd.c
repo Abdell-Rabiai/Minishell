@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:45:51 by arabiai           #+#    #+#             */
-/*   Updated: 2023/04/01 22:05:38 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/18 19:21:53 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,15 @@ void	cd(char *path, t_infos *infos)
 	char	*current_dir;
 
 	update_old_pwd(infos);
+	if (!path)
+	{
+		ft_printf(2, "minishell: cd: HOME not set\n");
+		g_g.g_exit_status = EXIT_FAILURE;
+		return ;
+	}
 	if (chdir(path))
 	{
-		ft_printf(2, "bash: my_cd: %s: No such file or directory\n", path);
+		ft_printf(2, "minishell: cd: %s: No such file or directory\n", path);
 		g_g.g_exit_status = EXIT_FAILURE;
 		return ;
 	}

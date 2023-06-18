@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/06/15 20:18:45 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/16 23:22:43 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,9 @@ void	child_process_for_one_cmd(t_list *final_list,
 	{
 		splited_paths = get_envpath(envp);
 		path = get_command_path(splited_paths, strs);
-		if (path[0] != '/')
-		{
-			execute_using_minishell(path, infos);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			if (!path)
-				exit(127);
-			execve(path, strs, envp);
-		}
+		if (!path)
+			exit(127);
+		execve(path, strs, envp);
 	}
 	exit(EXIT_SUCCESS);
 }
