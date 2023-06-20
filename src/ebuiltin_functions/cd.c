@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:45:51 by arabiai           #+#    #+#             */
-/*   Updated: 2023/06/18 19:21:53 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:52:38 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,21 @@ void	my_cd(char **strs, t_infos *infos)
 			return ;
 	}
 	else if (!ft_strcmp(strs[1], "~"))
-		cd(get_envp_value("HOME", infos), infos);
+	{
+		tmp = infos->tmp_home;
+		if (get_envp_value("HOME", infos))
+		{
+			free(tmp);
+			tmp = get_envp_value("HOME", infos);
+		}
+		printf("tmp = %s\n", tmp);
+		cd(tmp, infos);
+	}
 	else if (strs[1][0] == '~')
 	{
-		tmp = ft_strjoin(get_envp_value("HOME", infos), strs[1] + 1, 0);
+		if (get_envp_value("HOME", infos))
+			tmp = ft_strjoin(get_envp_value("HOME", infos), strs[1] + 1, 0);
+		tmp = ft_strjoin(infos->tmp_home, strs[1] + 1, 0);
 		cd(tmp, infos);
 		free(tmp);
 	}
