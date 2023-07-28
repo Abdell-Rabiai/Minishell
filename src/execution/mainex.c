@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mainex.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-/*   Updated: 2023/06/16 23:29:30 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/07/28 17:45:28 by abdell_rabi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	prompt(t_infos *infos)
 			ft_printf(1, "exit\n");
 			exit(1);
 		}
-		add_history(str);
+		// add_history(str);
 		final_list = pars_error(str, infos);
 		if (!final_list)
 		{

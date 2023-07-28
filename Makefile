@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
+#    By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/06/09 13:07:48 by arabiai          ###   ########.fr        #
+#    Updated: 2023/07/28 17:48:36 by abdell_rabi      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SRCS_OBJ = $(execution) $(ebuiltin_functions) $(parser) $(lexer)
 
 SRC = src/execution/mainex.c
 
-FLAGS = -Wall -Werror -Wextra # -g -fsanitize=address
+FLAGS = #-Wall -Werror -Wextra # -g -fsanitize=address
 
 HEADER = src/minishell.h
 
@@ -55,10 +55,8 @@ LIBS = src/libft/libft.a src/ft_printf/libftprintf.a
 
 OS = $(shell uname)
 
-ifeq ($(OS),Darwin)
 	READLINE_INC = -I $(shell brew --prefix readline)/include
 	READLINE_LIB = -L $(shell brew --prefix readline)/lib
-endif
 
 OBJ = $(SRCS_OBJ:.c=.o)
 
