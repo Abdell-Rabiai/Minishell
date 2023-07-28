@@ -6,7 +6,7 @@
 /*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/07/28 17:38:12 by abdell_rabi      ###   ########.fr       */
+/*   Updated: 2023/07/28 19:03:08 by abdell_rabi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
 	else
 		exit(EXIT_FAILURE);
 }
+
 
 void	inter_process(t_list *final_list, int pipe_ends[2]
 	, char **envp, t_infos *infos)

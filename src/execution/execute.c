@@ -6,7 +6,7 @@
 /*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/07/28 17:45:52 by abdell_rabi      ###   ########.fr       */
+/*   Updated: 2023/07/28 19:02:54 by abdell_rabi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int	is_builtin(t_list *node)
 	return (0);
 }
 
-void	execute_builtin(char **strs, t_infos *infos, t_list *final_list,
-		pid_t pid)
+void	execute_builtin(char **strs, t_infos *infos, t_list *final_list, pid_t pid)
 {
 	char	*str;
 

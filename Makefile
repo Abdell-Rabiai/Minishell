@@ -6,7 +6,7 @@
 #    By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/07/28 17:48:36 by abdell_rabi      ###   ########.fr        #
+#    Updated: 2023/07/28 19:02:48 by abdell_rabi      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ HEADER = src/minishell.h
 CC = cc
 
 LIBS = src/libft/libft.a src/ft_printf/libftprintf.a
+
 
 OS = $(shell uname)
 
