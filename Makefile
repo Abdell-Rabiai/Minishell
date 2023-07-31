@@ -6,9 +6,10 @@
 #    By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/04/02 19:25:07 by arabiai          ###   ########.fr        #
+#    Updated: 2023/07/31 14:55:36 by arabiai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
@@ -45,7 +46,7 @@ SRCS_OBJ = $(execution) $(ebuiltin_functions) $(parser) $(lexer)
 
 SRC = src/execution/mainex.c
 
-FLAGS = -Wall -Werror -Wextra # -g -fsanitize=address
+FLAGS = #-Wall -Werror -Wextra # -g -fsanitize=address
 
 HEADER = src/minishell.h
 
@@ -53,12 +54,11 @@ CC = cc
 
 LIBS = src/libft/libft.a src/ft_printf/libftprintf.a
 
+
 OS = $(shell uname)
 
-ifeq ($(OS),Darwin)
 	READLINE_INC = -I $(shell brew --prefix readline)/include
 	READLINE_LIB = -L $(shell brew --prefix readline)/lib
-endif
 
 OBJ = $(SRCS_OBJ:.c=.o)
 

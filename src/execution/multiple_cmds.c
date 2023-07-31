@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   multiple_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/03/28 05:02:01 by arabiai          ###   ########.fr       */
+=======
+/*   Updated: 2023/07/28 19:03:08 by abdell_rabi      ###   ########.fr       */
+>>>>>>> cb4724746f6decbdf30a881d490aaa366b02da69
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +70,7 @@ void	last_child_process(t_list *final_list, char **envp, t_infos *infos)
 	else
 		exit(EXIT_FAILURE);
 }
+
 
 void	inter_process(t_list *final_list, int pipe_ends[2]
 	, char **envp, t_infos *infos)

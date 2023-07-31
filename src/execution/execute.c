@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/02 02:34:21 by arabiai          ###   ########.fr       */
+=======
+/*   Updated: 2023/07/28 19:02:54 by abdell_rabi      ###   ########.fr       */
+>>>>>>> cb4724746f6decbdf30a881d490aaa366b02da69
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +68,7 @@ int	is_builtin(t_list *node)
 	return (0);
 }
 
-void	execute_builtin(char **strs, t_infos *infos, t_list *final_list,
-		pid_t pid)
+void	execute_builtin(char **strs, t_infos *infos, t_list *final_list, pid_t pid)
 {
 	char	*str;
 
