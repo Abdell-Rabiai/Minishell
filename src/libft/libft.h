@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 14:58:35 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/06/15 19:55:18 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/30 01:05:00 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-int					ft_strchar(char *string, char c);
+
 typedef struct s_delimiter
 {
 	char			*delimiter;

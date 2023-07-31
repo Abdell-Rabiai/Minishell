@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 12:18:23 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/06/18 19:25:19 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/04/02 18:43:43 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_infos
 	t_help			help;
 	int				*pids;
 	bool			ignore;
-	char			*tmp_home;
 }	t_infos;
 
 typedef struct s_g
@@ -150,8 +149,8 @@ int		is_builtin(t_list *node);
 void	execute_builtin(char **strs, t_infos *infos,
 			t_list *final_list, pid_t pid);
 void	redirect_process(int pipe_ends[2], t_list *tmp);
-void	create_pipe(t_infos *info, int *i);
-pid_t	my_fork(t_infos *info, int *i);
+void	create_pipe(int pipe_ends[2]);
+pid_t	my_fork(t_infos *infos, int i);
 
 /*------------> heredoc--------->*/
 char	*get_last_heredoc_filename(t_list *final_list);
@@ -218,8 +217,5 @@ void	finish_node(t_list **final, t_list *temp, int i);
 int		count_commands(t_list *temp);
 int		fill_check_final(char *inpstr, t_list **final,
 			t_list **command, t_infos *infos);
-
-int	check_command_if_accessible(char *cmd, char **paths);
-void	execute_using_minishell(char *executable, t_infos *infos);
 
 #endif

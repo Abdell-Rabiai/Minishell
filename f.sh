@@ -1,1 +1,0 @@
-echo "hello_eorldddddd"

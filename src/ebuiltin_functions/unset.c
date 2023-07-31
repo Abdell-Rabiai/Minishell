@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 19:31:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/06/20 20:49:55 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/24 22:47:58 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ void	unset_variable(char *str, t_infos *infos)
 	if (check_variable_regex(str))
 	{
 		ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", str);
-		return ;
+		exit(EXIT_FAILURE);
 	}
-	if (ft_strcmp(str, "HOME") == 0)
-		infos->tmp_home  =ft_strdup(get_envp_value("HOME", infos), 0);
 	if (delete_head_envp(infos, str))
 		return ;
 	else

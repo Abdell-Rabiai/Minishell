@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-/*   Updated: 2023/06/16 23:04:02 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/03/28 05:02:01 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,8 @@ void	execute_multiple_cmds(t_list *final_list, char **envp, t_infos *infos)
 	infos->help.i = 0;
 	while (infos->help.i < infos->help.size)
 	{
-		create_pipe(infos, &infos->help.i);
-		infos->help.pid = my_fork(infos, &infos->help.i);
+		create_pipe(infos->help.pipe_ends);
+		infos->help.pid = my_fork(infos, infos->help.i);
 		if (infos->help.pid == 0)
 		{
 			if (infos->help.i == 0)
