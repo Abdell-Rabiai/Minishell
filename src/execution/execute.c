@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/02 02:34:21 by arabiai          ###   ########.fr       */
-=======
-/*   Updated: 2023/07/28 19:02:54 by abdell_rabi      ###   ########.fr       */
->>>>>>> cb4724746f6decbdf30a881d490aaa366b02da69
+/*   Updated: 2023/07/31 14:56:02 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 

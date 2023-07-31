@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   mainex.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:26:09 by arabiai           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/02 19:39:43 by arabiai          ###   ########.fr       */
-=======
-/*   Updated: 2023/07/28 19:02:43 by abdell_rabi      ###   ########.fr       */
->>>>>>> cb4724746f6decbdf30a881d490aaa366b02da69
+/*   Updated: 2023/07/31 14:56:32 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 

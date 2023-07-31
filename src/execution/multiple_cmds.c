@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   multiple_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdell_rabiai <abdell_rabiai@student.42    +#+  +:+       +#+        */
+/*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:15:35 by arabiai           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/03/28 05:02:01 by arabiai          ###   ########.fr       */
-=======
-/*   Updated: 2023/07/28 19:03:08 by abdell_rabi      ###   ########.fr       */
->>>>>>> cb4724746f6decbdf30a881d490aaa366b02da69
+/*   Updated: 2023/07/31 14:56:16 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
