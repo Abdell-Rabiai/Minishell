@@ -6,7 +6,7 @@
 /*   By: arabiai <arabiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:39:26 by arabiai           #+#    #+#             */
-/*   Updated: 2023/07/31 14:56:02 by arabiai          ###   ########.fr       */
+/*   Updated: 2023/08/08 16:26:34 by arabiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	execute_one_cmd(t_list *final_list, char **envp, t_infos *infos)
 	signal(SIGQUIT, SIG_IGN);
 	if (check_infile_outfile_errors(final_list) == 1)
 		return ;
-	if (is_builtin(final_list) == 1 && !final_list->delims)
+	if (is_builtin(final_list) == 1 /*&& !final_list->delims*/)
 	{
 		execute_builtin(final_list->commands, infos, final_list, 1);
 		if (g_g.g_exit_status != EXIT_FAILURE)
